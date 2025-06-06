@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finca Corazón – Javea / Xàbia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" 
+    rel="stylesheet"
+  >
+  <style>
+    /* ------------ Global Styles ------------ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    section {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #222;
+      text-align: center;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+
+    /* ------------ Hero Section ------------ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: url('path/to/your-header-photo.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+    }
+    .hero-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #ffffff;
+      color: #333;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    .hero-button:hover {
+      background: #f0f0f0;
+    }
+
+    /* ------------ Section: Over de Finca ------------ */
+    .about p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+
+    /* ------------ Section: Voorzieningen ------------ */
+    .amenities ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .amenities li {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* ------------ Section: Voor wie ------------ */
+    .for-who ul {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+    .for-who li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+    .for-who li::before {
+      content: '•';
+      color: #ff6b6b;
+      font-size: 1.5rem;
+      line-height: 0;
+    }
+
+    /* ------------ Section: De Sfeer ------------ */
+    .vibe p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+
+    /* ------------ Section: Locatie ------------ */
+    .location p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+
+    /* ------------ Section: Gallery ------------ */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      height: 0;
+      padding-bottom: 75%;
+      background: #eee;
+    }
+    .gallery-item img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* ------------ Section: Boeking & Contact ------------ */
+    .contact-info {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .contact-info a {
+      display: inline-block;
+      margin: 10px 15px;
+      color: #ff6b6b;
+      font-weight: 500;
+    }
+    .contact-note {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
+
+    /* ------------ Footer ------------ */
+    footer {
+      background: #f8f8f8;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* ------------ Responsive Typography ------------ */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Finca Corazón</h1>
+      <p class="hero-subtitle">Een charmant huis met hart. Geniet van rust, ruimte en zon – het hele jaar door.</p>
+      <a class="hero-button" href="https://wa.me/31XXXXXXXXX">WhatsApp: Vraag beschikbaarheid</a>
+      <!-- Vervang het wa.me-nummer door jouw WhatsApp-link -->
+    </div>
+  </header>
+
+  <!-- SECTION: OVER DE FINCA -->
+  <section class="about" id="over">
+    <h2>Over de Finca</h2>
+    <p>Finca Corazón is een warm en stijlvol toevluchtsoord aan de zonnige Costa Blanca. Gelegen in een vlak en groen perceel in Javea/Xàbia, biedt deze finca alles wat je nodig hebt om echt tot rust te komen – met charme, sfeer en comfort.</p>
+    <p>Of je nu komt om te ontspannen, te werken of samen te zijn: dit huis voelt als thuiskomen in de zon.</p>
+  </section>
+
+  <!-- SECTION: VOORZIENINGEN -->
+  <section class="amenities" id="voorzieningen">
+    <h2>Voorzieningen</h2>
+    <ul>
+      <li>Privé zwembad met ligbedden</li>
+      <li>Grote veranda’s en loungehoeken</li>
+      <li>Volledig uitgeruste buitenkeuken</li>
+      <li>4 slaapkamers, elk met eigen badkamer</li>
+      <li>Airco in alle ruimtes</li>
+      <li>Supersnelle WiFi – ook geschikt voor remote work</li>
+      <li>Ruime tuin met veel zon, ook in de winter</li>
+      <li>Gratis parkeren op eigen terrein</li>
+    </ul>
+  </section>
+
+  <!-- SECTION: VOOR WIE -->
+  <section class="for-who" id="voor-wie">
+    <h2>Voor wie?</h2>
+    <ul>
+      <li>Gezinnen die ruimte en comfort zoeken</li>
+      <li>Digital nomads of remote werkers die willen opladen in de zon</li>
+      <li>Stellen of vriendengroepen die samen willen genieten van eenvoud en schoonheid</li>
+    </ul>
+  </section>
+
+  <!-- SECTION: DE SFEER -->
+  <section class="vibe" id="sfeer">
+    <h2>De Sfeer</h2>
+    <p>Binnen domineren lichte tinten, houten accenten en handgemaakte details. Buiten nodigen de terrassen, het zwembad en de tuin je uit om te leven in het ritme van de zon. Van lange tafelsessies tot siësta’s in de hangmat – hier leef je buiten.</p>
+  </section>
+
+  <!-- SECTION: LOCATIE -->
+  <section class="location" id="locatie">
+    <h2>Locatie</h2>
+    <p>Finca Corazón ligt op slechts 10 minuten van de kust en het oude centrum van Jávea/Xàbia. Je vindt er stille baaien, levendige marktjes, lokale tapasbars en prachtige wandelroutes in de bergen en langs de zee.</p>
+  </section>
+
+  <!-- SECTION: GALERIJ -->
+  <section class="gallery-section" id="galerij">
+    <h2>Galerij</h2>
+    <div class="gallery">
+      <!-- Vervang src-attribuut met jouw eigen afbeeldingspaden -->
+      <div class="gallery-item"><img src="images/photo1.jpg" alt="Foto 1"></div>
+      <div class="gallery-item"><img src="images/photo2.jpg" alt="Foto 2"></div>
+      <div class="gallery-item"><img src="images/photo3.jpg" alt="Foto 3"></div>
+      <div class="gallery-item"><img src="images/photo4.jpg" alt="Foto 4"></div>
+      <div class="gallery-item"><img src="images/photo5.jpg" alt="Foto 5"></div>
+      <div class="gallery-item"><img src="images/photo6.jpg" alt="Foto 6"></div>
+      <div class="gallery-item"><img src="images/photo7.jpg" alt="Foto 7"></div>
+      <div class="gallery-item"><img src="images/photo8.jpg" alt="Foto 8"></div>
+      <div class="gallery-item"><img src="images/photo9.jpg" alt="Foto 9"></div>
+      <div class="gallery-item"><img src="images/photo10.jpg" alt="Foto 10"></div>
+      <div class="gallery-item"><img src="images/photo11.jpg" alt="Foto 11"></div>
+      <div class="gallery-item"><img src="images/photo12.jpg" alt="Foto 12"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: BOEKING & CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Boeking &amp; Contact</h2>
+    <p>We werken niet met een boekingssysteem – we houden het graag persoonlijk.<br>
+       Stuur ons een kort berichtje en we denken graag met je mee.</p>
+    <div class="contact-info">
+      <a href="https://wa.me/31XXXXXXXXX">📱 WhatsApp</a>
+      <a href="mailto:info@fincacorazon.com">📧 info@fincacorazon.com</a>
+    </div>
+    <p class="contact-note"><em>Prijzen op aanvraag – afhankelijk van seizoen, gezelschap en verblijfsduur.</em></p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Finca Corazón – verhuur met liefde<br>
+       © 2025 · Javea / Xàbia, Spanje</p>
+  </footer>
+
+</body>
+</html>
