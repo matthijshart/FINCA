@@ -239,6 +239,50 @@
       cursor: pointer;
     }
 
+    /* ------------ Navigation ------------ */
+    .navbar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 3;
+    }
+    .nav-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+    }
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 15px;
+      border-radius: 4px;
+    }
+    .nav-menu.active {
+      display: flex;
+    }
+    .nav-menu li {
+      margin: 5px 0;
+      text-align: right;
+    }
+    .nav-menu a {
+      color: #fff;
+      font-weight: 500;
+    }
+
     /* ------------ Footer ------------ */
     footer {
       background: #f8f8f8;
@@ -266,6 +310,23 @@
 
   <!-- HERO SECTION -->
   <header class="hero">
+    <nav class="navbar">
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#over">Over de Finca</a></li>
+        <li><a href="#voorzieningen">Voorzieningen</a></li>
+        <li><a href="#voor-wie">Voor wie?</a></li>
+        <li><a href="#sfeer">De Sfeer</a></li>
+        <li><a href="#locatie">Locatie</a></li>
+        <li><a href="#omgeving">Omgeving</a></li>
+        <li><a href="#galerij">Galerij</a></li>
+        <li><a href="#contact">Boeking &amp; Contact</a></li>
+      </ul>
+    </nav>
     <div class="slideshow">
       <img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Slideshow afbeelding 1">
       <img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Slideshow afbeelding 2">
@@ -415,6 +476,14 @@
         } catch (err) {
           status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
         }
+      });
+    }
+
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    if (navToggle) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
       });
     }
   </script>
