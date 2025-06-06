@@ -268,6 +268,10 @@
       display: block;
       width: 25px;
       height: 3px;
+      background: #fff;
+      transition: background-color 0.3s;
+    }
+    .nav-toggle.dark span {
       background: #333;
     }
     .nav-menu {
@@ -472,6 +476,19 @@
         });
       });
     }
+
+    const heroSection = document.getElementById('home');
+    function updateNavColor() {
+      if (!navToggle) return;
+      const threshold = heroSection.offsetHeight - navToggle.offsetHeight;
+      if (window.scrollY > threshold) {
+        navToggle.classList.add('dark');
+      } else {
+        navToggle.classList.remove('dark');
+      }
+    }
+    window.addEventListener('scroll', updateNavColor);
+    window.addEventListener('load', updateNavColor);
 
     // Scroll to the top on initial load even if a hash is present
     window.addEventListener('load', () => {
