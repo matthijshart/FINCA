@@ -298,6 +298,29 @@
       color: #666;
     }
 
+    /* ------------ Scroll To Top Button ------------ */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: #ff6b6b;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+      z-index: 100;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
     /* ------------ Responsive Typography ------------ */
     @media (max-width: 768px) {
       .hero-title {
@@ -446,6 +469,7 @@
     <p>Finca Corazón – verhuur met liefde<br>
        © 2025 · Javea / Xàbia, Spanje</p>
   </footer>
+  <div id="scroll-top" class="scroll-top">^</div>
   <script>
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
@@ -489,10 +513,17 @@
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
     if (navToggle) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-      });
-    }
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  }
+
+  const scrollTopBtn = document.getElementById('scroll-top');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   </script>
 
 </body>
