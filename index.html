@@ -53,7 +53,7 @@
       position: relative;
       width: 100%;
       height: 100vh;
-      background: url('images/photo1.jpg') no-repeat center center/cover;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -67,6 +67,27 @@
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.4);
       pointer-events: none;
+    }
+    .hero-slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .hero-slideshow img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero-slideshow img.active {
+      opacity: 1;
     }
     .hero-content {
       position: relative;
@@ -194,6 +215,27 @@
       font-style: italic;
       color: #555;
     }
+    .contact-form {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    .contact-form button {
+      padding: 10px 20px;
+      background: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
     /* ------------ Footer ------------ */
     footer {
@@ -222,6 +264,11 @@
 
   <!-- HERO SECTION -->
   <header class="hero">
+    <div class="hero-slideshow">
+      <img src="images/photo1.jpg" class="slide active" alt="slide 1">
+      <img src="images/photo2.jpg" class="slide" alt="slide 2">
+      <img src="images/photo3.jpg" class="slide" alt="slide 3">
+    </div>
     <div class="hero-content">
       <h1 class="hero-title">Finca Corazón</h1>
       <p class="hero-subtitle">Een charmant huis met hart. Geniet van rust, ruimte en zon – het hele jaar door.</p>
@@ -299,8 +346,14 @@
        Stuur ons een kort berichtje en we denken graag met je mee.</p>
     <div class="contact-info">
       <a href="https://wa.me/31XXXXXXXXX">📱 WhatsApp</a>
-      <a href="mailto:info@fincacorazon.com">📧 info@fincacorazon.com</a>
     </div>
+    <form id="contact-form" class="contact-form">
+      <input type="text" name="name" placeholder="Naam" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Bericht" required></textarea>
+      <button type="submit">Verstuur</button>
+    </form>
+    <p id="form-status"></p>
     <p class="contact-note"><em>Prijzen op aanvraag – afhankelijk van seizoen, gezelschap en verblijfsduur.</em></p>
   </section>
 
@@ -309,6 +362,47 @@
     <p>Finca Corazón – verhuur met liefde<br>
        © 2025 · Javea / Xàbia, Spanje</p>
   </footer>
+  <script>
+    const slides = document.querySelectorAll('.hero-slideshow .slide');
+    let slideIndex = 0;
+    if (slides.length > 0) {
+      setInterval(() => {
+        slides[slideIndex].classList.remove('active');
+        slideIndex = (slideIndex + 1) % slides.length;
+        slides[slideIndex].classList.add('active');
+      }, 5000);
+    }
+  </script>
+  <script>
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        status.textContent = "Verzenden...";
+        const data = {
+          name: form.name.value,
+          email: form.email.value,
+          message: form.message.value,
+        };
+        try {
+          const res = await fetch("/send-mail", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data),
+          });
+          if (res.ok) {
+            status.textContent = "Bedankt! Je bericht is verstuurd.";
+            form.reset();
+          } else {
+            status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
+          }
+        } catch (err) {
+          status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
