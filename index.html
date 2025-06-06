@@ -281,6 +281,10 @@
     .availability-table td.available {
       background: #e6f4d6;
     }
+    .availability-table tr.current-month td {
+      outline: 2px solid #ff6b6b;
+      font-weight: bold;
+    }
 
     /* ------------ Section: Boeking & Contact ------------ */
     .contact {
@@ -410,7 +414,7 @@
     <div class="hero-content">
       <h1 class="hero-title">Finca Corazón</h1>
       <p class="hero-subtitle">Een casa met karakter Geniet van rust, ruimte en zon.</p>
-      <a class="hero-button" href="#contact">WhatsApp: Vraag beschikbaarheid</a>
+      <a class="hero-button" href="#beschikbaarheid">Bekijk beschikbaarheid</a>
       <a class="hero-button" href="#galerij">Zie meer foto's</a>
       <nav class="navbar">
         <button class="nav-toggle" aria-label="Menu">
@@ -667,6 +671,16 @@
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
       lightbox.classList.remove('active');
+    }
+  });
+
+  // Highlight current month in availability table
+  const monthNames = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  const currentMonth = new Date().getMonth();
+  document.querySelectorAll('.availability-table tr').forEach(row => {
+    const cell = row.querySelector('td');
+    if (cell && cell.textContent.trim() === monthNames[currentMonth]) {
+      row.classList.add('current-month');
     }
   });
   </script>
