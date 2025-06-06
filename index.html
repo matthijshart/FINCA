@@ -298,6 +298,29 @@
       color: #666;
     }
 
+    /* ------------ Scroll To Top Button ------------ */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ff6b6b;
+      color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      z-index: 100;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
     /* ------------ Responsive Typography ------------ */
     @media (max-width: 768px) {
       .hero-title {
@@ -315,7 +338,7 @@
 <body>
 
   <!-- HERO SECTION -->
-  <header class="hero">
+  <header id="top" class="hero">
     <div class="slideshow">
       <img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Slideshow afbeelding 1">
       <img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Slideshow afbeelding 2">
@@ -446,6 +469,7 @@
     <p>Finca Corazón – verhuur met liefde<br>
        © 2025 · Javea / Xàbia, Spanje</p>
   </footer>
+  <div id="scroll-top" class="scroll-top">&#x2191;</div>
   <script>
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
@@ -489,10 +513,22 @@
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
     if (navToggle) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-      });
-    }
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  }
+
+  const scrollTopBtn = document.getElementById('scroll-top');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      const header = document.getElementById('top');
+      if (header) {
+        header.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
   </script>
 
 </body>
