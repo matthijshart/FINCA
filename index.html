@@ -347,13 +347,12 @@
     <div class="contact-info">
       <a href="https://wa.me/31XXXXXXXXX">📱 WhatsApp</a>
     </div>
-    <form id="contact-form" class="contact-form">
+    <form action="mailto:matthijsthart@icloud.com" method="post" enctype="text/plain" class="contact-form">
       <input type="text" name="name" placeholder="Naam" required>
       <input type="email" name="email" placeholder="Email" required>
       <textarea name="message" placeholder="Bericht" required></textarea>
       <button type="submit">Verstuur</button>
     </form>
-    <p id="form-status"></p>
     <p class="contact-note"><em>Prijzen op aanvraag – afhankelijk van seizoen, gezelschap en verblijfsduur.</em></p>
   </section>
 
@@ -371,36 +370,6 @@
         slideIndex = (slideIndex + 1) % slides.length;
         slides[slideIndex].classList.add('active');
       }, 5000);
-    }
-  </script>
-  <script>
-    const form = document.getElementById("contact-form");
-    const status = document.getElementById("form-status");
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        status.textContent = "Verzenden...";
-        const data = {
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
-        };
-        try {
-          const res = await fetch("/send-mail", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data),
-          });
-          if (res.ok) {
-            status.textContent = "Bedankt! Je bericht is verstuurd.";
-            form.reset();
-          } else {
-            status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
-          }
-        } catch (err) {
-          status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
-        }
-      });
     }
   </script>
 
