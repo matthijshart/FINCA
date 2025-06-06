@@ -259,6 +259,29 @@
         right: 30px;
       }
 
+    /* ------------ Section: Beschikbaarheid ------------ */
+    .availability-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .availability-table th,
+    .availability-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    .availability-table th {
+      background: #f9f9f9;
+    }
+    .availability-table td.unavailable {
+      color: #fff;
+      background: #ff6b6b;
+    }
+    .availability-table td.available {
+      background: #e6f4d6;
+    }
+
     /* ------------ Section: Boeking & Contact ------------ */
     .contact {
       text-align: center;
@@ -404,6 +427,7 @@
           <li><a href="#locatie">Locatie</a></li>
           <li><a href="#galerij">Foto's van de Finca</a></li>
           <li><a href="#omgeving">Omgeving</a></li>
+          <li><a href="#beschikbaarheid">Beschikbaarheid</a></li>
           <li><a href="#contact">Boeking &amp; Contact</a></li>
         </ul>
       </nav>
@@ -508,6 +532,28 @@
     </div>
   </section>
   <hr class="section-divider">
+
+  <!-- SECTION: BESCHIKBAARHEID -->
+  <section class="availability" id="beschikbaarheid">
+    <h2>Beschikbaarheid</h2>
+    <table class="availability-table">
+      <tr><th>Maand</th><th>Status</th></tr>
+      <tr><td>Januari</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Februari</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Maart</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>April</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Mei</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Juni</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Juli</td><td class="unavailable">Niet beschikbaar</td></tr>
+      <tr><td>Augustus</td><td class="available">Beschikbaar vanaf 14 augustus</td></tr>
+      <tr><td>September</td><td class="available">Beschikbaar</td></tr>
+      <tr><td>Oktober</td><td class="available">Beschikbaar</td></tr>
+      <tr><td>November</td><td class="available">Beschikbaar</td></tr>
+      <tr><td>December</td><td class="available">Beschikbaar</td></tr>
+    </table>
+  </section>
+  <hr class="section-divider">
+
   <!-- SECTION: BOEKING & CONTACT -->
   <section class="contact" id="contact">
     <h2>Boeking &amp; Contact</h2>
