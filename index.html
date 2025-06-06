@@ -199,12 +199,58 @@
       padding-bottom: 75%;
       background: #eee;
     }
-    .gallery-item img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
+      .gallery-item img {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+      }
+
+      /* ------------ Lightbox ------------ */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 4px;
+      }
+      .lightbox .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+      .lightbox button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 2.5rem;
+        cursor: pointer;
+      }
+      #lightbox-prev {
+        left: 30px;
+      }
+      #lightbox-next {
+        right: 30px;
+      }
 
     /* ------------ Section: Boeking & Contact ------------ */
     .contact {
@@ -449,6 +495,14 @@
     <p>Finca Corazón – verhuur met liefde<br>
        © 2025 · Javea / Xàbia, Spanje</p>
   </footer>
+
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <button id="lightbox-prev">&#10094;</button>
+    <img src="" alt="Vergrote foto">
+    <button id="lightbox-next">&#10095;</button>
+  </div>
+
   <script>
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
@@ -488,15 +542,56 @@
       }
     }
     window.addEventListener('scroll', updateNavColor);
-    window.addEventListener('load', updateNavColor);
+  window.addEventListener('load', updateNavColor);
 
-    // Scroll to the top on initial load even if a hash is present
-    window.addEventListener('load', () => {
-      if (window.location.hash) {
-        history.replaceState(null, '', window.location.pathname);
-        window.scrollTo(0, 0);
-      }
+  // Scroll to the top on initial load even if a hash is present
+  window.addEventListener('load', () => {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+      window.scrollTo(0, 0);
+    }
+  });
+
+  // Lightbox functionality
+  const galleryImages = document.querySelectorAll('.gallery-item img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const closeBtn = lightbox.querySelector('.close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  let currentIndex = 0;
+
+  function showImage(index) {
+    if (index < 0) index = galleryImages.length - 1;
+    if (index >= galleryImages.length) index = 0;
+    currentIndex = index;
+    lightboxImg.src = galleryImages[currentIndex].src;
+  }
+
+  galleryImages.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      showImage(index);
+      lightbox.classList.add('active');
     });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    showImage(currentIndex + 1);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    showImage(currentIndex - 1);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
   </script>
 
 </body>
