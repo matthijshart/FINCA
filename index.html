@@ -493,6 +493,14 @@
         navMenu.classList.toggle('active');
       });
     }
+
+    // Scroll to the top on initial load even if a hash is present
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+        window.scrollTo(0, 0);
+      }
+    });
   </script>
 
 </body>
