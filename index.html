@@ -74,6 +74,7 @@
         z-index: 2;
         max-width: 800px;
         padding: 0 20px;
+        text-align: center;
       }
       .slideshow {
         position: absolute;
@@ -242,10 +243,10 @@
 
     /* ------------ Navigation ------------ */
     .navbar {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+      position: relative;
+      margin-top: 20px;
       z-index: 3;
+      display: inline-block;
     }
     .nav-toggle {
       background: none;
@@ -267,17 +268,18 @@
       flex-direction: column;
       position: absolute;
       top: 40px;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.8);
       padding: 10px 15px;
       border-radius: 4px;
+      text-align: center;
     }
     .nav-menu.active {
       display: flex;
     }
     .nav-menu li {
       margin: 5px 0;
-      text-align: right;
     }
     .nav-menu a {
       color: #fff;
@@ -311,23 +313,6 @@
 
   <!-- HERO SECTION -->
   <header class="hero">
-    <nav class="navbar">
-      <button class="nav-toggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-menu">
-        <li><a href="#over">Over de Finca</a></li>
-        <li><a href="#voorzieningen">Voorzieningen</a></li>
-        <li><a href="#voor-wie">Voor wie?</a></li>
-        <li><a href="#sfeer">De Sfeer</a></li>
-        <li><a href="#locatie">Locatie</a></li>
-        <li><a href="#omgeving">Omgeving</a></li>
-        <li><a href="#galerij">Galerij</a></li>
-        <li><a href="#contact">Boeking &amp; Contact</a></li>
-      </ul>
-    </nav>
     <div class="slideshow">
       <img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Slideshow afbeelding 1">
       <img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Slideshow afbeelding 2">
@@ -339,6 +324,23 @@
       <p class="hero-subtitle">Een charmant huis met hart. Geniet van rust, ruimte en zon – het hele jaar door.</p>
       <a class="hero-button" href="https://wa.me/31XXXXXXXXX">WhatsApp: Vraag beschikbaarheid</a>
       <a class="hero-button" href="#galerij">Zie meer foto's</a>
+      <nav class="navbar">
+        <button class="nav-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu">
+          <li><a href="#over">Over de Finca</a></li>
+          <li><a href="#voorzieningen">Voorzieningen</a></li>
+          <li><a href="#voor-wie">Voor wie?</a></li>
+          <li><a href="#sfeer">De Sfeer</a></li>
+          <li><a href="#locatie">Locatie</a></li>
+          <li><a href="#omgeving">Omgeving</a></li>
+          <li><a href="#galerij">Galerij</a></li>
+          <li><a href="#contact">Boeking &amp; Contact</a></li>
+        </ul>
+      </nav>
       <!-- Vervang het wa.me-nummer door jouw WhatsApp-link -->
     </div>
   </header>
