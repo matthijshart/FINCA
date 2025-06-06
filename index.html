@@ -305,12 +305,11 @@
       right: 20px;
       width: 40px;
       height: 40px;
+      line-height: 40px;
       background: #ff6b6b;
       color: #fff;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
       cursor: pointer;
       font-size: 1.5rem;
       z-index: 100;
@@ -338,7 +337,7 @@
 <body>
 
   <!-- HERO SECTION -->
-  <header class="hero">
+  <header id="top" class="hero">
     <div class="slideshow">
       <img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Slideshow afbeelding 1">
       <img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Slideshow afbeelding 2">
@@ -521,7 +520,12 @@
   const scrollTopBtn = document.getElementById('scroll-top');
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const header = document.getElementById('top');
+      if (header) {
+        header.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
   </script>
