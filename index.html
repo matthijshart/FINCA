@@ -461,6 +461,14 @@
       });
     }
 
+    if (navMenu) {
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+        });
+      });
+    }
+
     // Scroll to the top on initial load even if a hash is present
     window.addEventListener('load', () => {
       if (window.location.hash) {
