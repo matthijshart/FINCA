@@ -326,7 +326,7 @@
     <div class="hero-content">
       <h1 class="hero-title">Finca Corazón</h1>
       <p class="hero-subtitle">Een charmant huis met hart. Geniet van rust, ruimte en zon – het hele jaar door.</p>
-      <a class="hero-button" href="https://wa.me/31XXXXXXXXX">WhatsApp: Vraag beschikbaarheid</a>
+      <a class="hero-button" href="https://wa.me/31624978211">WhatsApp: Vraag beschikbaarheid</a>
       <a class="hero-button" href="#galerij">Zie meer foto's</a>
       <nav class="navbar">
         <button class="nav-toggle" aria-label="Menu">
@@ -430,15 +430,8 @@
     <p>We werken niet met een boekingssysteem – we houden het graag persoonlijk.<br>
        Stuur ons een kort berichtje en we denken graag met je mee.</p>
     <div class="contact-info">
-      <a href="https://wa.me/31XXXXXXXXX">📱 WhatsApp</a>
+      <a href="https://wa.me/31624978211">📱 WhatsApp</a>
     </div>
-    <form id="contact-form" class="contact-form">
-      <input type="text" name="name" placeholder="Naam" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea name="message" placeholder="Bericht" required></textarea>
-      <button type="submit">Verstuur</button>
-    </form>
-    <p id="form-status"></p>
     <p class="contact-note"><em>Prijzen op aanvraag – afhankelijk van seizoen, gezelschap en verblijfsduur.</em></p>
   </section>
 
@@ -457,34 +450,6 @@
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
       }, 4500);
-    }
-    const form = document.getElementById("contact-form");
-    const status = document.getElementById("form-status");
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        status.textContent = "Verzenden...";
-        const data = {
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
-        };
-        try {
-          const res = await fetch("/send-mail", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data),
-          });
-          if (res.ok) {
-            status.textContent = "Bedankt! Je bericht is verstuurd.";
-            form.reset();
-          } else {
-            status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
-          }
-        } catch (err) {
-          status.textContent = "Er ging iets mis. Probeer het later opnieuw.";
-        }
-      });
     }
 
     const navToggle = document.querySelector('.nav-toggle');
