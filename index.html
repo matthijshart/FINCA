@@ -41,6 +41,16 @@
       max-width: 1000px;
       margin: 0 auto;
     }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
     h2 {
       font-size: 2rem;
       margin-bottom: 20px;
@@ -420,7 +430,7 @@
   </header>
 
   <!-- SECTION: OVER DE FINCA -->
-  <section class="about" id="over">
+  <section class="about fade-in" id="over">
     <h2>Over de Finca</h2>
     <p>Finca Corazón is een warm en stijlvol toevluchtsoord aan de zonnige Costa Blanca. Gelegen in een vlak en groen perceel in Javea/Xàbia, biedt deze finca alles wat je nodig hebt om echt tot rust te komen – met charme, sfeer en comfort.</p>
     <p>Of je nu komt om te ontspannen, te werken of samen te zijn: dit huis voelt als thuiskomen in de zon.</p>
@@ -430,7 +440,7 @@
   <hr class="section-divider">
 
   <!-- SECTION: VOORZIENINGEN -->
-  <section class="amenities" id="voorzieningen">
+  <section class="amenities fade-in" id="voorzieningen">
     <h2>Voorzieningen</h2>
     <p>Comfort en gemak voor een zorgeloos verblijf.</p>
     <ul>
@@ -449,7 +459,7 @@
   <hr class="section-divider">
 
   <!-- SECTION: DE SFEER -->
-  <section class="vibe" id="sfeer">
+  <section class="vibe fade-in" id="sfeer">
     <h2>De Sfeer</h2>
     <p>Binnen domineren lichte tinten, houten accenten en handgemaakte details. Buiten nodigen de terrassen, het zwembad en de tuin je uit om te leven in het ritme van de zon. Van lange tafelsessies tot siësta’s op de ligbedden onder de veranda – hier leef je buiten.</p>
   </section>
@@ -457,7 +467,7 @@
   <hr class="section-divider">
 
   <!-- SECTION: LOCATIE -->
-  <section class="location" id="locatie">
+  <section class="location fade-in" id="locatie">
     <h2>Locatie</h2>
     <p>Finca Corazón ligt op slechts 3 minuten van de kust en het oude centrum van Jávea/Xàbia. Je vindt er stille baaien, levendige marktjes, lokale tapasbars en prachtige wandelroutes in de bergen en langs de zee.</p>
   </section>
@@ -465,47 +475,47 @@
   <hr class="section-divider">
 
   <!-- SECTION: GALERIJ -->
-  <section class="gallery-section" id="galerij">
+  <section class="gallery-section fade-in" id="galerij">
     <h2>Foto's van de Finca</h2>
     <div class="gallery">
-      <div class="gallery-item"><img src="images/photo1.jpg" alt="Foto 1"></div>
-      <div class="gallery-item"><img src="images/photo2.jpg" alt="Foto 2"></div>
-      <div class="gallery-item"><img src="images/photo3.jpg" alt="Foto 3"></div>
-      <div class="gallery-item"><img src="images/photo4.jpg" alt="Foto 4"></div>
-      <div class="gallery-item"><img src="images/photo5.jpg" alt="Foto 5"></div>
-      <div class="gallery-item"><img src="images/photo6.jpg" alt="Foto 6"></div>
-      <div class="gallery-item"><img src="images/photo7.jpg" alt="Foto 7"></div>
-      <div class="gallery-item"><img src="images/photo8.jpg" alt="Foto 8"></div>
-      <div class="gallery-item"><img src="images/photo9.jpg" alt="Foto 9"></div>
-      <div class="gallery-item"><img src="images/photo10.jpg" alt="Foto 10"></div>
-      <div class="gallery-item"><img src="images/photo11.jpg" alt="Foto 11"></div>
-      <div class="gallery-item"><img src="9e4b3e6c-a962-4ff8-bec0-b6423a822563.JPG" alt="Foto 12"></div>
-      <div class="gallery-item"><img src="PHOTO-2025-05-22-09-41-58 19.JPG" alt="Foto 13"></div>
-      <div class="gallery-item"><img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Foto 14"></div>
-      <div class="gallery-item"><img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Foto 15"></div>
-      <div class="gallery-item"><img src="PHOTO-2025-05-22-09-41-58 16.JPG" alt="Foto 16"></div>
-      <div class="gallery-item"><img src="dji_fly_20250605_134034_0028_1749124595923_photo.JPG" alt="Foto 17"></div>
-      <div class="gallery-item"><img src="dji_fly_20250605_185802_0042_1749153287792_photo.JPG" alt="Foto 18"></div>
+      <div class="gallery-item fade-in"><img src="images/photo1.jpg" alt="Foto 1"></div>
+      <div class="gallery-item fade-in"><img src="images/photo2.jpg" alt="Foto 2"></div>
+      <div class="gallery-item fade-in"><img src="images/photo3.jpg" alt="Foto 3"></div>
+      <div class="gallery-item fade-in"><img src="images/photo4.jpg" alt="Foto 4"></div>
+      <div class="gallery-item fade-in"><img src="images/photo5.jpg" alt="Foto 5"></div>
+      <div class="gallery-item fade-in"><img src="images/photo6.jpg" alt="Foto 6"></div>
+      <div class="gallery-item fade-in"><img src="images/photo7.jpg" alt="Foto 7"></div>
+      <div class="gallery-item fade-in"><img src="images/photo8.jpg" alt="Foto 8"></div>
+      <div class="gallery-item fade-in"><img src="images/photo9.jpg" alt="Foto 9"></div>
+      <div class="gallery-item fade-in"><img src="images/photo10.jpg" alt="Foto 10"></div>
+      <div class="gallery-item fade-in"><img src="images/photo11.jpg" alt="Foto 11"></div>
+      <div class="gallery-item fade-in"><img src="9e4b3e6c-a962-4ff8-bec0-b6423a822563.JPG" alt="Foto 12"></div>
+      <div class="gallery-item fade-in"><img src="PHOTO-2025-05-22-09-41-58 19.JPG" alt="Foto 13"></div>
+      <div class="gallery-item fade-in"><img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Foto 14"></div>
+      <div class="gallery-item fade-in"><img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Foto 15"></div>
+      <div class="gallery-item fade-in"><img src="PHOTO-2025-05-22-09-41-58 16.JPG" alt="Foto 16"></div>
+      <div class="gallery-item fade-in"><img src="dji_fly_20250605_134034_0028_1749124595923_photo.JPG" alt="Foto 17"></div>
+      <div class="gallery-item fade-in"><img src="dji_fly_20250605_185802_0042_1749153287792_photo.JPG" alt="Foto 18"></div>
     </div>
   </section>
 
   <hr class="section-divider">
 
 <!-- SECTION: OMGEVING JAVEA/XABIA -->
-  <section class="omgeving" id="omgeving">
+  <section class="omgeving fade-in" id="omgeving">
     <h2>Omgeving Javea/Xabia</h2>
     <div class="gallery">
-      <div class="gallery-item"><img src="IMG_3770 2.JPG" alt="Omgeving 1"></div>
-      <div class="gallery-item"><img src="IMG_3771 2.JPG" alt="Omgeving 2"></div>
-      <div class="gallery-item"><img src="istockphoto-1192838714-1024x1024.JPG" alt="Omgeving 3"></div>
-      <div class="gallery-item"><img src="istockphoto-1454769262-1024x1024.JPG" alt="Omgeving 4"></div>
-      <div class="gallery-item"><img src="istockphoto-2108599336-1024x1024.JPG" alt="Omgeving 5"></div>
-      <div class="gallery-item"><img src="istockphoto-538323831-1024x1024.JPG" alt="Omgeving 6"></div>
+      <div class="gallery-item fade-in"><img src="IMG_3770 2.JPG" alt="Omgeving 1"></div>
+      <div class="gallery-item fade-in"><img src="IMG_3771 2.JPG" alt="Omgeving 2"></div>
+      <div class="gallery-item fade-in"><img src="istockphoto-1192838714-1024x1024.JPG" alt="Omgeving 3"></div>
+      <div class="gallery-item fade-in"><img src="istockphoto-1454769262-1024x1024.JPG" alt="Omgeving 4"></div>
+      <div class="gallery-item fade-in"><img src="istockphoto-2108599336-1024x1024.JPG" alt="Omgeving 5"></div>
+      <div class="gallery-item fade-in"><img src="istockphoto-538323831-1024x1024.JPG" alt="Omgeving 6"></div>
     </div>
   </section>
 
   <!-- SECTION: BOEKING & CONTACT -->
-  <section class="contact" id="contact">
+  <section class="contact fade-in" id="contact">
     <h2>Boeking &amp; Contact</h2>
     <p>We werken niet met een boekingssysteem – we houden het graag persoonlijk.<br>
        Stuur ons een kort berichtje en we denken graag met je mee.</p>
@@ -619,6 +629,18 @@
       lightbox.classList.remove('active');
     }
   });
+
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => fadeObserver.observe(el));
 
 
 </script>
