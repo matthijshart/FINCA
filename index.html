@@ -624,6 +624,12 @@
     showImage(currentIndex - 1);
   });
 
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+  });
+
   closeBtn.addEventListener('click', () => {
     lightbox.classList.remove('active');
   });
