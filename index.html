@@ -463,8 +463,22 @@
     .nav-menu.active {
       display: flex;
     }
+    /* Zet menu-items naast elkaar en centreer verticaal */
     .nav-menu li {
-      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Voeg het boho swirl icoon toe als scheiding tussen items */
+    .nav-menu li + li::before {
+      content: "";
+      display: inline-block;
+      width: 20px; /* breedte icoon */
+      height: 20px; /* hoogte icoon */
+      background-image: url("images/boho_swirl_icon_transparent.png"); /* pad naar icoon */
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin: 0 12px; /* ruimte links en rechts van icoon */
     }
     .nav-menu a {
       color: #fff;
