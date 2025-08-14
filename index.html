@@ -159,28 +159,27 @@
     }
 
     /* ------------ Section: Voorzieningen ------------ */
-    .amenities ul {
-      column-count: 2;
-      column-gap: 40px;
-      list-style: none;
-      margin-top: 20px;
-      padding-left: 0;
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin: 4rem auto;
+      max-width: 1200px;
     }
-    .amenities li {
-      break-inside: avoid;
-      position: relative;
-      padding-left: 1.2em;
-      margin-bottom: 10px;
-      font-weight: 500;
+    .feature {
+      text-align: center;
     }
-    .amenities li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      top: 0.3em;
-      color: #ff6b6b;
-      font-size: 1.2em;
-      line-height: 0;
+    .feature svg {
+      width: 48px;
+      height: 48px;
+      stroke: #8a704e;
+      stroke-width: 1.5;
+      margin-bottom: 0.6rem;
+    }
+    .feature p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #333;
     }
 
     /* ------------ Section: Voor wie ------------ */
@@ -487,20 +486,47 @@
   <hr class="section-divider">
 
   <!-- SECTION: VOORZIENINGEN -->
-  <section class="amenities fade-in" id="voorzieningen">
+  <section class="fade-in" id="voorzieningen">
     <h2>Voorzieningen</h2>
     <p>Comfort en gemak voor een zorgeloos verblijf.</p>
-    <ul>
-      <li>Privé zwembad</li>
-      <li>Veranda’s & loungehoeken</li>
-      <li>Buitenkeuken</li>
-      <li>4 slaapkamers</li>
-      <li>4 badkamers</li>
-      <li>Airco in alle ruimtes</li>
-      <li>Supersnelle WiFi</li>
-      <li>Zonnige tuin</li>
-      <li>Eigen parkeerruimte</li>
-    </ul>
+    <div class="features-grid">
+      <div class="feature">
+        <i data-feather="droplet"></i>
+        <p>Privé zwembad</p>
+      </div>
+      <div class="feature">
+        <i data-feather="coffee"></i>
+        <p>Veranda’s & loungehoeken</p>
+      </div>
+      <div class="feature">
+        <i data-feather="coffee"></i>
+        <p>Buitenkeuken</p>
+      </div>
+      <div class="feature">
+        <i data-feather="home"></i>
+        <p>4&nbsp;slaapkamers</p>
+      </div>
+      <div class="feature">
+        <i data-feather="droplet"></i>
+        <p>4&nbsp;badkamers</p>
+      </div>
+      <div class="feature">
+        <i data-feather="wind"></i>
+        <p>Airco in alle ruimtes</p>
+      </div>
+      <div class="feature">
+        <i data-feather="wifi"></i>
+        <p>Supersnelle&nbsp;WiFi</p>
+      </div>
+      <div class="feature">
+        <i data-feather="sun"></i>
+        <p>Zonnige tuin</p>
+      </div>
+      <div class="feature">
+        <i data-feather="truck"></i>
+        <p>Eigen parkeerruimte</p>
+      </div>
+    </div>
   </section>
 
   <hr class="section-divider">
@@ -590,7 +616,9 @@
     <button id="lightbox-next">&#10095;</button>
   </div>
 
+  <script src="https://unpkg.com/feather-icons"></script>
   <script>
+    feather.replace();
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
     if (slides.length) {
