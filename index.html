@@ -338,16 +338,18 @@
     .navbar {
       position: fixed;
       top: 10px;
-      right: 10px;
-      left: auto;
+      left: 0;
+      right: 0;
       z-index: 3;
-      display: block;
+      display: flex;
+      justify-content: center;
     }
     .nav-links {
       display: flex;
       gap: 20px;
       color: #fff;
-      justify-content: flex-end;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     .nav-toggle {
       background: none;
