@@ -168,8 +168,9 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2rem;
-      margin: 4rem auto;
       max-width: 1200px;
+      margin: 4rem auto 1rem;
+      padding: 0 1rem;
     }
     .feature {
       text-align: center;
@@ -185,6 +186,17 @@
       font-size: 1rem;
       line-height: 1.4;
       color: #333;
+    }
+    .feature p .asterisk {
+      color: #8a704e;
+      font-weight: bold;
+    }
+    .capacity-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #8a704e;
+      margin-top: 0.5rem;
+      margin-bottom: 4rem;
     }
 
     /* ------------ Section: Voor wie ------------ */
@@ -543,11 +555,14 @@
         <p>Zonnige tuin</p>
       </div>
       <div class="feature">
-        <i data-feather="truck"></i>
-        <p>Eigen parkeerruimte</p>
+        <i data-feather="users"></i>
+        <p>8<span class="asterisk">(*10)</span> personen</p>
       </div>
     </div>
   </section>
+  <p class="capacity-note">
+    * In een van de slaapkamers is een extra ruimte met een tweepersoonsbed
+  </p>
 
   <hr class="section-divider">
 
