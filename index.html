@@ -333,14 +333,22 @@
       z-index: 3;
       display: block;
     }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      color: #fff;
+    }
     .nav-toggle {
       background: none;
       border: none;
       cursor: pointer;
-      display: flex;
       flex-direction: column;
       gap: 5px;
       padding: 5px;
+      display: none;
+    }
+    .nav-toggle.visible {
+      display: flex;
     }
     .nav-toggle span {
       display: block;
@@ -351,6 +359,12 @@
     }
     .nav-toggle.dark span {
       background: #333;
+    }
+    .navbar.scrolled .nav-links {
+      display: none;
+    }
+    .navbar.scrolled .nav-toggle {
+      display: flex;
     }
     .nav-menu {
       display: none;
@@ -415,7 +429,17 @@
       <p class="hero-subtitle">Een casa met karakter op top locatie. Geniet van rust, ruimte en zon.</p>
       <a class="hero-button" href="#galerij">Zie meer foto's</a>
       <nav class="navbar">
-        <button class="nav-toggle" aria-label="Menu">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#over">Over de Finca</a></li>
+          <li><a href="#voorzieningen">Voorzieningen</a></li>
+          <li><a href="#sfeer">De Sfeer</a></li>
+          <li><a href="#locatie">Locatie</a></li>
+          <li><a href="#galerij">Foto's van de Finca</a></li>
+          <li><a href="#omgeving">Omgeving</a></li>
+          <li><a href="#contact">Boeking &amp; Contact</a></li>
+        </ul>
+        <button class="nav-toggle hidden" aria-label="Menu">
           <span></span>
           <span></span>
           <span></span>
@@ -576,6 +600,17 @@
         });
       });
     }
+    const navbar = document.querySelector('.navbar');
+    function handleNavbarScroll() {
+      if (!navbar) return;
+      if (window.scrollY > 0) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', handleNavbarScroll);
+    window.addEventListener('load', handleNavbarScroll);
 
     const heroSection = document.getElementById('home');
     function updateNavColor() {
