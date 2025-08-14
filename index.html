@@ -219,31 +219,32 @@
     }
 
     /* ------------ Section: Gallery ------------ */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+    .masonry-gallery {
+      column-count: 3;
+      column-gap: 1rem;
       margin-top: 30px;
     }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 6px;
-      height: 0;
-      padding-bottom: 75%;
-      background: #eee;
+    .masonry-gallery img {
+      width: 100%;
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      break-inside: avoid;
+      transition: transform 0.3s ease;
     }
-      .gallery-item img {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
+    .masonry-gallery img:hover {
+      transform: scale(1.05);
+    }
+    @media (max-width: 900px) {
+      .masonry-gallery {
+        column-count: 2;
       }
-
-      .gallery-item:hover img {
-        transform: scale(1.05);
+    }
+    @media (max-width: 600px) {
+      .masonry-gallery {
+        column-count: 1;
       }
+    }
 
       /* ------------ Lightbox ------------ */
       .lightbox {
@@ -519,28 +520,28 @@
   <!-- SECTION: GALERIJ -->
   <section class="gallery-section fade-in" id="galerij">
     <h2>Foto's van de Finca</h2>
-    <div class="gallery">
-      <div class="gallery-item fade-in"><img src="images/photo1.jpg" alt="Foto 1"></div>
-      <div class="gallery-item fade-in"><img src="images/photo2.jpg" alt="Foto 2"></div>
-      <div class="gallery-item fade-in"><img src="images/photo3.jpg" alt="Foto 3"></div>
-      <div class="gallery-item fade-in"><img src="images/photo4.jpg" alt="Foto 4"></div>
-      <div class="gallery-item fade-in"><img src="images/photo5.jpg" alt="Foto 5"></div>
-      <div class="gallery-item fade-in"><img src="images/photo6.jpg" alt="Foto 6"></div>
-      <div class="gallery-item fade-in"><img src="images/photo7.jpg" alt="Foto 7"></div>
-      <div class="gallery-item fade-in"><img src="images/photo8.jpg" alt="Foto 8"></div>
-      <div class="gallery-item fade-in"><img src="images/photo9.jpg" alt="Foto 9"></div>
-      <div class="gallery-item fade-in"><img src="images/photo10.jpg" alt="Foto 10"></div>
-      <div class="gallery-item fade-in"><img src="images/photo11.jpg" alt="Foto 11"></div>
-      <div class="gallery-item fade-in"><img src="9e4b3e6c-a962-4ff8-bec0-b6423a822563.JPG" alt="Foto 12"></div>
-      <div class="gallery-item fade-in"><img src="PHOTO-2025-05-22-09-41-58 19.JPG" alt="Foto 13"></div>
-      <div class="gallery-item fade-in"><img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Foto 14"></div>
-      <div class="gallery-item fade-in"><img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Foto 15"></div>
-      <div class="gallery-item fade-in"><img src="PHOTO-2025-05-22-09-41-58 16.JPG" alt="Foto 16"></div>
-      <div class="gallery-item fade-in"><img src="dji_fly_20250605_134034_0028_1749124595923_photo.JPG" alt="Foto 17"></div>
-      <div class="gallery-item fade-in"><img src="dji_fly_20250605_185802_0042_1749153287792_photo.JPG" alt="Foto 18"></div>
-      <div class="gallery-item fade-in"><img src="IMG_4554.JPG" alt="Foto 19"></div>
-      <div class="gallery-item fade-in"><img src="IMG_4567.JPG" alt="Foto 20"></div>
-      <div class="gallery-item fade-in"><img src="IMG_4571.JPG" alt="Foto 21"></div>
+    <div class="masonry-gallery">
+      <img src="images/photo1.jpg" alt="Foto 1">
+      <img src="images/photo2.jpg" alt="Foto 2">
+      <img src="images/photo3.jpg" alt="Foto 3">
+      <img src="images/photo4.jpg" alt="Foto 4">
+      <img src="images/photo5.jpg" alt="Foto 5">
+      <img src="images/photo6.jpg" alt="Foto 6">
+      <img src="images/photo7.jpg" alt="Foto 7">
+      <img src="images/photo8.jpg" alt="Foto 8">
+      <img src="images/photo9.jpg" alt="Foto 9">
+      <img src="images/photo10.jpg" alt="Foto 10">
+      <img src="images/photo11.jpg" alt="Foto 11">
+      <img src="9e4b3e6c-a962-4ff8-bec0-b6423a822563.JPG" alt="Foto 12">
+      <img src="PHOTO-2025-05-22-09-41-58 19.JPG" alt="Foto 13">
+      <img src="dji_fly_20250603_193118_0003_1749122678727_photo.JPG" alt="Foto 14">
+      <img src="dji_fly_20250605_134540_0037_1749124547712_photo.JPG" alt="Foto 15">
+      <img src="PHOTO-2025-05-22-09-41-58 16.JPG" alt="Foto 16">
+      <img src="dji_fly_20250605_134034_0028_1749124595923_photo.JPG" alt="Foto 17">
+      <img src="dji_fly_20250605_185802_0042_1749153287792_photo.JPG" alt="Foto 18">
+      <img src="IMG_4554.JPG" alt="Foto 19">
+      <img src="IMG_4567.JPG" alt="Foto 20">
+      <img src="IMG_4571.JPG" alt="Foto 21">
     </div>
   </section>
 
@@ -549,13 +550,13 @@
 <!-- SECTION: OMGEVING JAVEA/XABIA -->
   <section class="omgeving fade-in" id="omgeving">
     <h2>Omgeving Javea/Xabia</h2>
-    <div class="gallery">
-      <div class="gallery-item fade-in"><img src="IMG_3770 2.JPG" alt="Omgeving 1"></div>
-      <div class="gallery-item fade-in"><img src="IMG_3771 2.JPG" alt="Omgeving 2"></div>
-      <div class="gallery-item fade-in"><img src="istockphoto-1192838714-1024x1024.JPG" alt="Omgeving 3"></div>
-      <div class="gallery-item fade-in"><img src="istockphoto-1454769262-1024x1024.JPG" alt="Omgeving 4"></div>
-      <div class="gallery-item fade-in"><img src="istockphoto-2108599336-1024x1024.JPG" alt="Omgeving 5"></div>
-      <div class="gallery-item fade-in"><img src="istockphoto-538323831-1024x1024.JPG" alt="Omgeving 6"></div>
+    <div class="masonry-gallery">
+      <img src="IMG_3770 2.JPG" alt="Omgeving 1">
+      <img src="IMG_3771 2.JPG" alt="Omgeving 2">
+      <img src="istockphoto-1192838714-1024x1024.JPG" alt="Omgeving 3">
+      <img src="istockphoto-1454769262-1024x1024.JPG" alt="Omgeving 4">
+      <img src="istockphoto-2108599336-1024x1024.JPG" alt="Omgeving 5">
+      <img src="istockphoto-538323831-1024x1024.JPG" alt="Omgeving 6">
     </div>
   </section>
 
@@ -646,7 +647,7 @@
   });
 
   // Lightbox functionality
-  const galleryImages = document.querySelectorAll('.gallery-item img');
+  const galleryImages = document.querySelectorAll('.masonry-gallery img');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const closeBtn = lightbox.querySelector('.close');
