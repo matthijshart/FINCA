@@ -360,16 +360,23 @@
     /* ------------ Navigation ------------ */
     .navbar {
       position: fixed;
-      top: 10px;
+      top: 0;
       left: 0;
       right: 0;
+      width: 100%;
       z-index: 3;
       display: flex;
       justify-content: center;
+      transition: background-color 0.3s;
     }
     .navbar.scrolled {
       justify-content: flex-start;
       padding-left: 10px;
+      background: #f4f1ec;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .navbar.scrolled .nav-links a {
+      color: #333;
     }
     .nav-links {
       display: flex;
@@ -399,12 +406,6 @@
     }
     .nav-toggle.dark span {
       background: #333;
-    }
-    .navbar.scrolled .nav-links {
-      display: none;
-    }
-    .navbar.scrolled .nav-toggle {
-      display: flex;
     }
     .nav-menu {
       display: none;
