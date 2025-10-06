@@ -721,6 +721,21 @@
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
     feather.replace();
+    const isIos = /iP(ad|hone|od)/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    if (isIos && isSafari) {
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        img.setAttribute('loading', 'eager');
+        if (!img.complete) {
+          const currentSrc = img.getAttribute('src');
+          if (currentSrc) {
+            img.src = currentSrc;
+          }
+        }
+      });
+    }
+
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
     if (slides.length) {
