@@ -88,7 +88,8 @@
       .hero {
         position: relative;
         width: 100%;
-        height: 100vh;
+        height: 100vh;   /* fallback */
+        height: 100svh;  /* stabiel op iOS 15.4+ */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -420,9 +421,10 @@
       gap: 5px;
       padding: 5px;
       display: none;
-    }
-    .nav-toggle.visible {
-      display: flex;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 9999;
     }
     .nav-toggle span {
       display: block;
@@ -730,6 +732,21 @@
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
     feather.replace();
+    const isIos = /iP(ad|hone|od)/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    if (isIos && isSafari) {
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        img.setAttribute('loading', 'eager');
+        if (!img.complete) {
+          const currentSrc = img.getAttribute('src');
+          if (currentSrc) {
+            img.src = currentSrc;
+          }
+        }
+      });
+    }
+
     const slides = document.querySelectorAll('.slideshow img');
     let currentSlide = 0;
     if (slides.length) {
@@ -738,53 +755,68 @@
         slides[currentSlide].classList.remove('active');
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
-      }, 2500);
+      }, 3500);
     }
 
-    const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
+
+    const heroSection = document.getElementById('home');
+    const navToggle   = document.querySelector('.nav-toggle');
+
+    // Sentinel: 1px onderin de hero
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.position = 'absolute';
+    sentinel.style.left = '0';
+    sentinel.style.right = '0';
+    sentinel.style.bottom = '0';
+    sentinel.style.height = '1px';
+    sentinel.style.pointerEvents = 'none';
+    heroSection.appendChild(sentinel);
+
+    // Observer: als sentinel NIET meer in beeld is => donker icoon
+    const io = new IntersectionObserver(([entry]) => {
+      if (!navToggle) return;
+      if (entry.isIntersecting) {
+        navToggle.classList.remove('dark');
+      } else {
+        navToggle.classList.add('dark');
+      }
+    }, { threshold: 0 });
+
+    io.observe(sentinel);
+
+    // Vervang ook je bestaande scroll-based navbar toggle door een drempel + passive
+    const navbar = document.querySelector('.navbar');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+      if (Math.abs(y - lastY) < 4) return; // hysterese tegen flikkeren
+      lastY = y;
+      if (y > 10) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    }, { passive: true });
+
     if (navToggle) {
       navToggle.addEventListener('click', () => {
+        if (!navMenu) return;
         navMenu.classList.toggle('active');
       });
     }
 
-      if (navMenu) {
-        navMenu.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-          });
-        });
-      }
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && navMenu) {
+    if (navMenu) {
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
           navMenu.classList.remove('active');
-        }
+        });
       });
-      const navbar = document.querySelector('.navbar');
-      function handleNavbarScroll() {
-        if (!navbar) return;
-      if (window.scrollY > 0) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
     }
-    window.addEventListener('scroll', handleNavbarScroll);
-    window.addEventListener('load', handleNavbarScroll);
 
-    const heroSection = document.getElementById('home');
-    function updateNavColor() {
-      if (!navToggle) return;
-      const threshold = heroSection.offsetHeight - navToggle.offsetHeight;
-      if (window.scrollY > threshold) {
-        navToggle.classList.add('dark');
-      } else {
-        navToggle.classList.remove('dark');
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && navMenu) {
+        navMenu.classList.remove('active');
       }
-    }
-    window.addEventListener('scroll', updateNavColor);
-  window.addEventListener('load', updateNavColor);
+    });
 
   // Scroll to the top on initial load even if a hash is present
   window.addEventListener('load', () => {
