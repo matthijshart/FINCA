@@ -56,15 +56,19 @@
     }
 
     .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
+      opacity: 1;
+      transform: none;
       transition: opacity 2.2s ease, transform 2.2s ease;
       transition-delay: 0.1s;
     }
-      .fade-in.visible {
-        opacity: 1;
-        transform: none;
-      }
+    html.js .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    html.js .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
       h1,
       h2 {
         font-family: 'Playfair Display', serif;
@@ -133,6 +137,9 @@
         opacity: 0;
         transition: opacity 1s ease-in-out;
         border-radius: 10px;
+      }
+      .slideshow img:first-of-type {
+        opacity: 1;
       }
       .slideshow img.active {
         opacity: 1;
@@ -731,7 +738,10 @@
 
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
-    feather.replace();
+    document.documentElement.classList.add('js');
+    if (window.feather && typeof window.feather.replace === 'function') {
+      window.feather.replace();
+    }
     const isIos = /iP(ad|hone|od)/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
