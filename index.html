@@ -514,6 +514,26 @@
         display: flex;
       }
     }
+        /* --- Fix: galerij zichtbaar houden en Safari hover bug voorkomen --- */
+#galerij.fade-in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.masonry-gallery {
+  overflow: visible;
+}
+
+.masonry-gallery img {
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid-column;
+  transition: none;
+}
+
+.masonry-gallery img:hover {
+  transform: none; /* voorkomt dat de afbeelding “wegduwt” bij hover */
+}
+
   </style>
 </head>
 <body>
