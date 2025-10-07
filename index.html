@@ -538,7 +538,32 @@
 .masonry-gallery img:hover {
   transform: none; /* voorkomt dat de afbeelding “wegduwt” bij hover */
 }
+/* --- Fix: foto's correct tonen in masonry --- */
+.masonry-gallery {
+  column-count: 3;
+  column-gap: 1rem;
+}
 
+@media (max-width: 900px) {
+  .masonry-gallery { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+  .masonry-gallery { column-count: 1; }
+}
+
+.masonry-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;     /* behoud juiste verhoudingen */
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid-column;
+  transition: none;
+  max-height: 600px;     /* voorkomt extreem hoge afbeeldingen */
+}
   </style>
 </head>
 <body>
