@@ -933,12 +933,12 @@
       });
     }
 
-    const heroSlides = document.querySelectorAll('.slideshow img');
+    const slides = document.querySelectorAll('.slideshow img');
     const heroPrevBtn = document.querySelector('.hero-arrow--prev');
     const heroNextBtn = document.querySelector('.hero-arrow--next');
-    const heroDotsWrap = document.querySelector('.hero-dots');
-    let heroCurrentSlide = 0;
-    let heroTimerId = null;
+    const dotsWrap = document.querySelector('.hero-dots');
+    let currentSlide = 0;
+    let timerId = null;
 
     function buildDots(){
       if (!heroDotsWrap) return;
