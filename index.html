@@ -264,6 +264,16 @@
       stroke-width: 1.5;
       margin-bottom: 0.6rem;
     }
+    .feature i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      color: #8a704e;
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+    }
     .feature p {
       font-size: 1rem;
       line-height: 1.4;
@@ -972,8 +982,8 @@
       updateDots();
       if (user) restartAuto();
     }
-    function next(){ goToSlide(heroCurrentSlide + 1, true); }
-    function prev(){ goToSlide(heroCurrentSlide - 1, true); }
+    const next = (user = false) => goToSlide(heroCurrentSlide + 1, user);
+    const prev = (user = false) => goToSlide(heroCurrentSlide - 1, user);
     function startAuto(){
       stopAuto();
       heroTimerId = setInterval(() => goToSlide(heroCurrentSlide + 1), 4000);
@@ -986,8 +996,8 @@
       buildDots();
       startAuto();
     }
-    if (heroNextBtn) heroNextBtn.addEventListener('click', next, {passive:true});
-    if (heroPrevBtn) heroPrevBtn.addEventListener('click', prev, {passive:true});
+    if (heroNextBtn) heroNextBtn.addEventListener('click', () => next(true), {passive:true});
+    if (heroPrevBtn) heroPrevBtn.addEventListener('click', () => prev(true), {passive:true});
     // keyboard support
     document.addEventListener('keydown', (e)=>{
       if (e.key==='ArrowRight') next();
@@ -1086,15 +1096,19 @@
 
   // Fade-in on scroll
   const fadeEls = document.querySelectorAll('.fade-in');
-  const fadeObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        fadeObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  fadeEls.forEach(el => fadeObserver.observe(el));
+  if ('IntersectionObserver' in window) {
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => fadeObserver.observe(el));
+  } else {
+    fadeEls.forEach(el => el.classList.add('visible'));
+  }
 
   // Verberg de chevron na de eerste scroll
   window.addEventListener('scroll', () => {
