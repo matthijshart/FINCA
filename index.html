@@ -941,43 +941,43 @@
     let timerId = null;
 
     function buildDots(){
-      if (!dotsWrap) return;
-      dotsWrap.innerHTML = '';
-      slides.forEach((_, i) => {
+      if (!heroDotsWrap) return;
+      heroDotsWrap.innerHTML = '';
+      heroSlides.forEach((_, i) => {
         const d = document.createElement('button');
         d.className = 'hero-dot' + (i===0 ? ' is-active' : '');
         d.type = 'button';
         d.setAttribute('role','tab');
         d.setAttribute('aria-label', `Ga naar foto ${i+1}`);
         d.addEventListener('click', () => goToSlide(i, true));
-        dotsWrap.appendChild(d);
+        heroDotsWrap.appendChild(d);
       });
     }
     function updateDots(){
-      if (!dotsWrap) return;
-      [...dotsWrap.children].forEach((el, i) => {
-        el.classList.toggle('is-active', i===currentSlide);
+      if (!heroDotsWrap) return;
+      [...heroDotsWrap.children].forEach((el, i) => {
+        el.classList.toggle('is-active', i===heroCurrentSlide);
       });
     }
     function goToSlide(index, user=false){
-      if (!slides.length) return;
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (index + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
+      if (!heroSlides.length) return;
+      heroSlides[heroCurrentSlide].classList.remove('active');
+      heroCurrentSlide = (index + heroSlides.length) % heroSlides.length;
+      heroSlides[heroCurrentSlide].classList.add('active');
       updateDots();
       if (user) restartAuto();
     }
-    function next(){ goToSlide(currentSlide + 1, true); }
-    function prev(){ goToSlide(currentSlide - 1, true); }
+    function next(){ goToSlide(heroCurrentSlide + 1, true); }
+    function prev(){ goToSlide(heroCurrentSlide - 1, true); }
     function startAuto(){
       stopAuto();
-      timerId = setInterval(() => goToSlide(currentSlide + 1), 4000);
+      heroTimerId = setInterval(() => goToSlide(heroCurrentSlide + 1), 4000);
     }
-    function stopAuto(){ if (timerId) clearInterval(timerId); }
+    function stopAuto(){ if (heroTimerId) clearInterval(heroTimerId); }
     function restartAuto(){ stopAuto(); startAuto(); }
 
-    if (slides.length){
-      slides[0].classList.add('active');
+    if (heroSlides.length){
+      heroSlides[0].classList.add('active');
       buildDots();
       startAuto();
     }
@@ -985,8 +985,8 @@
     if (heroPrevBtn) heroPrevBtn.addEventListener('click', prev, {passive:true});
     // keyboard support
     document.addEventListener('keydown', (e)=>{
-      if (e.key==='ArrowRight') next();
-      if (e.key==='ArrowLeft')  prev();
+      if (e.key==='ArrowRight') nextSlide(true);
+      if (e.key==='ArrowLeft')  prevSlide(true);
     });
 
     const navMenu = document.querySelector('.nav-menu');
