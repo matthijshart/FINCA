@@ -985,8 +985,8 @@
     if (heroPrevBtn) heroPrevBtn.addEventListener('click', prev, {passive:true});
     // keyboard support
     document.addEventListener('keydown', (e)=>{
-      if (e.key==='ArrowRight') next();
-      if (e.key==='ArrowLeft')  prev();
+      if (e.key==='ArrowRight') nextSlide(true);
+      if (e.key==='ArrowLeft')  prevSlide(true);
     });
 
     const navMenu = document.querySelector('.nav-menu');
