@@ -938,12 +938,12 @@
       });
     }
 
-    const slides = document.querySelectorAll('.slideshow img');
+    const heroSlides = document.querySelectorAll('.slideshow img');
     const heroPrevBtn = document.querySelector('.hero-arrow--prev');
     const heroNextBtn = document.querySelector('.hero-arrow--next');
-    const dotsWrap = document.querySelector('.hero-dots');
-    let currentSlide = 0;
-    let timerId = null;
+    const heroDotsWrap = document.querySelector('.hero-dots');
+    let heroCurrentSlide = 0;
+    let heroTimerId = null;
 
     function buildDots(){
       if (!heroDotsWrap) return;
@@ -990,8 +990,8 @@
     if (heroPrevBtn) heroPrevBtn.addEventListener('click', prev, {passive:true});
     // keyboard support
     document.addEventListener('keydown', (e)=>{
-      if (e.key==='ArrowRight') nextSlide(true);
-      if (e.key==='ArrowLeft')  prevSlide(true);
+      if (e.key==='ArrowRight') next();
+      if (e.key==='ArrowLeft')  prev();
     });
 
     const navMenu = document.querySelector('.nav-menu');
@@ -1042,8 +1042,8 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const closeBtn = lightbox.querySelector('.close');
-  const lightboxPrevBtn = document.getElementById('lightbox-prev');
-  const lightboxNextBtn = document.getElementById('lightbox-next');
+  const lbPrevBtn = document.getElementById('lightbox-prev');
+  const lbNextBtn = document.getElementById('lightbox-next');
   let currentIndex = 0;
 
   function showImage(index) {
@@ -1060,11 +1060,11 @@
     });
   });
 
-  lightboxNextBtn.addEventListener('click', () => {
+  lbNextBtn.addEventListener('click', () => {
     showImage(currentIndex + 1);
   });
 
-  lightboxPrevBtn.addEventListener('click', () => {
+  lbPrevBtn.addEventListener('click', () => {
     showImage(currentIndex - 1);
   });
 
