@@ -153,18 +153,59 @@
       .slideshow img.active {
         opacity: 1;
       }
-      .hero-title {
-        font-family: 'Pacifico', cursive;
-        font-size: 3rem;
-        color: #E9DFD0;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-        margin-bottom: 10px;
-      }
-    .hero-subtitle {
-      font-size: 1.25rem;
-      font-weight: 300;
-      margin-bottom: 30px;
-    }
+      /* Hero-titel (bovenste regel) */
+.hero-title {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #fff;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  text-shadow: none;
+}
+
+/* Subtitel “Javea, Spanje” met witte lijnen */
+.hero-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+  color: #E9DFD0;
+  position: relative;
+  display: inline-block;
+  padding: 0 1.75em;
+  margin-top: 6px;
+  margin-bottom: 28px;
+}
+
+.hero-subtitle::before,
+.hero-subtitle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 2.2em;
+  height: 1px;
+  background: #fff;
+  transform: translateY(-50%);
+}
+
+.hero-subtitle::before {
+  left: 0;
+  transform: translate(-110%, -50%);
+}
+
+.hero-subtitle::after {
+  right: 0;
+  transform: translate(110%, -50%);
+}
+
+@media (max-width: 600px) {
+  .hero-subtitle::before,
+  .hero-subtitle::after {
+    width: 1.6em;
+  }
+}
+
     .hero-button {
       display: inline-block;
       padding: 12px 30px;
