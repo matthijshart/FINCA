@@ -955,68 +955,101 @@
     let heroCurrentSlide = 0;
     let heroTimerId = null;
 
-    function buildDots(){
+    function buildDots() {
       if (!heroDotsWrap) return;
       heroDotsWrap.innerHTML = '';
       heroSlides.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'hero-dot' + (i===0 ? ' is-active' : '');
-        d.type = 'button';
-        d.setAttribute('role','tab');
-        d.setAttribute('aria-label', `Ga naar foto ${i+1}`);
-        d.addEventListener('click', () => goToSlide(i, true));
-        heroDotsWrap.appendChild(d);
+        const dot = document.createElement('button');
+        dot.className = 'hero-dot' + (i === 0 ? ' is-active' : '');
+        dot.type = 'button';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Ga naar foto ${i + 1}`);
+        dot.addEventListener('click', () => goToSlide(i, true));
+        heroDotsWrap.appendChild(dot);
       });
     }
-    function updateDots(){
+
+    function updateDots() {
       if (!heroDotsWrap) return;
       [...heroDotsWrap.children].forEach((el, i) => {
-        el.classList.toggle('is-active', i===heroCurrentSlide);
+        el.classList.toggle('is-active', i === heroCurrentSlide);
       });
     }
-    function goToSlide(index, user=false){
+
+    function goToSlide(index, userInitiated = false) {
       if (!heroSlides.length) return;
-      heroSlides[heroCurrentSlide].classList.remove('active');
+      const previousSlide = heroSlides[heroCurrentSlide];
+      if (previousSlide) {
+        previousSlide.classList.remove('active');
+      }
       heroCurrentSlide = (index + heroSlides.length) % heroSlides.length;
       heroSlides[heroCurrentSlide].classList.add('active');
       updateDots();
-      if (user) restartAuto();
+      if (userInitiated) restartAuto();
     }
-    const next = (user = false) => goToSlide(heroCurrentSlide + 1, user);
-    const prev = (user = false) => goToSlide(heroCurrentSlide - 1, user);
-    function startAuto(){
-      stopAuto();
-      heroTimerId = setInterval(() => goToSlide(heroCurrentSlide + 1), 4000);
-    }
-    function stopAuto(){ if (heroTimerId) clearInterval(heroTimerId); }
-    function restartAuto(){ stopAuto(); startAuto(); }
 
-    if (heroSlides.length){
+    function next(userInitiated = false) {
+      goToSlide(heroCurrentSlide + 1, userInitiated);
+    }
+
+    function prev(userInitiated = false) {
+      goToSlide(heroCurrentSlide - 1, userInitiated);
+    }
+
+    function startAuto() {
+      stopAuto();
+      if (heroSlides.length > 1) {
+        heroTimerId = window.setInterval(() => goToSlide(heroCurrentSlide + 1), 4000);
+      }
+    }
+
+    function stopAuto() {
+      if (heroTimerId) {
+        clearInterval(heroTimerId);
+        heroTimerId = null;
+      }
+    }
+
+    function restartAuto() {
+      stopAuto();
+      startAuto();
+    }
+
+    if (heroSlides.length) {
       heroSlides[0].classList.add('active');
       buildDots();
       startAuto();
     }
-    if (heroNextBtn) heroNextBtn.addEventListener('click', () => next(true), {passive:true});
-    if (heroPrevBtn) heroPrevBtn.addEventListener('click', () => prev(true), {passive:true});
-    // keyboard support
-    document.addEventListener('keydown', (e)=>{
-      if (e.key==='ArrowRight') next();
-      if (e.key==='ArrowLeft')  prev();
+
+    if (heroNextBtn) {
+      heroNextBtn.addEventListener('click', () => next(true));
+    }
+
+    if (heroPrevBtn) {
+      heroPrevBtn.addEventListener('click', () => prev(true));
+    }
+
+    document.addEventListener('keydown', e => {
+      if (!heroSlides.length) return;
+      if (e.key === 'ArrowRight') next(true);
+      if (e.key === 'ArrowLeft') prev(true);
     });
 
     const navMenu = document.querySelector('.nav-menu');
-    const navToggle   = document.querySelector('.nav-toggle');
+    const navToggle = document.querySelector('.nav-toggle');
 
     // Vervang ook je bestaande scroll-based navbar toggle door een drempel + passive
     const navbar = document.querySelector('.navbar');
-    let lastY = 0;
-    window.addEventListener('scroll', () => {
-      const y = window.pageYOffset || document.documentElement.scrollTop;
-      if (Math.abs(y - lastY) < 4) return; // hysterese tegen flikkeren
-      lastY = y;
-      if (y > 10) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
-    }, { passive: true });
+    if (navbar) {
+      let lastY = 0;
+      window.addEventListener('scroll', () => {
+        const y = window.pageYOffset || document.documentElement.scrollTop;
+        if (Math.abs(y - lastY) < 4) return; // hysterese tegen flikkeren
+        lastY = y;
+        if (y > 10) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }, { passive: true });
+    }
 
     if (navToggle) {
       navToggle.addEventListener('click', () => {
@@ -1050,49 +1083,62 @@
   // Lightbox functionality
   const galleryImages = document.querySelectorAll('.masonry-gallery img');
   const lightbox = document.getElementById('lightbox');
-  const lightboxImg = lightbox.querySelector('img');
-  const closeBtn = lightbox.querySelector('.close');
-  const lbPrevBtn = document.getElementById('lightbox-prev');
-  const lbNextBtn = document.getElementById('lightbox-next');
   let currentIndex = 0;
 
-  function showImage(index) {
-    if (index < 0) index = galleryImages.length - 1;
-    if (index >= galleryImages.length) index = 0;
-    currentIndex = index;
-    lightboxImg.src = galleryImages[currentIndex].src;
-  }
+  if (lightbox && galleryImages.length) {
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.close');
+    const lightboxPrevBtn = document.getElementById('lightbox-prev');
+    const lightboxNextBtn = document.getElementById('lightbox-next');
 
-  galleryImages.forEach((img, index) => {
-    img.addEventListener('click', () => {
-      showImage(index);
-      lightbox.classList.add('active');
-    });
-  });
-
-  lbNextBtn.addEventListener('click', () => {
-    showImage(currentIndex + 1);
-  });
-
-  lbPrevBtn.addEventListener('click', () => {
-    showImage(currentIndex - 1);
-  });
-
-  document.addEventListener('keydown', e => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
-    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
-  });
-
-  closeBtn.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-  });
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove('active');
+    function showImage(index) {
+      const total = galleryImages.length;
+      if (!lightboxImg || !total) return;
+      if (index < 0) index = total - 1;
+      if (index >= total) index = 0;
+      currentIndex = index;
+      lightboxImg.src = galleryImages[currentIndex].src;
+      lightboxImg.alt = galleryImages[currentIndex].alt || '';
     }
-  });
+
+    galleryImages.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        showImage(index);
+        lightbox.classList.add('active');
+      });
+    });
+
+    if (lightboxNextBtn) {
+      lightboxNextBtn.addEventListener('click', () => {
+        showImage(currentIndex + 1);
+      });
+    }
+
+    if (lightboxPrevBtn) {
+      lightboxPrevBtn.addEventListener('click', () => {
+        showImage(currentIndex - 1);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+      if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+    }
+
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+  }
 
   // Fade-in on scroll
   const fadeEls = document.querySelectorAll('.fade-in');
