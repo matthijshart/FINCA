@@ -933,56 +933,56 @@
       });
     }
 
-    const slides = document.querySelectorAll('.slideshow img');
+    const heroSlides = document.querySelectorAll('.slideshow img');
     const heroPrevBtn = document.querySelector('.hero-arrow--prev');
     const heroNextBtn = document.querySelector('.hero-arrow--next');
-    const dotsWrap = document.querySelector('.hero-dots');
-    let currentSlide = 0;
-    let timerId = null;
+    const heroDotsWrap = document.querySelector('.hero-dots');
+    let heroCurrentSlide = 0;
+    let heroTimerId = null;
 
     function buildDots(){
-      if (!dotsWrap) return;
-      dotsWrap.innerHTML = '';
-      slides.forEach((_, i) => {
+      if (!heroDotsWrap) return;
+      heroDotsWrap.innerHTML = '';
+      heroSlides.forEach((_, i) => {
         const d = document.createElement('button');
         d.className = 'hero-dot' + (i===0 ? ' is-active' : '');
         d.type = 'button';
         d.setAttribute('role','tab');
         d.setAttribute('aria-label', `Ga naar foto ${i+1}`);
         d.addEventListener('click', () => goToSlide(i, true));
-        dotsWrap.appendChild(d);
+        heroDotsWrap.appendChild(d);
       });
     }
     function updateDots(){
-      if (!dotsWrap) return;
-      [...dotsWrap.children].forEach((el, i) => {
-        el.classList.toggle('is-active', i===currentSlide);
+      if (!heroDotsWrap) return;
+      [...heroDotsWrap.children].forEach((el, i) => {
+        el.classList.toggle('is-active', i===heroCurrentSlide);
       });
     }
     function goToSlide(index, user=false){
-      if (!slides.length) return;
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (index + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
+      if (!heroSlides.length) return;
+      heroSlides[heroCurrentSlide].classList.remove('active');
+      heroCurrentSlide = (index + heroSlides.length) % heroSlides.length;
+      heroSlides[heroCurrentSlide].classList.add('active');
       updateDots();
       if (user) restartAuto();
     }
-    function nextSlide(user=false){ goToSlide(currentSlide + 1, user); }
-    function prevSlide(user=false){ goToSlide(currentSlide - 1, user); }
+    function next(){ goToSlide(heroCurrentSlide + 1, true); }
+    function prev(){ goToSlide(heroCurrentSlide - 1, true); }
     function startAuto(){
       stopAuto();
-      timerId = setInterval(() => nextSlide(), 4000);
+      heroTimerId = setInterval(() => goToSlide(heroCurrentSlide + 1), 4000);
     }
-    function stopAuto(){ if (timerId) clearInterval(timerId); }
+    function stopAuto(){ if (heroTimerId) clearInterval(heroTimerId); }
     function restartAuto(){ stopAuto(); startAuto(); }
 
-    if (slides.length){
-      slides[0].classList.add('active');
+    if (heroSlides.length){
+      heroSlides[0].classList.add('active');
       buildDots();
       startAuto();
     }
-    if (heroNextBtn) heroNextBtn.addEventListener('click', () => nextSlide(true), {passive:true});
-    if (heroPrevBtn) heroPrevBtn.addEventListener('click', () => prevSlide(true), {passive:true});
+    if (heroNextBtn) heroNextBtn.addEventListener('click', next, {passive:true});
+    if (heroPrevBtn) heroPrevBtn.addEventListener('click', prev, {passive:true});
     // keyboard support
     document.addEventListener('keydown', (e)=>{
       if (e.key==='ArrowRight') nextSlide(true);
@@ -1037,8 +1037,8 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const closeBtn = lightbox.querySelector('.close');
-  const prevBtn = document.getElementById('lightbox-prev');
-  const nextBtn = document.getElementById('lightbox-next');
+  const lightboxPrevBtn = document.getElementById('lightbox-prev');
+  const lightboxNextBtn = document.getElementById('lightbox-next');
   let currentIndex = 0;
 
   function showImage(index) {
@@ -1055,11 +1055,11 @@
     });
   });
 
-  nextBtn.addEventListener('click', () => {
+  lightboxNextBtn.addEventListener('click', () => {
     showImage(currentIndex + 1);
   });
 
-  prevBtn.addEventListener('click', () => {
+  lightboxPrevBtn.addEventListener('click', () => {
     showImage(currentIndex - 1);
   });
 
