@@ -126,6 +126,9 @@
         max-width: 800px;
         padding: 0 20px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .slideshow {
         position: absolute;
@@ -174,8 +177,7 @@
   position: relative;
   display: inline-block;
   padding: 0 1.75em;
-  margin-top: 6px;
-  margin-bottom: 28px;
+  margin: clamp(4px, 1vh, 10px) 0 clamp(14px, 2.2vh, 20px);
 }
 
 .hero-subtitle::before,
@@ -207,15 +209,16 @@
 }
 
     .hero-button {
-      display: inline-block;
+      display: inline-flex;
       padding: 12px 30px;
       background: #f4f1ec;
       color: #333;
       font-weight: 500;
       border-radius: 4px;
       transition: background 0.3s ease;
-      margin: 5px;
-      margin-top: clamp(20px, 5vh, 60px);
+      margin: clamp(24px, 4vh, 52px) 0 0;
+      align-self: center;
+      justify-content: center;
     }
       .hero-button:hover {
         background: #f0f0f0;
