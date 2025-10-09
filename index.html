@@ -21,7 +21,8 @@
       >
       <style>
       :root {
-        --hero-frame-block: 48px;
+        /* meer ruimte boven/onder de foto (adaptief) */
+        --hero-frame-block: clamp(40px, 8vh, 72px);
         --hero-beige: #f4f1ec;
       }
 
@@ -133,6 +134,7 @@
         height: auto;
         z-index: 0;
         overflow: hidden;
+        border-radius: 0;
       }
       .slideshow img {
         position: absolute;
@@ -143,6 +145,7 @@
         object-fit: cover;
         opacity: 0;
         transition: opacity 1s ease-in-out;
+        border-radius: 0;
       }
       .slideshow img:first-of-type {
         opacity: 1;
@@ -177,9 +180,7 @@
       }
 
       @media (max-width: 768px) {
-        :root {
-          --hero-frame-block: clamp(28px, 6vh, 32px);
-        }
+        :root { --hero-frame-block: clamp(32px, 7vh, 56px); }
         /* laat een beetje van de volgende sectie zien */
         .hero {
           min-height: 88svh;
@@ -410,6 +411,38 @@
     section:nth-of-type(odd) {
       background-color: #fff; /* white */
     }
+
+    /* ---------- HERO: ARROWS + DOTS ---------- */
+    .hero-arrow{
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      z-index:3;
+      width:48px; height:48px;       /* ruim tap-target */
+      display:flex; align-items:center; justify-content:center;
+      color:#fff;
+    }
+    .hero-arrow svg{
+      width:28px; height:28px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));
+    }
+    .hero-arrow--prev{ left: calc(var(--hero-frame-block) + 8px); }
+    .hero-arrow--next{ right: calc(var(--hero-frame-block) + 8px); }
+
+    .hero-dots{
+      position:absolute;
+      left:50%;
+      bottom: calc(var(--hero-frame-block) + env(safe-area-inset-bottom, 0px) + 12px);
+      transform: translateX(-50%);
+      z-index:3;
+      display:flex; gap:8px;
+    }
+    .hero-dot{
+      width:8px; height:8px; border-radius:50%;
+      background: rgba(255,255,255,.55);
+      box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    }
+    .hero-dot.is-active{ background:#fff; }
     /* scroll cue */
     .scroll-cue {
       position: absolute;
@@ -619,6 +652,15 @@
       <img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="Slideshow afbeelding 8" loading="lazy" decoding="async" fetchpriority="low">
       <img src="images/img-4567.jpg" alt="Slideshow afbeelding 9" loading="lazy" decoding="async" fetchpriority="low">
     </div>
+    <!-- arrows -->
+    <button class="hero-arrow hero-arrow--prev" aria-label="Vorige foto" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="hero-arrow hero-arrow--next" aria-label="Volgende foto" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <!-- dots -->
+    <div class="hero-dots" role="tablist" aria-label="Slide navigatie"></div>
     <div class="hero-content">
       <h1 class="hero-title">Finca el Corazón</h1>
       <p class="hero-subtitle">Een casa met karakter op top locatie. Geniet van rust, ruimte en zon.</p>
@@ -850,15 +892,60 @@
     }
 
     const slides = document.querySelectorAll('.slideshow img');
+    const prevBtn = document.querySelector('.hero-arrow--prev');
+    const nextBtn = document.querySelector('.hero-arrow--next');
+    const dotsWrap = document.querySelector('.hero-dots');
     let currentSlide = 0;
-    if (slides.length) {
-      slides[currentSlide].classList.add('active');
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 3500);
+    let timerId = null;
+
+    function buildDots(){
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.className = 'hero-dot' + (i===0 ? ' is-active' : '');
+        d.type = 'button';
+        d.setAttribute('role','tab');
+        d.setAttribute('aria-label', `Ga naar foto ${i+1}`);
+        d.addEventListener('click', () => goToSlide(i, true));
+        dotsWrap.appendChild(d);
+      });
     }
+    function updateDots(){
+      if (!dotsWrap) return;
+      [...dotsWrap.children].forEach((el, i) => {
+        el.classList.toggle('is-active', i===currentSlide);
+      });
+    }
+    function goToSlide(index, user=false){
+      if (!slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      updateDots();
+      if (user) restartAuto();
+    }
+    function next(){ goToSlide(currentSlide + 1, true); }
+    function prev(){ goToSlide(currentSlide - 1, true); }
+    function startAuto(){
+      stopAuto();
+      timerId = setInterval(() => goToSlide(currentSlide + 1), 4000);
+    }
+    function stopAuto(){ if (timerId) clearInterval(timerId); }
+    function restartAuto(){ stopAuto(); startAuto(); }
+
+    if (slides.length){
+      slides[0].classList.add('active');
+      buildDots();
+      startAuto();
+    }
+    if (nextBtn) nextBtn.addEventListener('click', next, {passive:true});
+    if (prevBtn) prevBtn.addEventListener('click', prev, {passive:true});
+    // keyboard support
+    document.addEventListener('keydown', (e)=>{
+      if (e.key==='ArrowRight') next();
+      if (e.key==='ArrowLeft')  prev();
+    });
 
     const navMenu = document.querySelector('.nav-menu');
     const navToggle   = document.querySelector('.nav-toggle');
