@@ -102,6 +102,15 @@
         overflow: hidden;
         background: var(--hero-beige);
       }
+      /* extra bodem-fade als scroll-hint */
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: calc(var(--hero-frame-block) + 60%) 0 var(--hero-frame-block) 0;
+        background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.55) 100%);
+        z-index: 1;
+        pointer-events: none;
+      }
       .hero::after {
         content: '';
         position: absolute;
@@ -172,7 +181,15 @@
 
       @media (max-width: 768px) {
         :root {
-          --hero-frame-block: 24px;
+          --hero-frame-block: clamp(28px, 6vh, 32px);
+        }
+        /* laat een beetje van de volgende sectie zien */
+        .hero {
+          min-height: 88svh;
+          height: auto;
+        }
+        .hero-content {
+          padding-bottom: 80px; /* ruimte voor de chevron */
         }
       }
 
@@ -396,6 +413,23 @@
     section:nth-of-type(odd) {
       background-color: #fff; /* white */
     }
+    /* scroll cue */
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--hero-frame-block) + 10px);
+      transform: translateX(-50%);
+      color: #fff;
+      opacity: 0.9;
+      z-index: 3;
+      animation: bounce 1.6s infinite;
+      text-decoration: none;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 6px); }
+    }
+    body.scrolled .scroll-cue { display: none; }
 
     /* ------------ Navigation ------------ */
     .navbar {
@@ -585,6 +619,12 @@
       <h1 class="hero-title">Finca el Corazón</h1>
       <p class="hero-subtitle">Een casa met karakter op top locatie. Geniet van rust, ruimte en zon.</p>
       <a class="hero-button" href="#galerij">Zie meer foto's</a>
+      <!-- scroll cue -->
+      <a href="#over" class="scroll-cue" aria-label="Scroll verder">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
       <nav class="navbar">
         <ul class="nav-links">
           <li><a href="#home">Home</a></li>
@@ -942,6 +982,15 @@
     });
   }, { threshold: 0.1 });
   fadeEls.forEach(el => fadeObserver.observe(el));
+
+  // Verberg de chevron na de eerste scroll
+  window.addEventListener('scroll', () => {
+    if ((window.pageYOffset || document.documentElement.scrollTop) > 20) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
+  }, { passive: true });
 
 
 </script>
