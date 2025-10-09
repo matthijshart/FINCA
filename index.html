@@ -468,8 +468,8 @@
       padding: 5px;
       display: none;
       position: fixed;
-      top: 12px;
-      left: 12px;
+      top: calc(env(safe-area-inset-top, 0px) + 12px);
+      left: calc(env(safe-area-inset-left, 0px) + 12px);
       z-index: 9999;
     }
     .nav-toggle span {
@@ -485,14 +485,15 @@
     .nav-menu {
       display: none;
       flex-direction: column;
-      position: absolute;
-      top: 40px;
-      left: 10px;
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 0px) + 52px);
+      left: calc(env(safe-area-inset-left, 0px) + 12px);
       right: auto;
       background: rgba(0, 0, 0, 0.8);
       padding: 10px 15px;
       border-radius: 4px;
       text-align: left;
+      z-index: 10000;
     }
     .nav-menu.active {
       display: flex;
