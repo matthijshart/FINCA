@@ -54,6 +54,7 @@
     }
     section {
       padding: 60px 20px;
+      scroll-margin-top: 90px;
     }
 
     .fade-in {
@@ -527,35 +528,24 @@
 
     /* ------------ Navigation ------------ */
     .navbar {
-      position: absolute;
-      bottom: clamp(18px, 6vh, 42px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: auto;
-      z-index: 3;
-      display: flex;
-      justify-content: center;
-      transition: background-color 0.3s, box-shadow 0.3s, padding 0.3s, transform 0.3s;
-    }
-    .navbar.scrolled {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      bottom: auto;
-      transform: none;
-      justify-content: flex-start;
-      padding: 12px 14px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: transparent;
+      transition: background-color 0.3s, box-shadow 0.3s, padding 0.3s;
+    }
+    .navbar.scrolled {
       background: #f4f1ec;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
     .navbar.scrolled .nav-links a {
       color: #333;
-    }
-    .navbar.scrolled .nav-links {
-      justify-content: flex-start;
-      gap: 16px;
     }
     .nav-links {
       display: flex;
@@ -565,26 +555,20 @@
       flex-wrap: wrap;
     }
     .nav-toggle {
-      background: rgba(255, 255, 255, 0.72);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: #f4f1ec;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 999px;
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
       cursor: pointer;
       display: none;
       flex-direction: column;
       gap: 6px;
       justify-content: center;
       align-items: center;
-      min-height: 48px;
-      padding: 12px 18px;
-      position: fixed;
-      top: calc(env(safe-area-inset-top, 0px) + var(--hero-frame-block) + 12px);
-      left: calc(var(--hero-frame-block) + 12px);
-      top: calc(env(safe-area-inset-top, 0px) + 12px);
-      left: calc(env(safe-area-inset-left, 0px) + 12px);
-      z-index: 9999;
+      min-height: 44px;
+      padding: 10px 16px;
+      position: relative;
+      z-index: 6;
     }
     .nav-toggle span {
       display: block;
@@ -597,34 +581,21 @@
       display: none;
       flex-direction: column;
       position: fixed;
-      top: calc(env(safe-area-inset-top, 0px) + 52px);
-      left: calc(env(safe-area-inset-left, 0px) + 12px);
-      right: auto;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 10px 15px;
-      border-radius: 4px;
+      top: calc(env(safe-area-inset-top, 0px) + 64px);
+      left: 16px;
+      right: 16px;
+      background: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
       text-align: left;
-      z-index: 10000;
+      z-index: 6;
     }
     .nav-menu.active {
       display: flex;
     }
-    /* Zet menu-items naast elkaar en centreer verticaal */
-    .nav-menu li {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Voeg het boho swirl icoon toe als scheiding tussen items */
-    .nav-menu li + li::before {
-      content: "";
-      display: inline-block;
-      width: 20px; /* breedte icoon */
-      height: 20px; /* hoogte icoon */
-      background-image: url("images/boho_swirl_icon_transparent.png"); /* pad naar icoon */
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin: 0 12px; /* ruimte links en rechts van icoon */
+    .nav-menu li + li {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
     .nav-links a,
     .nav-menu a {
@@ -633,9 +604,15 @@
       display: inline-block;
       padding: 12px 0;
     }
-    .nav-links a:hover,
-    .nav-menu a:hover {
+    .nav-menu a {
+      color: #1d1d1d;
+      width: 100%;
+    }
+    .nav-links a:hover {
       color: #ccc;
+    }
+    .nav-menu a:hover {
+      color: #000;
     }
 
     /* ------------ Footer ------------ */
@@ -758,12 +735,12 @@
           <li><a href="#omgeving">Omgeving</a></li>
           <li><a href="#contact">Boeking &amp; Contact</a></li>
         </ul>
-        <button class="nav-toggle" aria-label="Menu">
+        <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="mobile-menu">
           <li><a href="#home">Home</a></li>
           <li><a href="#over">Over de Finca</a></li>
           <li><a href="#voorzieningen">Voorzieningen</a></li>
@@ -1069,24 +1046,56 @@
       }, { passive: true });
     }
 
+    const closeMenu = () => {
+      if (!navMenu || !navToggle) return;
+      navMenu.classList.remove('active');
+      navToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    const openMenu = () => {
+      if (!navMenu || !navToggle) return;
+      navMenu.classList.add('active');
+      navToggle.setAttribute('aria-expanded', 'true');
+    };
+
     if (navToggle) {
       navToggle.addEventListener('click', () => {
         if (!navMenu) return;
-        navMenu.classList.toggle('active');
+        const isOpen = navMenu.classList.contains('active');
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
       });
     }
 
     if (navMenu) {
       navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
-          navMenu.classList.remove('active');
+          closeMenu();
         });
       });
     }
 
+    document.addEventListener('click', event => {
+      if (!navMenu || !navToggle) return;
+      if (!navMenu.classList.contains('active')) return;
+      const target = event.target;
+      if (target instanceof Node && !navMenu.contains(target) && !navToggle.contains(target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768 && navMenu) {
-        navMenu.classList.remove('active');
+        closeMenu();
       }
     });
 
