@@ -807,7 +807,8 @@
     const prevBtn = lb ? lb.querySelector('.lb-prev') : null;
     const nextBtn = lb ? lb.querySelector('.lb-next') : null;
 
-    const allGalleryImgs = Array.from(document.querySelectorAll('.g img'));
+    const allGalleryImgs = Array.from(document.querySelectorAll('#galerij .g img'));
+
     let current = 0;
 
     function openLb(i){
