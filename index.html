@@ -25,7 +25,7 @@
       --wrap: 1080px;
       --pad: clamp(18px, 3vw, 28px);
 
-      --heroFrame: clamp(18px, 4vh, 34px);
+      --heroFrame: 0px;
     }
 
     *{ box-sizing: border-box; margin:0; padding:0; }
@@ -166,10 +166,10 @@
     /* frame */
     .hero-frame{
       position:absolute;
-      inset: var(--heroFrame);
-      border-radius: clamp(16px, 2vw, 28px);
+      inset: 0;
+      border-radius: 0;
       overflow:hidden;
-      box-shadow: var(--shadow);
+      box-shadow: none;
     }
 
     .hero-slides{
