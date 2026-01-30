@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
       rel="stylesheet"
     >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    >
       <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
         rel="stylesheet"
@@ -525,117 +529,159 @@
     }
     body.scrolled .scroll-cue { display: none; }
 
-    /* ------------ Navigation ------------ */
-    .navbar {
-      position: absolute;
-      bottom: clamp(18px, 6vh, 42px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: auto;
-      z-index: 3;
-      display: flex;
-      justify-content: center;
-      transition: background-color 0.3s, box-shadow 0.3s, padding 0.3s, transform 0.3s;
-    }
-    .navbar.scrolled {
+    /* ------------ Navigation (CLEAN) ------------ */
+
+    /* Nav staat altijd bovenin; geen gedoe met bottom */
+    .navbar{
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      bottom: auto;
-      transform: none;
-      justify-content: flex-start;
-      padding: 12px 14px;
-      background: #f4f1ec;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      z-index: 50;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 12px 16px;
+      background: transparent;
+      transition: background-color .25s ease, box-shadow .25s ease;
     }
-    .navbar.scrolled .nav-links a {
+
+    /* Bij scroll: subtiele header */
+    .navbar.scrolled{
+      background: rgba(244,241,236,.88);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    /* Desktop links */
+    .nav-links{
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    /* Desktop: wanneer gescrolled tekst donker */
+    .navbar.scrolled .nav-links{
       color: #333;
     }
-    .navbar.scrolled .nav-links {
-      justify-content: flex-start;
-      gap: 16px;
+
+    /* Link styling */
+    .nav-links a,
+    .nav-menu a{
+      font-weight: 500;
+      display: inline-block;
+      padding: 10px 0;
     }
-    .nav-links {
+
+    /* Hover */
+    .nav-links a:hover,
+    .nav-menu a:hover{
+      opacity: .8;
+    }
+
+    /* Desktop separators met jouw swirl */
+    .nav-links li{
       display: flex;
-      gap: 20px;
-      color: #fff;
-      justify-content: center;
-      flex-wrap: wrap;
+      align-items: center;
     }
-    .nav-toggle {
-      background: rgba(255, 255, 255, 0.72);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 999px;
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-      cursor: pointer;
+    .nav-links li + li::before{
+      content:"";
+      display:inline-block;
+      width:20px;
+      height:20px;
+      background-image:url("images/boho_swirl_icon_transparent.png");
+      background-size:contain;
+      background-repeat:no-repeat;
+      margin: 0 12px;
+      opacity: .85;
+    }
+
+    /* Hamburger button (alleen mobiel zichtbaar via media query) */
+    .nav-toggle{
       display: none;
       flex-direction: column;
       gap: 6px;
       justify-content: center;
       align-items: center;
-      min-height: 48px;
-      padding: 12px 18px;
-      position: fixed;
-      top: calc(env(safe-area-inset-top, 0px) + var(--hero-frame-block) + 12px);
-      left: calc(var(--hero-frame-block) + 12px);
-      top: calc(env(safe-area-inset-top, 0px) + 12px);
-      left: calc(env(safe-area-inset-left, 0px) + 12px);
-      z-index: 9999;
+
+      background: rgba(255,255,255,0.72);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+
+      min-height: 44px;
+      padding: 10px 14px;
+      cursor: pointer;
     }
-    .nav-toggle span {
-      display: block;
+
+    /* Hamburger streepjes */
+    .nav-toggle span{
+      display:block;
       width: 26px;
       height: 3px;
       border-radius: 2px;
       background: #1d1d1d;
     }
-    .nav-menu {
+
+    /* Mobile menu dropdown */
+    .nav-menu{
       display: none;
       flex-direction: column;
+
       position: fixed;
-      top: calc(env(safe-area-inset-top, 0px) + 52px);
-      left: calc(env(safe-area-inset-left, 0px) + 12px);
-      right: auto;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 10px 15px;
-      border-radius: 4px;
-      text-align: left;
-      z-index: 10000;
-    }
-    .nav-menu.active {
-      display: flex;
-    }
-    /* Zet menu-items naast elkaar en centreer verticaal */
-    .nav-menu li {
-      display: flex;
-      align-items: center;
+      top: 64px; /* onder navbar */
+      left: 12px;
+      right: 12px;
+      max-width: 360px;
+
+      background: rgba(0,0,0,0.82);
+      padding: 10px 14px;
+      border-radius: 12px;
+      z-index: 55;
     }
 
-    /* Voeg het boho swirl icoon toe als scheiding tussen items */
-    .nav-menu li + li::before {
-      content: "";
-      display: inline-block;
-      width: 20px; /* breedte icoon */
-      height: 20px; /* hoogte icoon */
-      background-image: url("images/boho_swirl_icon_transparent.png"); /* pad naar icoon */
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin: 0 12px; /* ruimte links en rechts van icoon */
+    /* open state */
+    .nav-menu.active{
+      display: flex;
     }
-    .nav-links a,
-    .nav-menu a {
+
+    /* Mobile menu: geen swirl separators (dit was de “kapotte” look) */
+    .nav-menu li + li::before{
+      content: none;
+    }
+
+    /* Mobile menu: nette scheiding */
+    .nav-menu li + li{
+      border-top: 1px solid rgba(255,255,255,.15);
+    }
+    .nav-menu a{
       color: #fff;
-      font-weight: 500;
-      display: inline-block;
       padding: 12px 0;
     }
-    .nav-links a:hover,
-    .nav-menu a:hover {
-      color: #ccc;
+
+    /* Responsive: mobiel */
+    @media (max-width: 768px){
+      .nav-links{ display:none; }
+      .nav-toggle{ display:flex; margin-left: auto; }
+      .navbar{ justify-content: flex-end; }
+    }
+
+    /* Geef content ruimte onder de fixed navbar */
+    body{
+      padding-top: 64px;
+    }
+
+    /* Hero mag weer “tot boven” doorlopen */
+    .hero{
+      margin-top: -64px;
     }
 
     /* ------------ Footer ------------ */
@@ -657,12 +703,6 @@
       }
       h2 {
         font-size: 1.75rem;
-      }
-      .nav-links {
-        display: none;
-      }
-      .nav-toggle {
-        display: flex;
       }
     }
         /* --- Fix: galerij zichtbaar houden en Safari hover bug voorkomen --- */
@@ -736,6 +776,35 @@
     </button>
     <!-- dots -->
     <div class="hero-dots" role="tablist" aria-label="Slide navigatie"></div>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#over">Over de Finca</a></li>
+        <li><a href="#voorzieningen">Voorzieningen</a></li>
+        <li><a href="#sfeer">De Sfeer</a></li>
+        <li><a href="#locatie">Locatie</a></li>
+        <li><a href="#winterzon">Winterzon aan het zwembad</a></li>
+        <li><a href="#galerij">Foto's van de Finca</a></li>
+        <li><a href="#omgeving">Omgeving</a></li>
+        <li><a href="#contact">Boeking &amp; Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu" type="button" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu" aria-label="Mobiel menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#over">Over de Finca</a></li>
+        <li><a href="#voorzieningen">Voorzieningen</a></li>
+        <li><a href="#sfeer">De Sfeer</a></li>
+        <li><a href="#locatie">Locatie</a></li>
+        <li><a href="#winterzon">Winterzon aan het zwembad</a></li>
+        <li><a href="#galerij">Foto's van de Finca</a></li>
+        <li><a href="#omgeving">Omgeving</a></li>
+        <li><a href="#contact">Boeking &amp; Contact</a></li>
+      </ul>
+    </nav>
     <div class="hero-content">
       <h1 class="hero-title">Finca el Corazón</h1>
       <p class="hero-subtitle">Javea, Spanje</p>
@@ -746,35 +815,6 @@
           <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </a>
-      <nav class="navbar">
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#over">Over de Finca</a></li>
-          <li><a href="#voorzieningen">Voorzieningen</a></li>
-          <li><a href="#sfeer">De Sfeer</a></li>
-          <li><a href="#locatie">Locatie</a></li>
-          <li><a href="#winterzon">Winterzon aan het zwembad</a></li>
-          <li><a href="#galerij">Foto's van de Finca</a></li>
-          <li><a href="#omgeving">Omgeving</a></li>
-          <li><a href="#contact">Boeking &amp; Contact</a></li>
-        </ul>
-        <button class="nav-toggle" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <ul class="nav-menu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#over">Over de Finca</a></li>
-          <li><a href="#voorzieningen">Voorzieningen</a></li>
-          <li><a href="#sfeer">De Sfeer</a></li>
-          <li><a href="#locatie">Locatie</a></li>
-          <li><a href="#winterzon">Winterzon aan het zwembad</a></li>
-          <li><a href="#galerij">Foto's van de Finca</a></li>
-          <li><a href="#omgeving">Omgeving</a></li>
-          <li><a href="#contact">Boeking &amp; Contact</a></li>
-        </ul>
-      </nav>
       <!-- Vervang het wa.me-nummer door jouw WhatsApp-link -->
     </div>
   </header>
@@ -1055,38 +1095,52 @@
 
     const navMenu = document.querySelector('.nav-menu');
     const navToggle = document.querySelector('.nav-toggle');
-
-    // Vervang ook je bestaande scroll-based navbar toggle door een drempel + passive
     const navbar = document.querySelector('.navbar');
+
+    /* Scroll: zet scrolled class */
     if (navbar) {
       let lastY = 0;
       window.addEventListener('scroll', () => {
         const y = window.pageYOffset || document.documentElement.scrollTop;
-        if (Math.abs(y - lastY) < 4) return; // hysterese tegen flikkeren
+        if (Math.abs(y - lastY) < 4) return;
         lastY = y;
+
         if (y > 10) navbar.classList.add('scrolled');
         else navbar.classList.remove('scrolled');
       }, { passive: true });
     }
 
-    if (navToggle) {
+    /* Toggle menu */
+    if (navToggle && navMenu) {
       navToggle.addEventListener('click', () => {
-        if (!navMenu) return;
-        navMenu.classList.toggle('active');
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
       });
-    }
 
-    if (navMenu) {
+      /* Sluit menu bij klik op link */
       navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
           navMenu.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
         });
+      });
+
+      /* Sluit menu bij klik buiten */
+      document.addEventListener('click', (e) => {
+        if (!navMenu.classList.contains('active')) return;
+        const clickedInside = navMenu.contains(e.target) || navToggle.contains(e.target);
+        if (!clickedInside) {
+          navMenu.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
       });
     }
 
+    /* Bij resize naar desktop: menu dicht */
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && navMenu) {
+      if (window.innerWidth > 768 && navMenu && navToggle) {
         navMenu.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
       }
     });
 
