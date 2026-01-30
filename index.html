@@ -478,6 +478,42 @@
       color: rgba(31,31,31,.60);
       font-size: .92rem;
     }
+
+    /* --- Compact info cards --- */
+    .info-grid{
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .info-card{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.70);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+
+    .info-card h3{
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      margin: 0 0 6px;
+      letter-spacing: .01em;
+    }
+
+    .info-card p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: .98rem;
+    }
+
+    @media (max-width: 900px){
+      .info-grid{ grid-template-columns: 1fr; }
+      .info-card{ padding: 14px 16px; }
+    }
   </style>
 </head>
 
@@ -494,6 +530,7 @@
     <div class="topbar-links" aria-label="Links">
       <a href="#over">Over</a>
       <a href="#voorzieningen">Voorzieningen</a>
+      <a href="#info">Info</a>
       <a href="#galerij">Foto’s</a>
       <a href="#omgeving">Omgeving</a>
       <a href="#contact">Contact</a>
@@ -504,6 +541,7 @@
   <div class="topbar-drawer" aria-label="Mobiel menu">
     <a href="#over">Over</a>
     <a href="#voorzieningen">Voorzieningen</a>
+    <a href="#info">Info</a>
     <a href="#galerij">Foto’s</a>
     <a href="#omgeving">Omgeving</a>
     <a href="#contact">Contact</a>
@@ -582,36 +620,29 @@
     </div>
   </section>
 
-  <!-- SFEER -->
-  <section id="sfeer" class="fade">
+  <!-- INFO -->
+  <section id="info" class="fade">
     <div class="wrap">
-      <h2>De sfeer</h2>
-      <p class="lead">
-        Binnen: lichte tinten en hout. Buiten: lange tafels, schaduwplekken, en een dagritme dat vanzelf vertraagt.
-      </p>
-      <div class="divider"></div>
-    </div>
-  </section>
+      <h2>Info</h2>
+      <p class="lead">Drie dingen die je meteen wil weten.</p>
 
-  <!-- LOCATIE -->
-  <section id="locatie" class="fade">
-    <div class="wrap">
-      <h2>Locatie</h2>
-      <p class="lead">
-        Dicht bij zee en het oude centrum. Kleine baaien, tapasbars, marktjes en routes langs kust en bergen.
-      </p>
-      <div class="divider"></div>
-    </div>
-  </section>
+      <div class="info-grid" aria-label="Sfeer, locatie en winterzon">
+        <article class="info-card" id="sfeer">
+          <h3>Sfeer</h3>
+          <p>Binnen licht en hout. Buiten veel schaduwplekken, lange tafels en leven rondom het zwembad.</p>
+        </article>
 
-  <!-- WINTERZON -->
-  <section id="winterzon" class="fade">
-    <div class="wrap">
-      <h2>Winterzon</h2>
-      <p class="lead">
-        Ook in de winter blijft het perceel lang in de zon. Zonder directe bebouwing rondom.
-        Een plek waar je ook in december buiten kunt zitten.
-      </p>
+        <article class="info-card" id="locatie">
+          <h3>Locatie</h3>
+          <p>Rustig gelegen, maar dichtbij zee en het oude centrum. Baaien, tapasbars en wandelroutes in de buurt.</p>
+        </article>
+
+        <article class="info-card" id="winterzon">
+          <h3>Winterzon</h3>
+          <p>Door het vlakke perceel en weinig directe bebouwing blijft het lang zonnig. Ook in december zit je buiten.</p>
+        </article>
+      </div>
+
       <div class="divider"></div>
     </div>
   </section>
