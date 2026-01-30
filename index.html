@@ -47,8 +47,8 @@
       padding: 0 var(--pad);
     }
     section{
-      padding: clamp(56px, 8vh, 90px) 0;
-      scroll-margin-top: 90px;
+      padding: clamp(36px, 5vh, 60px) 0;
+      scroll-margin-top: 70px;
     }
 
     /* --------- Minimal topbar (appears after scroll) --------- */
@@ -225,7 +225,7 @@
       text-transform: uppercase;
       font-size: clamp(.82rem, 1.6vw, .95rem);
       opacity: .92;
-      margin-bottom: 26px;
+      margin-bottom: 18px;
     }
 
     .hero-actions{
@@ -285,25 +285,26 @@
       font-size: clamp(1.7rem, 2.6vw, 2.2rem);
       letter-spacing: .01em;
       text-align:center;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
     .lead{
       max-width: 780px;
       margin: 0 auto;
       text-align:center;
       color: var(--muted);
-      font-size: 1.02rem;
+      font-size: 1rem;
+      line-height: 1.55;
     }
     .divider{
       width: 64px;
       height: 1px;
       background: var(--hairline);
-      margin: 26px auto 0;
+      margin: 16px auto 0;
     }
 
     /* feature grid */
     .features{
-      margin-top: 34px;
+      margin-top: 20px;
       display:grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
@@ -333,7 +334,7 @@
       font-size: .98rem;
     }
     .note{
-      margin-top: 16px;
+      margin-top: 10px;
       text-align:center;
       color: var(--muted);
       font-size: .92rem;
@@ -348,7 +349,7 @@
 
     /* --------- Gallery (simple, aesthetic) --------- */
     .gallery{
-      margin-top: 34px;
+      margin-top: 20px;
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 12px;
@@ -393,7 +394,7 @@
 
     /* --------- Contact card --------- */
     .contact-card{
-      margin-top: 28px;
+      margin-top: 18px;
       background: rgba(255,255,255,.78);
       border: 1px solid rgba(255,255,255,.70);
       border-radius: clamp(18px, 2vw, 26px);
@@ -406,7 +407,7 @@
       color: var(--muted);
     }
     .contact-actions{
-      margin-top: 14px;
+      margin-top: 10px;
       display:flex;
       justify-content:center;
       gap: 10px;
