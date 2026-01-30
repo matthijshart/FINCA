@@ -395,6 +395,22 @@
       }
     }
 
+    @supports not (aspect-ratio: 1 / 1){
+      .g{ position: relative; }
+      .g img{ position: absolute; inset: 0; }
+      .g::before{ content: ""; display: block; }
+      .g.span-12::before{ padding-top: 42.857%; }
+      .g.span-8::before{ padding-top: 56.25%; }
+      .g.span-6::before{ padding-top: 75%; }
+      .g.span-4::before{ padding-top: 100%; }
+    }
+
+    @supports not (aspect-ratio: 1 / 1){
+      @media (max-width: 560px){
+        .g::before{ padding-top: 75%; }
+      }
+    }
+
     /* --------- Contact card --------- */
     .contact-card{
       margin-top: 18px;
@@ -754,6 +770,22 @@
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     if (isIos && isSafari) {
       document.querySelectorAll('img[loading="lazy"]').forEach(img => img.setAttribute('loading','eager'));
+    }
+
+    // Remove duplicate images in the gallery (by src)
+    const galleryGrid = document.querySelector('#galerij .gallery');
+    if (galleryGrid) {
+      const seen = new Set();
+      galleryGrid.querySelectorAll('.g').forEach(card => {
+        const img = card.querySelector('img');
+        if (!img) return;
+        const src = img.getAttribute('src');
+        if (seen.has(src)) {
+          card.remove();
+        } else {
+          seen.add(src);
+        }
+      });
     }
 
     // --- Hero slideshow (simple crossfade) ---
