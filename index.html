@@ -413,13 +413,14 @@
       color: var(--muted);
     }
     .contact-actions{
-      margin-top: 10px;
-      display:inline-flex;
-      justify-content:center;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  margin-top: 10px;
+  display:flex;              /* was inline-flex */
+  justify-content:center;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;               /* zorgt dat centreren altijd klopt */
+}
 
     /* --------- Lightbox --------- */
     .lightbox{
