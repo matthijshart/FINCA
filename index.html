@@ -10,6 +10,11 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://fincacorazon.nl/" />
 
+   <!-- PRELOAD hero images -->
+  <link rel="preload" as="image" href="images/photo-2025-05-22-09-40-54-14.jpg">
+  <link rel="preload" as="image" href="images/photo-2025-05-22-09-41-58-16.jpg">
+  <link rel="preload" as="image" href="images/photo-2025-05-22-09-41-58-5.jpg">
+
 <meta property="og:image" content="https://fincacorazon.nl/images/373f4572-0ca4-4c11-a3b8-25e8bb6fdbb6.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -197,7 +202,7 @@
       border-radius: 0;
       border: none;
       opacity:0;
-      transition: opacity 1.s ease;
+      transition: opacity 1.2s ease;
       transform: scale(1.02);
     }
     .hero-slides img.is-active{ opacity: 1; }
@@ -545,6 +550,7 @@
   }
 }
 
+
     /* =========================
        Linear scroll-linked reveal
        ========================= */
@@ -640,14 +646,14 @@
   <header id="home" class="hero">
     <div class="hero-frame" aria-hidden="true">
       <div class="hero-slides">
-        <img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="" loading="eager" decoding="sync" fetchpriority="high" class="is-active" />
-        <img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="" loading="lazy" decoding="async" />
-        <img src="images/photo-2025-05-22-09-41-58-5.jpg" alt="" loading="lazy" decoding="async" />
-        <img src="images/photo11.jpg" alt="" loading="lazy" decoding="async" />
-        <img src="images/zwembad drone.JPG" alt="" loading="lazy" decoding="async" />
-        <img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="" loading="lazy" decoding="async" />
-        <img src="images/img-4567.jpg" alt="" loading="lazy" decoding="async" />
-      </div>
+  <img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
+  <img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" />
+  <img src="images/photo-2025-05-22-09-41-58-5.jpg"  alt="" loading="eager" decoding="async" />
+  <img src="images/photo11.jpg"                     alt="" loading="eager" decoding="async" />
+  <img src="images/zwembad drone.JPG"               alt="" loading="eager" decoding="async" />
+  <img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="" loading="eager" decoding="async" />
+  <img src="images/img-4567.jpg"                    alt="" loading="eager" decoding="async" />
+</div>
       <div class="hero-overlay"></div>
     </div>
 
