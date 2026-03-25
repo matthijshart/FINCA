@@ -557,15 +557,39 @@
        ========================= */
     .reveal-l{
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(24px);
       will-change: opacity, transform;
+    }
+
+    /* Staggered reveal for grid children */
+    .features .feature,
+    .info-grid .info-card,
+    .gallery .g{
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+    }
+    .features .feature.is-revealed,
+    .info-grid .info-card.is-revealed,
+    .gallery .g.is-revealed{
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Hero parallax */
+    .hero-slides{
+      will-change: transform;
     }
 
     /* accessibility: geen animatie bij reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .reveal-l{
+      .reveal-l,
+      .features .feature,
+      .info-grid .info-card,
+      .gallery .g{
         opacity: 1 !important;
         transform: none !important;
+        transition: none !important;
       }
     }
 
@@ -651,7 +675,7 @@
   <img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" />
   <img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="" loading="eager" decoding="async" />
   <img src="images/photo-2025-05-22-09-41-58-5.jpg"  alt="" loading="eager" decoding="async" />
-  <img src="images/photo11.jpg"                     alt="" loading="eager" decoding="async" />
+  <img src="images/photo-2025-05-22-09-44-07-4.jpg"  alt="" loading="eager" decoding="async" />
   <img src="images/zwembad%20drone.JPG"               alt="" loading="eager" decoding="async" />
   <img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="" loading="eager" decoding="async" />
   <img src="images/img-4567.jpg"                    alt="" loading="eager" decoding="async" />
@@ -762,7 +786,7 @@
       <div class="g span-6 reveal-l"><img src="images/5-PHOTO-2025-05-22-09-42-58%208%202.jpg" alt="Finca impressie" loading="lazy" decoding="async"></div>
 
       <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="Vooraanzicht van de finca" loading="lazy" decoding="async"></div>
-      <div class="g span-6 reveal-l"><img src="images/photo11.jpg" alt="Slaapkamer" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/dji-fly-20250605-134034-0028-1749124595923-photo.jpg" alt="Drone foto zwembad" loading="lazy" decoding="async"></div>
 
       <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-42-58.jpg" alt="Terras met houten balken" loading="lazy" decoding="async"></div>
       <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="Zithoek buiten" loading="lazy" decoding="async"></div>
@@ -1040,6 +1064,19 @@
 
     let ticking = false;
 
+    // --- Hero parallax ---
+    const heroSlides = document.querySelector('.hero-slides');
+    const heroSection = document.querySelector('.hero');
+
+    function updateParallax(){
+      if (!heroSlides || !heroSection) return;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const heroH = heroSection.offsetHeight;
+      if (scrollY <= heroH){
+        heroSlides.style.transform = `translateY(${scrollY * 0.35}px) scale(1.02)`;
+      }
+    }
+
     function updateRevealLinear(){
       ticking = false;
 
@@ -1055,14 +1092,33 @@
 
         const p = clamp01((start - r.top) / (start - end));
 
-        // 100% lineair (geen easing)
-        const opacity = p;
-        const translateY = (1 - p) * 18;
+        // smooth easing via cubic bezier approximation
+        const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        const opacity = eased;
+        const translateY = (1 - eased) * 24;
 
         el.style.opacity = opacity;
         el.style.transform = `translateY(${translateY}px)`;
       });
+
+      updateParallax();
     }
+
+    // --- Staggered reveal for grid children ---
+    const staggerContainers = document.querySelectorAll('.features, .info-grid, .gallery');
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const children = entry.target.querySelectorAll('.feature, .info-card, .g');
+        children.forEach((child, i) => {
+          setTimeout(() => {
+            child.classList.add('is-revealed');
+          }, i * 70);
+        });
+        staggerObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+    staggerContainers.forEach(c => staggerObserver.observe(c));
 
     function requestUpdate(){
       if (ticking) return;
