@@ -2,7 +2,10 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#faf8f5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Finca el Corazón – Jávea / Xàbia</title>
   <meta name="description" content="Finca el Corazón in Jávea/Xàbia, Costa Blanca. Vier slaapkamers, privé zwembad, volledige privacy. Geschikt tot 10 personen." />
   <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
@@ -930,6 +933,255 @@
         bottom: calc(var(--heroFrame) + 82px);
       }
     }
+
+    /* =========================
+       MOBILE POLISH — premium feel
+       ========================= */
+    @media (max-width: 768px){
+      :root{
+        --pad: 22px;
+      }
+
+      /* Sections — breathing room */
+      section{
+        padding: clamp(56px, 10vh, 90px) 0;
+      }
+
+      /* Typography — luxe scale on mobile */
+      body{
+        font-size: 15px;
+        line-height: 1.7;
+      }
+      h2{
+        font-size: clamp(2.1rem, 9vw, 2.8rem) !important;
+        line-height: 1.1;
+      }
+      .lead{
+        font-size: 1rem;
+        line-height: 1.7;
+        padding: 0 4px;
+      }
+      .eyebrow{
+        font-size: .68rem;
+        letter-spacing: .24em;
+      }
+
+      /* --- Topbar --- */
+      .topbar{
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px 16px;
+        border-radius: 999px;
+      }
+      .brand{ font-size: 1.05rem; }
+      .topbar-drawer{
+        top: 68px;
+        left: 10px;
+        right: 10px;
+        border-radius: 18px;
+      }
+      .topbar-drawer a{
+        padding: 16px 20px;
+        font-family: "Inter", sans-serif;
+        font-size: .78rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+
+      /* --- Hero --- */
+      .hero-inner{
+        padding-top: max(14vh, 90px);
+        padding-bottom: max(18vh, 140px);
+        min-height: 100svh;
+      }
+      .hero-title{
+        font-size: clamp(2.8rem, 13vw, 4.2rem);
+        line-height: 1;
+        margin-bottom: 16px;
+      }
+      .hero-subtitle{
+        font-size: .72rem;
+        letter-spacing: .24em;
+        margin-bottom: 30px;
+      }
+      .hero-badge{
+        font-size: .6rem;
+        letter-spacing: .24em;
+        padding: 6px 14px;
+        margin-bottom: 20px;
+      }
+      .hero-actions{
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        gap: 12px;
+      }
+      .hero-actions .btn{
+        width: 100%;
+        padding: 16px 22px;
+        font-size: .78rem;
+      }
+
+      /* Hero dots + scroll cue — no overlap */
+      .hero-dots{
+        bottom: 24px;
+      }
+      .scroll-cue{
+        display: none;
+      }
+
+      /* --- Features grid --- */
+      .features{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px;
+        margin-top: 36px;
+      }
+      .feature{
+        padding: 24px 14px;
+        gap: 12px;
+        border-radius: 8px;
+      }
+      .feature .icon{
+        width: 48px;
+        height: 48px;
+      }
+      .feature .icon svg{ width: 20px; height: 20px; }
+      .feature h3{
+        font-size: 1.2rem;
+      }
+      .feature p{
+        font-size: .82rem;
+        line-height: 1.5;
+      }
+      .note{
+        margin-top: 26px;
+        font-size: .85rem;
+        padding: 0 10px;
+      }
+
+      /* --- Info cards --- */
+      .info-grid{
+        gap: 14px;
+        margin-top: 32px;
+      }
+      .info-card{
+        padding: 28px 24px;
+        border-radius: 8px;
+      }
+      .info-card h3{
+        font-size: 1.45rem;
+      }
+      .info-card p{
+        font-size: .92rem;
+      }
+
+      /* --- Highlight quote --- */
+      .highlight{
+        padding: clamp(70px, 12vh, 110px) 0;
+      }
+      .highlight::before{
+        width: 400px;
+        height: 400px;
+      }
+      .quote-mark{
+        font-size: 5rem;
+      }
+      .highlight blockquote{
+        font-size: 1.45rem;
+        line-height: 1.35;
+        padding: 0 8px;
+      }
+      .highlight cite{
+        margin-top: 22px;
+        font-size: .66rem;
+      }
+
+      /* --- Gallery — varied layouts on mobile --- */
+      .gallery{
+        gap: 8px;
+        margin-top: 32px;
+      }
+      /* Restore varied layouts: use 2-col base instead of 1-col */
+      .g.span-3,.g.span-4,.g.span-5,.g.span-6,.g.span-7,.g.span-8{
+        grid-column: span 6 !important;
+        aspect-ratio: 1/1 !important;
+      }
+      .g.span-12{
+        grid-column: span 12 !important;
+        aspect-ratio: 4/3 !important;
+      }
+      /* Every 5th card gets full width for rhythm */
+      .gallery .g:nth-child(7n+4){
+        grid-column: span 12 !important;
+        aspect-ratio: 4/3 !important;
+      }
+      .g{
+        border-radius: 4px;
+      }
+      .g .caption{ opacity: 1; transform: none; }
+      .g::after{ opacity: .7; }
+
+      /* --- Contact card --- */
+      .contact-card{
+        margin-top: 32px;
+        padding: 32px 22px;
+        border-radius: 10px;
+      }
+      .contact-card p{
+        font-size: .95rem;
+      }
+      .contact-actions{
+        flex-direction: column;
+        gap: 10px;
+      }
+      .contact-actions .btn{
+        width: 100%;
+        padding: 15px 22px;
+      }
+
+      /* --- Footer --- */
+      footer{
+        padding: 44px 0 54px;
+        font-size: .72rem;
+      }
+      footer .brand-mark{
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      /* Better tap targets everywhere */
+      a, button{
+        -webkit-tap-highlight-color: rgba(196,149,106,.2);
+      }
+
+      /* Divider tighter */
+      .divider{ margin-top: 28px; }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 380px){
+      .hero-title{ font-size: 2.5rem; }
+      h2{ font-size: 2rem !important; }
+      .features{ gap: 10px; }
+      .feature{ padding: 22px 12px; }
+      .feature h3{ font-size: 1.1rem; }
+    }
+
+    /* iOS safe areas */
+    @supports (padding: max(0px)){
+      .topbar{
+        top: max(10px, env(safe-area-inset-top));
+      }
+      footer{
+        padding-bottom: max(54px, calc(54px + env(safe-area-inset-bottom)));
+      }
+    }
+
+    /* Prevent horizontal overflow */
+    html, body{ overflow-x: hidden; }
   </style>
 </head>
 
