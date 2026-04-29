@@ -744,8 +744,11 @@
     .info-grid{
       margin-top: 40px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 24px;
+    }
+    @media (max-width: 1100px){
+      .info-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     .info-card{
@@ -1281,7 +1284,7 @@
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
           <h3>4 slaapkamers</h3>
-          <p>Vier ruime slaapkamers, geschikt tot 8 (optioneel 10) personen.</p>
+          <p>Vier ruime slaapkamers, allen met kingsize bed (180×200) en premium matrassen.</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="M7 12V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v5"/><path d="M9 20v2"/><path d="M15 20v2"/></svg></div>
@@ -1343,6 +1346,11 @@
         <article class="info-card reveal-l" id="winterzon">
           <h3>Winterzon</h3>
           <p>Door het vlakke perceel en weinig directe bebouwing blijft het lang zonnig. Ook in december zit je buiten.</p>
+        </article>
+
+        <article class="info-card reveal-l" id="bedden">
+          <h3>Slapen</h3>
+          <p>Elke slaapkamer heeft een kingsize bed van 180×200 cm met hoogwaardige matrassen voor optimaal nachtrust.</p>
         </article>
       </div>
 
@@ -1666,7 +1674,28 @@
     if (nextBtn) nextBtn.addEventListener('click', () => show(1));
 
     if (lb) {
-      lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+      let lbTouchStartX = 0;
+      let lbTouchStartY = 0;
+      let lbSwiped = false;
+
+      lb.addEventListener('touchstart', (e) => {
+        lbTouchStartX = e.changedTouches[0].clientX;
+        lbTouchStartY = e.changedTouches[0].clientY;
+        lbSwiped = false;
+      }, { passive: true });
+
+      lb.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - lbTouchStartX;
+        const dy = e.changedTouches[0].clientY - lbTouchStartY;
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+        lbSwiped = true;
+        show(dx < 0 ? 1 : -1);
+      }, { passive: true });
+
+      lb.addEventListener('click', (e) => {
+        if (lbSwiped) { lbSwiped = false; return; }
+        if (e.target === lb) closeLb();
+      });
     }
 
     document.addEventListener('keydown', (e) => {
