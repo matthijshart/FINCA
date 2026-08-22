@@ -27,44 +27,57 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
 
   <style>
     :root{
+      /* Warm neutrals — ink shares the hue of the paper, so nothing reads cold */
       --bg: #faf8f5;
       --bg-alt: #f4f1ec;
       --paper: #ffffff;
-      --ink: #1e1e1e;
-      --muted: rgba(30,30,30,.68);
-      --hairline: rgba(30,30,30,.10);
+      --ink: #26211c;
+      --muted: #6b625a;
+      --hairline: rgba(38,33,28,.10);
 
+      /* Terracotta: --accent is decorative only (rules, dots).
+         --accent-ink is the AA-safe variant for text and buttons. */
       --accent: #c4956a;
-      --accent-dark: #a67a52;
+      --accent-ink: #8a5f38;
+      --accent-ink-hover: #6f4a2b;
       --accent-soft: rgba(196,149,106,.14);
 
-      --radius: 18px;
-      --shadow: 0 18px 60px rgba(0,0,0,.18);
+      /* Two radii, two shadows — that is the whole set */
+      --r: 4px;
+      --r-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(38,33,28,.05);
+      --shadow-lg: 0 24px 60px rgba(38,33,28,.10);
+
+      /* One spacing scale */
+      --s1: 8px;
+      --s2: 16px;
+      --s3: 24px;
+      --s4: 40px;
+      --s5: 64px;
+      --s6: 96px;
 
       --wrap: 1120px;
       --pad: clamp(18px, 3vw, 28px);
 
       --heroFrame: 0px;
 
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      /* One easing, three durations */
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --t-fast: .2s;
+      --t: .4s;
+      --t-slow: .8s;
     }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar{ width: 10px; }
-    ::-webkit-scrollbar-track{ background: var(--bg-alt); }
-    ::-webkit-scrollbar-thumb{ background: rgba(30,30,30,.18); border-radius: 999px; border: 2px solid var(--bg-alt); }
-    ::-webkit-scrollbar-thumb:hover{ background: var(--accent); }
 
     *{ box-sizing: border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; }
     body{
       font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       background: var(--bg);
       color: var(--ink);
       line-height: 1.7;
@@ -78,14 +91,9 @@
     /* --------- Layout helpers --------- */
     .wrap{
       max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 0 var(--pad);
+      margin:0 auto;
+      padding:0 var(--pad);
     }
-    section{
-      padding: clamp(36px, 5vh, 60px) 0;
-      scroll-margin-top: 70px;
-    }
-
     /* --------- Minimal topbar (appears after scroll) --------- */
     .topbar{
       position: fixed;
@@ -97,16 +105,16 @@
       display:flex;
       align-items:center;
       justify-content: space-between;
-      gap: 14px;
+      gap:14px;
 
-      padding: 10px 14px;
+      padding:10px 14px;
       border-radius: 999px;
 
       background: rgba(244,241,236,.70);
       -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,.55);
-      box-shadow: 0 14px 40px rgba(0,0,0,.12);
+      box-shadow: var(--shadow-lg);
 
       opacity: 0;
       transform: translateY(-6px);
@@ -130,7 +138,7 @@
     .topbar-links{
       display:flex;
       align-items:center;
-      gap: 16px;
+      gap:var(--s2);
       flex-wrap: wrap;
     }
     .topbar-links a{
@@ -138,7 +146,7 @@
       font-size: .78rem;
       color: var(--ink);
       opacity: .85;
-      padding: 8px 6px;
+      padding:var(--s1) 6px;
       letter-spacing: .12em;
       text-transform: uppercase;
       font-weight: 400;
@@ -160,22 +168,32 @@
     .topbar-links a:hover::after{ transform: scaleX(1); }
 
     /* Mobile menu */
+    /* 44x44 minimum touch target (Apple HIG) */
     .topbar-toggle{
       display:none;
+      width: 44px;
+      height: 44px;
       border:none;
       background:transparent;
-      padding: 8px;
-      border-radius: 999px;
+      padding:0;
+      border-radius: var(--r-pill);
       cursor:pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap:5px;
     }
     .topbar-toggle span{
       display:block;
-      width: 22px;
-      height: 2px;
+      width: 20px;
+      height: 1.5px;
       background: var(--ink);
       border-radius: 2px;
+      transition: transform var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
     }
-    .topbar-toggle span + span{ margin-top: 6px; }
+    @media (max-width: 860px){
+      .topbar-toggle{ display:flex; }
+    }
 
     .topbar-drawer{
       display:none;
@@ -189,15 +207,15 @@
       -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,.55);
-      box-shadow: 0 14px 40px rgba(0,0,0,.12);
-      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--r);
       overflow:hidden;
     }
     .topbar-drawer.is-open{ display:block; }
     .topbar-drawer a{
       display:block;
-      padding: 14px 16px;
-      border-top: 1px solid rgba(0,0,0,.06);
+      padding:14px var(--s2);
+      border-top: 1px solid var(--hairline);
       color: var(--ink);
       opacity: .88;
     }
@@ -205,7 +223,6 @@
 
     @media (max-width: 860px){
       .topbar-links{ display:none; }
-      .topbar-toggle{ display:inline-block; }
     }
 
     /* --------- Hero --------- */
@@ -239,22 +256,25 @@
       border-radius: 0;
       border: none;
       opacity:0;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.6s var(--ease);
       transform: scale(1.02);
     }
     .hero-slides img.is-active{ opacity: 1; }
 
     .hero-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg,
-      rgba(20,20,20,.55) 0%,
-      rgba(20,20,20,.45) 50%,
-      rgba(20,20,20,.65) 100%
-    );
-  pointer-events:none;
-}
+      position:absolute;
+      inset:0;
+      /* Light, warm scrim: enough to carry white type, not so much that the
+         photography goes grey. Weighted top and bottom where the type sits. */
+      background:
+        linear-gradient(180deg,
+          rgba(28,22,16,.42) 0%,
+          rgba(28,22,16,.18) 42%,
+          rgba(28,22,16,.20) 58%,
+          rgba(28,22,16,.50) 100%
+        );
+      pointer-events:none;
+    }
 
     .hero-inner{
       position: relative;
@@ -263,7 +283,7 @@
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding: calc(var(--heroFrame) + 28px) var(--pad) calc(var(--heroFrame) + 36px);
+      padding:calc(var(--heroFrame) + 28px) var(--pad) calc(var(--heroFrame) + 36px);
       color: #fff;
     }
 
@@ -271,16 +291,16 @@
       font-family: "Cormorant Garamond", serif;
       font-weight: 500;
       letter-spacing: .005em;
-      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-size: clamp(2.5rem, 1.1rem + 6.4vw, 4.8rem);
       line-height: 1.05;
-      margin-bottom: 14px;
+      margin-bottom:14px;
     }
 
     .hero-logo{
       width: clamp(70px, 11vw, 120px);
-      margin: 0 auto 14px;
+      margin:0 auto 14px;
       opacity: .75;
-      filter: brightness(0) invert(1) drop-shadow(0 6px 16px rgba(0,0,0,.22));
+      filter: brightness(0) invert(1) drop-shadow(0 4px 14px rgba(28,22,16,.28));
     }
 
     @media (max-width: 560px){
@@ -296,22 +316,18 @@
       text-transform: uppercase;
       font-size: clamp(.72rem, 1.2vw, .82rem);
       opacity: .92;
-      margin-bottom: 26px;
+      margin-bottom:26px;
     }
+    /* Plain letterspaced label — the pill was a third rounded shape
+       stacked above two pill buttons. */
     .hero-badge{
       display: inline-block;
       font-family: "Inter", sans-serif;
       font-size: .68rem;
       letter-spacing: .28em;
       text-transform: uppercase;
-      color: #fff;
-      padding: 7px 16px;
-      border: 1px solid rgba(196,149,106,.65);
-      border-radius: 999px;
-      margin-bottom: 22px;
-      background: rgba(196,149,106,.18);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255,255,255,.88);
+      margin-bottom:var(--s3);
     }
 
     /* Hero intro reveal */
@@ -331,7 +347,7 @@
 
     .hero-actions{
       display:flex;
-      gap: 10px;
+      gap:10px;
       justify-content:center;
       flex-wrap: wrap;
     }
@@ -341,71 +357,58 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap: 10px;
-      padding: 14px 26px;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-      background: var(--accent);
-      color: #fff;
+      gap:10px;
+      /* min-height keeps every button a comfortable 48px touch target */
+      min-height: 48px;
+      padding:14px 30px;
+      border-radius: var(--r-pill);
+      /* Ink rather than terracotta: reads sharper over photography and on
+         cream, and clears AA comfortably (15:1) where terracotta did not. */
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
       font-family: "Inter", sans-serif;
       font-weight: 500;
-      font-size: .85rem;
-      letter-spacing: .08em;
+      font-size: .8rem;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      box-shadow: 0 12px 30px rgba(196,149,106,.32);
-      transition: transform .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
-      overflow: hidden;
-    }
-    .btn::before{
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
-      transition: left .6s var(--ease);
+      transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
     }
     .btn:hover{
-      transform: translateY(-2px);
-      background: var(--accent-dark);
-      box-shadow: 0 18px 38px rgba(196,149,106,.42);
+      background: var(--accent-ink);
+      border-color: var(--accent-ink);
     }
-    .btn:hover::before{ left: 100%; }
 
     .btn-ghost{
       background: transparent;
       color: #fff;
-      border: 1px solid rgba(255,255,255,.55);
-      box-shadow: none;
+      border: 1px solid rgba(255,255,255,.6);
     }
     .btn-ghost:hover{
-      background: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.14);
       border-color: #fff;
-      box-shadow: none;
     }
     .btn-outline{
       background: transparent;
       color: var(--ink);
       border: 1px solid var(--ink);
-      box-shadow: none;
     }
     .btn-outline:hover{
       background: var(--ink);
+      border-color: var(--ink);
       color: #fff;
-      box-shadow: 0 12px 30px rgba(0,0,0,.18);
     }
 
-    /* Animated scroll cue */
+    /* Animated scroll cue — sits below the pagination dots, never under them */
     .scroll-cue{
       position:absolute;
       left:50%;
-      bottom: calc(var(--heroFrame) + 28px);
+      bottom: calc(var(--heroFrame) + 24px);
       transform: translateX(-50%);
       display:flex;
       flex-direction: column;
       align-items:center;
-      gap: 10px;
+      gap:10px;
       color:#fff;
       opacity: 0;
       animation: heroIn 1s var(--ease) .9s forwards;
@@ -416,7 +419,7 @@
     }
     .scroll-cue-line{
       width: 1px;
-      height: 50px;
+      height: 40px;
       background: rgba(255,255,255,.55);
       position: relative;
       overflow: hidden;
@@ -441,105 +444,110 @@
     h2{
       font-family:"Cormorant Garamond", serif;
       font-weight: 500;
-      font-size: clamp(2rem, 3.4vw, 3rem);
-      letter-spacing: .005em;
+      font-size: clamp(2.1rem, 1.2rem + 4vw, 3.4rem);
+      /* large display serif wants slightly negative tracking */
+      letter-spacing: -.015em;
       text-align:center;
-      margin-bottom: 10px;
-      line-height: 1.1;
+      margin-bottom:var(--s2);
+      line-height: 1.08;
     }
     .lead{
-      max-width: 720px;
-      margin: 0 auto;
+      /* ~62 characters keeps the measure comfortable */
+      max-width: 58ch;
+      margin:0 auto;
       text-align:center;
       color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.7;
-      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.75;
     }
     .eyebrow{
       display: block;
       text-align: center;
       font-family: "Inter", sans-serif;
-      font-size: .7rem;
-      letter-spacing: .26em;
+      font-size: .72rem;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
+      color: var(--accent-ink);
+      margin-bottom:var(--s2);
       font-weight: 500;
-    }
-    .divider{
-      width: 48px;
-      height: 1px;
-      background: var(--accent);
-      margin: 22px auto 0;
-      opacity: .55;
     }
     section{
-      padding: clamp(64px, 9vh, 110px) 0;
-      scroll-margin-top: 70px;
+      padding:clamp(88px, 13vh, 168px) 0;
+      /* clears the floating topbar so anchors do not land underneath it */
+      scroll-margin-top:var(--s6);
     }
 
-    /* feature grid */
+    /* Feature list — no cards. Plain text blocks on the page, left aligned,
+       with air between them doing the separating. */
     .features{
-      margin-top: 40px;
+      margin-top:var(--s6);
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
+      gap:var(--s5) var(--s4);
     }
     .feature{
-      background: #fff;
-      border: 1px solid var(--hairline);
-      border-radius: 6px;
-      padding: 32px 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,.04);
       display:flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 16px;
-      transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
-    }
-    .feature:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.08);
-      border-color: rgba(196,149,106,.35);
+      align-items: flex-start;
+      text-align: left;
+      gap:var(--s2);
     }
     .feature .icon{
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition: background .4s var(--ease), color .4s var(--ease), transform .4s var(--ease);
+      color: var(--accent-ink);
     }
-    .feature:hover .icon{
-      background: var(--accent);
-      color: #fff;
-      transform: scale(1.08);
-    }
-    .feature .icon svg{ width: 24px; height: 24px; }
+    .feature .icon svg{ width: 26px; height: 26px; }
     .feature h3{
-      margin: 0;
+      margin:0;
       font-family: "Cormorant Garamond", serif;
       font-weight: 500;
-      font-size: 1.35rem;
-      letter-spacing: .005em;
+      font-size: 1.4rem;
+      /* headings must not inherit the 1.7 body leading */
+      line-height: 1.15;
+      letter-spacing: -.005em;
     }
     .feature p{
       margin:0;
       color: var(--muted);
-      line-height: 1.55;
-      font-size: .92rem;
+      line-height: 1.65;
+      font-size: .95rem;
     }
     .note{
-      margin-top: 28px;
+      margin-top:var(--s5);
       text-align:center;
       color: var(--muted);
-      font-size: .9rem;
-      font-style: italic;
+      font-size: .92rem;
+    }
+
+    /* Key facts under the intro — hairline-separated, no boxes */
+    .facts{
+      margin:var(--s5) auto 0;
+      max-width: 720px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:var(--s3);
+      text-align: center;
+    }
+    .facts li{
+      padding-top:var(--s3);
+      border-top: 1px solid var(--hairline);
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .04em;
+      line-height: 1.5;
+    }
+    .facts strong{
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      font-size: 1.9rem;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin-bottom:2px;
+    }
+    @media (max-width: 560px){
+      .facts{ grid-template-columns: repeat(2, 1fr); gap:var(--s3) var(--s2); margin-top:var(--s4); }
+      .facts strong{ font-size: 1.6rem; }
     }
 
     @media (max-width: 900px){
@@ -551,117 +559,91 @@
 
     /* --------- Gallery (varied, premium) --------- */
     .gallery{
-      margin-top: 40px;
+      margin-top:var(--s6);
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
+      gap:var(--s2);
     }
+    /* Tiles sit flat on the page: no shadow, no border, minimal radius.
+       Nothing frames the photography except the whitespace around it. */
     .g{
       position:relative;
-      border-radius: 6px;
+      border-radius: var(--r);
       overflow:hidden;
-      background: rgba(255,255,255,.55);
-      box-shadow: 0 12px 40px rgba(0,0,0,.08);
+      background: var(--bg-alt);
       cursor: pointer;
     }
     .g img{
       width:100%;
       height: 100%;
       object-fit: cover;
-      transition: transform .8s var(--ease);
-    }
-    .g::after{
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(20,20,20,.55) 100%);
-      opacity: 0;
-      transition: opacity .5s var(--ease);
-      pointer-events: none;
-    }
-    .g:hover img{ transform: scale(1.06); }
-    .g:hover::after{ opacity: 1; }
-    .g .caption{
-      position: absolute;
-      bottom: 18px;
-      left: 22px;
-      right: 22px;
-      color: #fff;
-      font-family: "Inter", sans-serif;
-      font-size: .78rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-      z-index: 2;
-    }
-    .g:hover .caption{
-      opacity: 1;
-      transform: translateY(0);
     }
 
-    /* Span variants */
+    /* Span variants.
+       Row-mates MUST share an aspect-ratio or the shorter tile leaves a white
+       gap beside it: 7+5 and 8+4 both pair here, so both pairs use 3/2. */
     .g.span-3{ grid-column: span 3; aspect-ratio: 3/4; }
-    .g.span-4{ grid-column: span 4; aspect-ratio: 4/5; }
-    .g.span-5{ grid-column: span 5; aspect-ratio: 4/3; }
-    .g.span-6{ grid-column: span 6; aspect-ratio: 4/3; }
-    .g.span-7{ grid-column: span 7; aspect-ratio: 16/10; }
-    .g.span-8{ grid-column: span 8; aspect-ratio: 16/9; }
-    .g.span-12{ grid-column: span 12; aspect-ratio: 21/9; }
-    .g.tall{ aspect-ratio: 3/4; }
-    .g.wide{ aspect-ratio: 16/9; }
+    .g.span-4{ grid-column: span 4; aspect-ratio: 3/2; }
+    .g.span-5{ grid-column: span 5; aspect-ratio: 3/2; }
+    .g.span-6{ grid-column: span 6; aspect-ratio: 3/2; }
+    .g.span-7{ grid-column: span 7; aspect-ratio: 3/2; }
+    .g.span-8{ grid-column: span 8; aspect-ratio: 3/2; }
+    .g.span-12{ grid-column: span 12; aspect-ratio: 2/1; }
 
+    /* Portrait-shot photos get a portrait frame instead of being cropped to
+       a landscape one. Every tile in a row carries the same modifier, so rows
+       always come out level. */
+    .g.is-portrait{ aspect-ratio: 3/4; }
+
+    /* Tablet / landscape phone: stack anything that would orphan. */
     @media (max-width: 900px){
-      .g.span-8,.g.span-7,.g.span-5,.g.span-4{ grid-column: span 12; }
+      .g.span-8,.g.span-7,.g.span-5{ grid-column: span 12; aspect-ratio: 3/2; }
+      /* span-4 stays 3-across: the portrait trios divide evenly by 3, never by 2,
+         so forcing them into two columns would leave one tile orphaned. */
+      .g.span-4{ grid-column: span 4; }
       .g.span-6{ grid-column: span 6; }
-      .g.span-3{ grid-column: span 6; }
+      .g.span-3{ grid-column: span 6; aspect-ratio: 3/4; }
       .g.span-12{ aspect-ratio: 16/9; }
+      .g.is-portrait{ aspect-ratio: 3/4; }
     }
+    /* Phone: one calm column, each photo in its natural landscape ratio.
+       No forced squares, no per-tile exceptions — so no orphan rows. */
     @media (max-width: 560px){
-      .gallery{ gap: 10px; }
+      .gallery{ gap:var(--s2); margin-top:var(--s5); }
       .g.span-3,.g.span-4,.g.span-5,.g.span-6,.g.span-7,.g.span-8,.g.span-12{
         grid-column: span 12;
-        aspect-ratio: 4/3;
+        aspect-ratio: 3/2;
       }
-      .g .caption{ opacity: 1; transform: none; }
-      .g::after{ opacity: 1; }
+      /* portrait-shot photos keep a portrait frame instead of being cropped */
+      .g.is-portrait{ aspect-ratio: 4/5; }
     }
+
 
     /* --------- Contact card --------- */
     .contact-card{
-      margin-top: 40px;
-      background: linear-gradient(135deg, #fff 0%, var(--bg-alt) 100%);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      padding: clamp(36px, 5vw, 56px) clamp(24px, 4vw, 48px);
-      box-shadow: 0 24px 70px rgba(0,0,0,.08);
+      margin-top:var(--s5);
+      padding:0;
       text-align:center;
       position: relative;
-      overflow: hidden;
-    }
-    .contact-card::before{
-      content: "";
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
-      pointer-events: none;
     }
     .contact-card p{
-      margin: 0 0 8px;
+      margin:0 0 var(--s1);
       color: var(--muted);
       position: relative;
-      font-size: 1rem;
+      font-size: 1.05rem;
+    }
+    .contact-meta{
+      margin-top:var(--s3);
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .04em;
     }
     .contact-actions{
-  margin-top: 10px;
+  margin-top:10px;
   display:flex;              /* was inline-flex */
   justify-content:center;
   align-items:center;
-  gap: 10px;
+  gap:10px;
   flex-wrap: wrap;
   width: 100%;               /* zorgt dat centreren altijd klopt */
 }
@@ -670,12 +652,12 @@
     .lightbox{
       position: fixed;
       inset:0;
-      background: rgba(0,0,0,.88);
+      background: #171310;
       display:none;
       align-items:center;
       justify-content:center;
       z-index: 80;
-      padding: 22px;
+      padding:22px;
     }
     .lightbox.is-open{ display:flex; }
     .lightbox-inner{
@@ -686,27 +668,51 @@
       width: 100%;
       max-height: 82svh;
       object-fit: contain;
-      border-radius: 14px;
+      border-radius: var(--r);
     }
+    /* Controls: 48x48 hit areas, clear of the notch and home indicator */
     .lb-btn{
       position:absolute;
-      top: 12px;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      padding:0;
       border:none;
-      background: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.14);
       color:#fff;
-      padding: 10px 12px;
-      border-radius: 999px;
+      border-radius: var(--r-pill);
       cursor:pointer;
+      transition: background var(--t-fast) var(--ease);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    .lb-close{ right: 12px; }
+    .lb-btn:hover{ background: rgba(255,255,255,.26); }
+    .lb-close{
+      top: max(16px, env(safe-area-inset-top));
+      right: max(16px, env(safe-area-inset-right));
+    }
     .lb-prev, .lb-next{
       top: 50%;
       transform: translateY(-50%);
     }
-    .lb-prev{ left: 12px; }
-    .lb-next{ right: 12px; }
+    .lb-prev{ left: max(12px, env(safe-area-inset-left)); }
+    .lb-next{ right: max(12px, env(safe-area-inset-right)); }
+
+    /* "7 / 35" — orientation in a long gallery */
+    .lb-count{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(-1 * var(--s4));
+      color: rgba(255,255,255,.7);
+      font-family: "Inter", sans-serif;
+      font-size: .72rem;
+      letter-spacing: .22em;
+      font-variant-numeric: tabular-nums;
+    }
+    /* keep the page still while the lightbox is open */
+    body.lb-open{ overflow: hidden; }
 
     /* --------- Fade-in --------- */
     .fade{
@@ -717,14 +723,14 @@
 
     /* --------- Footer --------- */
     footer{
-      padding: 50px 0 60px;
+      padding:50px 0 60px;
       text-align:center;
-      color: rgba(30,30,30,.55);
+      color: var(--muted);
       font-size: .8rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       border-top: 1px solid var(--hairline);
-      margin-top: 20px;
+      margin-top:20px;
     }
     footer .brand-mark{
       font-family: "Cormorant Garamond", serif;
@@ -733,56 +739,50 @@
       text-transform: none;
       color: var(--ink);
       display: block;
-      margin-bottom: 8px;
+      margin-bottom:var(--s1);
     }
     footer .brand-mark span{ color: var(--accent); }
 
     /* --- Info cards --- */
     .info-grid{
-      margin-top: 40px;
+      margin-top:var(--s6);
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 24px;
+      gap:var(--s4);
     }
     @media (max-width: 1100px){
-      .info-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap:var(--s5) var(--s4); }
     }
 
+    /* Same treatment as the feature blocks: no card chrome, just a hairline
+       rule, a heading and text. */
     .info-card{
-      background: #fff;
-      border: 1px solid var(--hairline);
-      border-radius: 6px;
-      padding: 36px 28px;
-      box-shadow: 0 1px 3px rgba(0,0,0,.04);
-      transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
       position: relative;
-    }
-    .info-card:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.08);
-      border-color: rgba(196,149,106,.35);
+      padding-top:var(--s3);
+      border-top: 1px solid var(--hairline);
     }
     .info-card::before{
       content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
       display: block;
-      width: 30px;
+      width: 32px;
       height: 1px;
-      background: var(--accent);
-      margin-bottom: 18px;
-      transition: width .4s var(--ease);
+      background: var(--accent-ink);
     }
-    .info-card:hover::before{ width: 50px; }
 
     .info-card h3{
       font-family: "Cormorant Garamond", serif;
       font-weight: 500;
-      font-size: 1.6rem;
-      margin: 0 0 10px;
-      letter-spacing: .005em;
+      font-size: 1.5rem;
+      line-height: 1.15;
+      margin:0 0 var(--s1);
+      letter-spacing: -.005em;
     }
 
     .info-card p{
-      margin: 0;
+      margin:0;
       color: var(--muted);
       line-height: 1.65;
       font-size: .95rem;
@@ -793,23 +793,15 @@
     }
 
     /* --- Highlight quote section --- */
+    /* Warm deep clay, not near-black — a black band in the middle of a cream
+       page is a tonal jolt that breaks the calm. */
     .highlight{
-      background: #1e1e1e;
-      color: #fff;
-      padding: clamp(80px, 12vh, 140px) 0;
+      background: var(--bg-alt);
+      color: var(--ink);
+      padding:clamp(88px, 13vh, 168px) 0;
       position: relative;
-      overflow: hidden;
-    }
-    .highlight::before{
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(196,149,106,.18) 0%, transparent 70%);
-      pointer-events: none;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
     }
     .highlight .wrap{
       position: relative;
@@ -817,57 +809,56 @@
     }
     .quote-mark{
       font-family: "Cormorant Garamond", serif;
-      font-size: clamp(5rem, 10vw, 8rem);
+      font-size: clamp(3.5rem, 6vw, 5rem);
       line-height: .8;
       color: var(--accent);
-      opacity: .55;
-      margin-bottom: 10px;
+      margin-bottom:var(--s2);
     }
     .highlight blockquote{
       font-family: "Cormorant Garamond", serif;
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      line-height: 1.4;
-      max-width: 820px;
-      margin: 0 auto;
-      letter-spacing: .005em;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      line-height: 1.45;
+      max-width: 24ch;
+      margin:0 auto;
+      letter-spacing: -.01em;
     }
     .highlight cite{
       display: block;
-      margin-top: 28px;
+      margin-top:var(--s3);
       font-family: "Inter", sans-serif;
       font-style: normal;
       font-size: .72rem;
-      letter-spacing: .26em;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-ink);
     }
     @media (max-width: 560px){
   .hero-inner{
-    padding-top: max(16vh, 110px);
-    padding-bottom: max(16vh, 110px);
+    padding-top:max(16vh, 110px);
+    padding-bottom:max(16vh, 110px);
   }
 }
 
 
     /* =========================
-       Linear scroll-linked reveal
-       ========================= */
-    .reveal-l{
-      opacity: 0;
-      transform: translateY(24px);
-      will-change: opacity, transform;
-    }
-
-    /* Staggered reveal for grid children */
+       Reveal on entry — once
+       =========================
+       Elements appear once when they scroll into view and then stay put.
+       The previous version rewrote inline opacity/transform on 60+ elements
+       on every scroll frame, which made content fade back out on the way up
+       and cost a layout pass per frame on mobile. */
+    .reveal-l,
     .features .feature,
     .info-grid .info-card,
     .gallery .g{
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+      /* restrained travel — premium motion moves a little, not a lot */
+      transform: translateY(12px);
+      transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
     }
+    .reveal-l.is-revealed,
     .features .feature.is-revealed,
     .info-grid .info-card.is-revealed,
     .gallery .g.is-revealed{
@@ -875,13 +866,9 @@
       transform: none;
     }
 
-    /* Hero parallax */
-    .hero-slides{
-      will-change: transform;
-    }
-
     /* accessibility: geen animatie bij reduced motion */
     @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
       .reveal-l,
       .features .feature,
       .info-grid .info-card,
@@ -890,48 +877,50 @@
         transform: none !important;
         transition: none !important;
       }
+      .hero-reveal{ animation: none !important; opacity: 1 !important; transform: none !important; }
+      .scroll-cue{ animation: none !important; opacity: 1 !important; }
+      .scroll-cue-line::after{ animation: none !important; }
+      .hero-slides img{ transition: none !important; }
+      *,*::before,*::after{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
 
     /* =========================
        Hero pagination dots
        ========================= */
+    /* Bare dots, no glass pill — one less floating shape over the photo */
     .hero-dots{
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: calc(var(--heroFrame) + 70px);
+      bottom: calc(var(--heroFrame) + 96px);
       display: flex;
-      gap: 8px;
+      gap:4px;
       z-index: 6;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.18);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.18);
     }
 
+    /* 8px dot centred inside a 44x44 hit area (Apple's minimum) */
     .hero-dot{
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.55);
-      background: rgba(255,255,255,.22);
-      opacity: .9;
+      width: 44px;
+      height: 44px;
+      padding:0;
+      border: none;
+      background: none;
+      display: grid;
+      place-items: center;
       cursor: pointer;
-      transition: transform .18s ease, background .18s ease, opacity .18s ease;
     }
-
-    .hero-dot.is-active{
-      background: rgba(255,255,255,.85);
-      transform: scale(1.25);
-      opacity: 1;
+    .hero-dot::before{
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: var(--r-pill);
+      background: rgba(255,255,255,.45);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.35);
+      transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
     }
-
-    @media (max-width: 560px){
-      .hero-dots{
-        bottom: calc(var(--heroFrame) + 82px);
-      }
+    .hero-dot.is-active::before{
+      background: #fff;
+      transform: scale(1.15);
     }
 
     /* =========================
@@ -944,26 +933,16 @@
 
       /* Sections — breathing room */
       section{
-        padding: clamp(56px, 10vh, 90px) 0;
+        padding:clamp(56px, 10vh, 90px) 0;
       }
 
       /* Typography — luxe scale on mobile */
-      body{
-        font-size: 15px;
-        line-height: 1.7;
-      }
-      h2{
-        font-size: clamp(2.1rem, 9vw, 2.8rem) !important;
-        line-height: 1.1;
-      }
+      /* h2 and .hero-title use monotonic clamps in the base rules, so they
+         no longer need mobile overrides — the old ones made headings shrink
+         as the screen got wider (2.8rem at 768px -> 2.0rem at 769px). */
       .lead{
         font-size: 1rem;
         line-height: 1.7;
-        padding: 0 4px;
-      }
-      .eyebrow{
-        font-size: .68rem;
-        letter-spacing: .24em;
       }
 
       /* --- Topbar --- */
@@ -971,7 +950,7 @@
         top: 10px;
         left: 10px;
         right: 10px;
-        padding: 10px 16px;
+        padding:10px var(--s2);
         border-radius: 999px;
       }
       .brand{ font-size: 1.05rem; }
@@ -979,10 +958,10 @@
         top: 68px;
         left: 10px;
         right: 10px;
-        border-radius: 18px;
+        border-radius: var(--r);
       }
       .topbar-drawer a{
-        padding: 16px 20px;
+        padding:var(--s2) 20px;
         font-family: "Inter", sans-serif;
         font-size: .78rem;
         letter-spacing: .14em;
@@ -992,36 +971,34 @@
 
       /* --- Hero --- */
       .hero-inner{
-        padding-top: max(14vh, 90px);
-        padding-bottom: max(18vh, 140px);
+        padding-top:max(14vh, 90px);
+        padding-bottom:max(18vh, 140px);
         min-height: 100svh;
       }
       .hero-title{
-        font-size: clamp(2.8rem, 13vw, 4.2rem);
-        line-height: 1;
-        margin-bottom: 16px;
+        margin-bottom:var(--s2);
       }
       .hero-subtitle{
         font-size: .72rem;
         letter-spacing: .24em;
-        margin-bottom: 30px;
+        margin-bottom:30px;
       }
       .hero-badge{
         font-size: .6rem;
         letter-spacing: .24em;
-        padding: 6px 14px;
-        margin-bottom: 20px;
+        padding:6px 14px;
+        margin-bottom:20px;
       }
       .hero-actions{
         flex-direction: column;
         width: 100%;
         max-width: 300px;
-        margin: 0 auto;
-        gap: 12px;
+        margin:0 auto;
+        gap:12px;
       }
       .hero-actions .btn{
         width: 100%;
-        padding: 16px 22px;
+        padding:var(--s2) 22px;
         font-size: .78rem;
       }
 
@@ -1033,123 +1010,75 @@
         display: none;
       }
 
-      /* --- Features grid --- */
+      /* --- Features --- */
       .features{
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 12px;
-        margin-top: 36px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap:var(--s5) var(--s3);
+        margin-top:var(--s5);
       }
-      .feature{
-        padding: 24px 14px;
-        gap: 12px;
-        border-radius: 8px;
-      }
-      .feature .icon{
-        width: 48px;
-        height: 48px;
-      }
-      .feature .icon svg{ width: 20px; height: 20px; }
-      .feature h3{
-        font-size: 1.2rem;
-      }
-      .feature p{
-        font-size: .82rem;
-        line-height: 1.5;
-      }
+      .feature .icon svg{ width: 22px; height: 22px; }
+      .feature h3{ font-size: 1.25rem; }
+      .feature p{ font-size: .9rem; }
       .note{
-        margin-top: 26px;
-        font-size: .85rem;
-        padding: 0 10px;
+        margin-top:var(--s4);
+        font-size: .9rem;
       }
 
-      /* --- Info cards --- */
+      /* --- Info --- */
       .info-grid{
-        gap: 14px;
-        margin-top: 32px;
+        gap:var(--s5);
+        margin-top:var(--s5);
       }
-      .info-card{
-        padding: 28px 24px;
-        border-radius: 8px;
-      }
-      .info-card h3{
-        font-size: 1.45rem;
-      }
-      .info-card p{
-        font-size: .92rem;
-      }
+      .info-card h3{ font-size: 1.4rem; }
+      .info-card p{ font-size: .92rem; }
 
       /* --- Highlight quote --- */
       .highlight{
-        padding: clamp(70px, 12vh, 110px) 0;
-      }
-      .highlight::before{
-        width: 400px;
-        height: 400px;
+        padding:clamp(72px, 12vh, 120px) 0;
       }
       .quote-mark{
-        font-size: 5rem;
+        font-size: 3.5rem;
       }
       .highlight blockquote{
         font-size: 1.45rem;
         line-height: 1.35;
-        padding: 0 8px;
+        padding:0 var(--s1);
       }
       .highlight cite{
-        margin-top: 22px;
+        margin-top:22px;
         font-size: .66rem;
       }
 
-      /* --- Gallery — varied layouts on mobile --- */
-      .gallery{
-        gap: 8px;
-        margin-top: 32px;
-      }
-      /* Restore varied layouts: use 2-col base instead of 1-col */
-      .g.span-3,.g.span-4,.g.span-5,.g.span-6,.g.span-7,.g.span-8{
-        grid-column: span 6 !important;
-        aspect-ratio: 1/1 !important;
-      }
-      .g.span-12{
-        grid-column: span 12 !important;
-        aspect-ratio: 4/3 !important;
-      }
-      /* Every 5th card gets full width for rhythm */
-      .gallery .g:nth-child(7n+4){
-        grid-column: span 12 !important;
-        aspect-ratio: 4/3 !important;
-      }
-      .g{
-        border-radius: 4px;
-      }
-      .g .caption{ opacity: 1; transform: none; }
-      .g::after{ opacity: .7; }
+      /* Gallery layout for phones lives in the 560px block above.
+         The old rules here forced every photo into a 1:1 square and laid a
+         permanent dark gradient over all of them (for captions that no longer
+         exist), and the nth-child(7n+4) rhythm rule left a white gap beside
+         whichever tile preceded a full-width one. All three are gone. */
 
-      /* --- Contact card --- */
+      /* --- Contact --- */
       .contact-card{
-        margin-top: 32px;
-        padding: 32px 22px;
-        border-radius: 10px;
+        margin-top:var(--s4);
       }
       .contact-card p{
-        font-size: .95rem;
+        font-size: 1rem;
       }
       .contact-actions{
         flex-direction: column;
-        gap: 10px;
+        gap:10px;
       }
       .contact-actions .btn{
         width: 100%;
-        padding: 15px 22px;
+        padding:15px 22px;
       }
 
       /* --- Footer --- */
       footer{
-        padding: 44px 0 54px;
+        padding:44px 0 54px;
         font-size: .72rem;
       }
       footer .brand-mark{
         font-size: 1.3rem;
-        margin-bottom: 10px;
+        margin-bottom:10px;
       }
 
       /* Better tap targets everywhere */
@@ -1157,26 +1086,22 @@
         -webkit-tap-highlight-color: rgba(196,149,106,.2);
       }
 
-      /* Divider tighter */
-      .divider{ margin-top: 28px; }
     }
 
-    /* Extra small phones */
-    @media (max-width: 380px){
-      .hero-title{ font-size: 2.5rem; }
-      h2{ font-size: 2rem !important; }
-      .features{ gap: 10px; }
-      .feature{ padding: 22px 12px; }
-      .feature h3{ font-size: 1.1rem; }
+    /* One column on phones: two columns at 390px leaves a ~150px measure,
+       which breaks every sentence into four ragged lines. */
+    @media (max-width: 560px){
+      .features{ grid-template-columns: 1fr; gap:var(--s4); }
+      .feature p{ max-width: 46ch; }
     }
 
     /* iOS safe areas */
-    @supports (padding: max(0px)){
+    @supports (padding:max(0px)){
       .topbar{
         top: max(10px, env(safe-area-inset-top));
       }
       footer{
-        padding-bottom: max(54px, calc(54px + env(safe-area-inset-bottom)));
+        padding-bottom:max(54px, calc(54px + env(safe-area-inset-bottom)));
       }
     }
 
@@ -1220,12 +1145,9 @@
     <div class="hero-frame" aria-hidden="true">
       <div class="hero-slides">
   <img src="images/bank-binnen-hero.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
-  <img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="" loading="eager" decoding="async" />
-  <img src="images/photo-2025-05-22-09-40-54-14.jpg"  alt="" loading="eager" decoding="async" />
-  <img src="images/photo-2025-05-22-09-44-07-4.jpg"  alt="" loading="eager" decoding="async" />
-  <img src="images/zwembad%20drone.JPG"               alt="" loading="eager" decoding="async" />
-  <img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="" loading="eager" decoding="async" />
-  <img src="images/img-4567.jpg"                    alt="" loading="eager" decoding="async" />
+  <img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="" loading="lazy" decoding="async" />
+  <img src="images/zwembad%20drone.JPG" alt="" loading="lazy" decoding="async" />
+  <img src="images/photo-2025-05-22-09-44-07-4.jpg" alt="" loading="lazy" decoding="async" />
 </div>
       <div class="hero-overlay"></div>
     </div>
@@ -1258,10 +1180,17 @@
       <span class="eyebrow reveal-l">Welkom</span>
       <h2 class="reveal-l">Over de finca</h2>
       <p class="lead reveal-l">
-        Een rustig huis op een groen perceel in Jávea/Xàbia. Licht, buitenleven, en ruimte om samen te zijn.
-        Vier slaapkamers, vier badkamers. Geschikt tot 8 personen (optioneel 10).
+        Een rustig huis op een groen perceel in Jávea. Veel licht binnen, veel schaduw buiten,
+        en overal plek om met elkaar te zitten — aan de lange tafel, onder de pergola,
+        of met je voeten in het water.
       </p>
-      <div class="divider"></div>
+
+      <ul class="facts reveal-l">
+        <li><strong>4</strong> slaapkamers</li>
+        <li><strong>4</strong> badkamers</li>
+        <li><strong>8–10</strong> personen</li>
+        <li><strong>Privé</strong> zwembad</li>
+      </ul>
     </div>
   </section>
 
@@ -1270,7 +1199,7 @@
     <div class="wrap">
       <span class="eyebrow reveal-l">De Villa</span>
       <h2 class="reveal-l">Voorzieningen</h2>
-      <p class="lead reveal-l">Comfort zonder gedoe. Alles wat je nodig hebt, niets teveel.</p>
+      <p class="lead reveal-l">Comfort zonder gedoe. Alles wat je nodig hebt, niets te veel.</p>
 
       <div class="features" aria-label="Voorzieningen lijst">
         <div class="feature">
@@ -1286,17 +1215,17 @@
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="M7 12V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v5"/><path d="M9 20v2"/><path d="M15 20v2"/></svg></div>
           <h3>4 badkamers</h3>
-          <p>Vier eigen badkamers, ieder met douche en wastafel.</p>
+          <p>Vier eigen badkamers, elk met douche en wastafel.</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
           <h3>Buitenleven</h3>
-          <p>Veranda's, buitenkeuken en lange tafels voor samen eten.</p>
+          <p>Veranda’s, een buitenkeuken en lange tafels om samen te eten.</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
           <h3>Snelle WiFi</h3>
-          <p>Stabiele internetverbinding in het hele huis. Werken kan ook.</p>
+          <p>Stabiel in het hele huis. Werken kan ook.</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 4l-5.5 8h7l-2 8 8-12h-7z"/></svg></div>
@@ -1306,19 +1235,15 @@
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-7-8-13a8 8 0 0 1 16 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="3"/></svg></div>
           <h3>Volledige privacy</h3>
-          <p>Vlak perceel met groen rondom. Geen inkijk van buren.</p>
+          <p>Vlak perceel met groen rondom. Geen inkijk van de buren.</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M5 22v-3a7 7 0 0 1 14 0v3"/></svg></div>
           <h3>Tot 10 personen</h3>
-          <p>Ruimte voor 8, optioneel 10 met extra bed in een slaapkamer.</p>
+          <p>Basis voor 8. Eén slaapkamer heeft een aangrenzende ruimte met tweepersoonsbed, goed voor 10.</p>
         </div>
       </div>
 
-      <div class="note">
-        In één slaapkamer is een extra ruimte met tweepersoonsbed, waardoor 10 personen kunnen slapen.
-      </div>
-      <div class="divider"></div>
     </div>
   </section>
 
@@ -1327,17 +1252,17 @@
     <div class="wrap">
       <span class="eyebrow reveal-l">Goed om te weten</span>
       <h2 class="reveal-l">Info</h2>
-      <p class="lead reveal-l">Drie dingen die je meteen wil weten.</p>
+      <p class="lead reveal-l">Vier dingen die je meteen wilt weten.</p>
 
       <div class="info-grid" aria-label="Sfeer, locatie en winterzon">
         <article class="info-card reveal-l" id="sfeer">
           <h3>Sfeer</h3>
-          <p>Binnen licht en hout. Buiten veel schaduwplekken, lange tafels en leven rondom het zwembad.</p>
+          <p>Binnen licht en hout. Buiten schaduwplekken, lange tafels en leven rondom het zwembad.</p>
         </article>
 
         <article class="info-card reveal-l" id="locatie">
           <h3>Locatie</h3>
-          <p>Rustig gelegen, maar dichtbij zee en het oude centrum. Baaien, tapasbars en wandelroutes in de buurt.</p>
+          <p>Rustig gelegen, maar dicht bij zee en het oude centrum. Baaien, tapasbars en wandelroutes in de buurt.</p>
         </article>
 
         <article class="info-card reveal-l" id="winterzon">
@@ -1351,7 +1276,6 @@
         </article>
       </div>
 
-      <div class="divider"></div>
     </div>
   </section>
 
@@ -1372,79 +1296,49 @@
   <div class="wrap">
     <span class="eyebrow reveal-l">Impressies</span>
     <h2 class="reveal-l">Foto’s</h2>
-    <p class="lead reveal-l">Een selectie van het huis, terras en zwembad. Klik om te vergroten.</p>
+    <p class="lead reveal-l">Het huis, de tuin en het zwembad. Tik op een foto om te vergroten.</p>
 
     <div class="gallery" aria-label="Galerij">
-      <!-- Layout A: hero wide -->
-      <div class="g span-12 reveal-l"><img src="images/boven%20af%20drone.PNG" alt="Dronefoto van de finca" loading="lazy" decoding="async"></div>
+      <!-- Aankomst -->
+      <div class="g span-12 reveal-l"><img src="images/1-IMG_0988.jpg" alt="De finca en het zwembad bij zonsopkomst, met de Montgó erachter" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/HIHIPHOTO-2025-05-22-09-41-58%209.JPG" alt="Voorgevel met bloeiende bougainville boven de bogen" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-40-54-7.jpg" alt="Overdekte binnenplaats met terracotta tegels" loading="lazy" decoding="async"></div>
+      <div class="g span-6 is-portrait reveal-l"><img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="Balkon met smeedijzeren tafeltje en bougainville" loading="lazy" decoding="async"></div>
+      <div class="g span-6 is-portrait reveal-l"><img src="images/muurtje%20met%20pot.PNG" alt="Cactus in terracotta pot tegen de zandstenen tuinmuur" loading="lazy" decoding="async"></div>
 
-      <!-- Layout B: 7+5 -->
-      <div class="g span-7 reveal-l"><img src="images/2-PHOTO-2026-03-05-09-45-56.jpg" alt="Finca impressie" loading="lazy" decoding="async"></div>
-      <div class="g span-5 reveal-l"><img src="images/3-PHOTO-2026-02-10-11-23-55.jpg" alt="Keuken" loading="lazy" decoding="async"></div>
+      <!-- Zwembad -->
+      <div class="g span-12 reveal-l"><img src="images/zwembad%20voor.PNG" alt="Het privézwembad met palmen en parasol" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/XXPHOTO-2025-05-22-09-42-58%2015.JPG" alt="Gazon met ingegraven trampoline, zwembad op de achtergrond" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-42-58-11.jpg" alt="Zwembad met ligbedden en de finca erachter" loading="lazy" decoding="async"></div>
+      <div class="g span-12 reveal-l"><img src="images/dji-fly-20250605-134034-0028-1749124595923-photo.jpg" alt="Dronefoto recht boven het zwembad" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="Terras bij het zwembad onder de palmen" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/veranda%201.PNG" alt="Lange eettafel onder de veranda met rieten hanglampen" loading="lazy" decoding="async"></div>
 
-      <!-- Layout C: badkamer + 4 detail-foto's + drone -->
-      <div class="g span-12 reveal-l"><img src="images/5-PHOTO-2025-05-22-09-42-58%208%202.jpg" alt="Badkamer" loading="lazy" decoding="async"></div>
+      <!-- Buitenleven -->
+      <div class="g span-12 reveal-l"><img src="images/img-4567.jpg" alt="Pergola met lange tafel, gemetselde bank en ligbed" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/dubbel%20bed.PNG" alt="Dubbel ligbed onder de pergola met zicht op de tuin" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/bbq%20links.PNG" alt="Buitenkeuken met gasbarbecue" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/buitenkeuken%20rechts.PNG" alt="Buitenkeuken met spoelbak en houten kasten" loading="lazy" decoding="async"></div>
 
-      <!-- Verplaatste detailrij: 4 foto's -->
-      <div class="g span-3 reveal-l"><img src="images/bbq%20links.PNG" alt="Buitenkeuken met BBQ" loading="lazy" decoding="async"></div>
-      <div class="g span-3 reveal-l"><img src="images/buitenkeuken%20rechts.PNG" alt="Buitenkeuken vanaf rechts" loading="lazy" decoding="async"></div>
-      <div class="g span-3 reveal-l"><img src="images/muurtje%20met%20pot.PNG" alt="Detail tuinmuur" loading="lazy" decoding="async"></div>
-      <div class="g span-3 reveal-l"><img src="images/open%20haard%20binnen.PNG" alt="Woonkamer met open haard" loading="lazy" decoding="async"></div>
+      <!-- Binnen -->
+      <div class="g span-4 reveal-l"><img src="images/bank-binnen-hero.jpg" alt="Woonkamer met hoekbank en zicht op het zwembad" loading="lazy" decoding="async"></div>
+      <div class="g span-4 reveal-l"><img src="images/XXPHOTO-2025-05-22-09-41-26%2015.JPG" alt="Woonkamer met terracotta vloer en openslaande deuren" loading="lazy" decoding="async"></div>
+      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-41-26-18.jpg" alt="Bewerkt houten dressoir tegen een witte wand" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-41-58-14.jpg" alt="Zithoek met massief houten salontafel en boogvenster op het zwembad" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/slaapkamer%20guesthouse.PNG" alt="Slaapkamer in het gastenverblijf" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/binnen%20eettafel.PNG" alt="Eettafel binnen onder grote rieten lampen" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/open%20haard%20binnen.PNG" alt="Open haard met amfora-vazen" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/3-PHOTO-2026-02-10-11-23-55.jpg" alt="Keuken met houten fronten, betonnen blad en oude balk" loading="lazy" decoding="async"></div>
 
-      <div class="g span-12 reveal-l"><img src="images/dji-fly-20250605-134034-0028-1749124595923-photo.jpg" alt="Drone foto zwembad" loading="lazy" decoding="async"></div>
+      <!-- Slapen -->
+      <div class="g span-4 is-portrait reveal-l"><img src="images/2-PHOTO-2026-03-05-09-45-56.jpg" alt="Slaapkamer met kingsize bed en rieten wandobject" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/5-PHOTO-2025-05-22-09-42-58%208%202.jpg" alt="Badkamer met ronde spiegel en inloopdouche" loading="lazy" decoding="async"></div>
+      <div class="g span-4 is-portrait reveal-l"><img src="images/niche_01_full.jpg" alt="Nis in de trapwand met terracotta kruik" loading="lazy" decoding="async"></div>
 
-      <!-- Layout D: 4+4+4 -->
-      <div class="g span-4 reveal-l"><img src="images/slaapkamer%20guesthouse.PNG" alt="Slaapkamer guesthouse" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-41-58-14.jpg" alt="Eettafel buiten" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/veranda%201.PNG" alt="Veranda met eettafel" loading="lazy" decoding="async"></div>
-
-      <!-- Layout E: 6+6 -->
-      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-40-54-14.jpg" alt="Vooraanzicht" loading="lazy" decoding="async"></div>
-      <div class="g span-6 reveal-l"><img src="images/photo-2025-05-22-09-42-58.jpg" alt="Terras" loading="lazy" decoding="async"></div>
-
-      <!-- Layout F: 8+4 -->
-      <div class="g span-8 reveal-l"><img src="images/photo-2025-05-22-09-41-58-16.jpg" alt="Zithoek buiten" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-41-26-17.jpg" alt="Detail" loading="lazy" decoding="async"></div>
-
-      <!-- Layout G: 4+4+4 -->
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-41-26-18.jpg" alt="Buitenruimte" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/niche_01_full.jpg" alt="Detail trapnis met kruik" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-44-07-4.jpg" alt="Avondsfeer" loading="lazy" decoding="async"></div>
-
-      <!-- Layout H: 4+4+4 -->
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-40-54-7.jpg" alt="Buitenterras" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/bank-binnen-hero.jpg" alt="Woonkamer met zwembadzicht" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-41-58.jpg" alt="Buitenhoek" loading="lazy" decoding="async"></div>
-
-      <!-- Layout I: 6+6 -->
-      <div class="g span-6 reveal-l"><img src="images/XXPHOTO-2025-05-22-09-41-26%2015.JPG" alt="Woonkamer" loading="lazy" decoding="async"></div>
-      <div class="g span-6 reveal-l"><img src="images/XXPHOTO-2025-05-22-09-42-58%2015.JPG" alt="Tuin met zwembad" loading="lazy" decoding="async"></div>
-
-      <!-- Layout J: 4+4+4 -->
-      <div class="g span-4 reveal-l"><img src="images/HIHIPHOTO-2025-05-22-09-41-26%2020.JPG" alt="Keuken" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/binnen%20eettafel.PNG" alt="Eetkamer binnen" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/HIHIPHOTO-2025-05-22-09-41-58%209.JPG" alt="Voorgevel met bougainville" loading="lazy" decoding="async"></div>
-
-      <!-- Layout K: 7+5 -->
-      <div class="g span-7 reveal-l"><img src="images/img-4554.jpg" alt="Buitenkeuken" loading="lazy" decoding="async"></div>
-      <div class="g span-5 reveal-l"><img src="images/photo-2025-05-22-09-41-26-19.jpg" alt="Terrasdetail" loading="lazy" decoding="async"></div>
-
-      <!-- Layout L: 4+4+4 -->
-      <div class="g span-4 reveal-l"><img src="images/photo-2025-05-22-09-42-58-11.jpg" alt="Terras in de zon" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/dubbel%20bed.PNG" alt="Slaapkamer met dubbel bed" loading="lazy" decoding="async"></div>
-      <div class="g span-4 reveal-l"><img src="images/zwembad%20voor.PNG" alt="Zwembad vooraanzicht" loading="lazy" decoding="async"></div>
-
-      <!-- Layout M: pergola full width -->
-      <div class="g span-12 reveal-l"><img src="images/img-4567.jpg" alt="Pergola met zicht op tuin" loading="lazy" decoding="async"></div>
-
-      <!-- Layout N: full width -->
-      <div class="g span-12 reveal-l"><img src="images/1-IMG_0988.jpg" alt="Finca el Corazón overzicht" loading="lazy" decoding="async"></div>
-
-      <!-- Layout O: full width -->
-      <div class="g span-12 reveal-l"><img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="Avondzicht drone" loading="lazy" decoding="async"></div>
+      <!-- Avond -->
+      <div class="g span-12 reveal-l"><img src="images/photo-2025-05-22-09-44-07-4.jpg" alt="Het verlichte terras en zwembad in de avond" loading="lazy" decoding="async"></div>
     </div>
 
-    <div class="divider"></div>
   </div>
 </section>
 
@@ -1454,17 +1348,14 @@
     <div class="wrap">
       <span class="eyebrow reveal-l">Locatie</span>
       <h2 class="reveal-l">Omgeving</h2>
-      <p class="lead reveal-l">Stranddagen, wandelingen, en avonden in het oude centrum.</p>
+      <p class="lead reveal-l">Stranddagen, wandelingen en avonden in het oude centrum.</p>
 
       <div class="gallery" aria-label="Omgeving galerij">
-        <div class="g span-7 reveal-l"><img src="images/img-3770-2.jpg" alt="Kust van Jávea" loading="lazy" decoding="async"></div>
-        <div class="g span-5 reveal-l"><img src="images/img-3771-2.jpg" alt="Stranden in de buurt" loading="lazy" decoding="async"></div>
-        <div class="g span-4 reveal-l"><img src="images/istockphoto-1192838714-1024x1024.jpg" alt="Oude centrum" loading="lazy" decoding="async"></div>
-        <div class="g span-4 reveal-l"><img src="images/istockphoto-1454769262-1024x1024.jpg" alt="Wandelroutes" loading="lazy" decoding="async"></div>
-        <div class="g span-4 reveal-l"><img src="images/istockphoto-2108599336-1024x1024.jpg" alt="Costa Blanca" loading="lazy" decoding="async"></div>
+      <div class="g span-12 reveal-l"><img src="images/dji-fly-20250605-185802-0042-1749153287792-photo.jpg" alt="Jávea met de Montgó, gezien vanuit de lucht" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/img-3770-2.jpg" alt="De rotskust van Jávea, een kwartier rijden van de finca" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img src="images/img-3771-2.jpg" alt="Baai met helder water in de buurt van Jávea" loading="lazy" decoding="async"></div>
       </div>
 
-      <div class="divider"></div>
     </div>
   </section>
 
@@ -1472,15 +1363,15 @@
   <section id="contact" class="fade">
     <div class="wrap">
       <span class="eyebrow reveal-l">Contact</span>
-      <h2 class="reveal-l">Boeking &amp; reservering</h2>
-      <p class="lead reveal-l">Geen boekingssysteem. Gewoon even appen. Dan stemmen we af op seizoen en verblijfsduur.</p>
+      <h2 class="reveal-l">Boeken</h2>
+      <p class="lead reveal-l">Geen boekingssysteem — je appt ons rechtstreeks. We stemmen samen af op seizoen en verblijfsduur.</p>
 
       <div class="contact-card reveal-l">
-        <p>Stuur een berichtje met je gewenste data en groepsgrootte.</p>
+        <p>Laat je gewenste data en het aantal personen weten.</p>
         <div class="contact-actions">
-          <a class="btn" href="https://wa.me/31624978211">WhatsApp</a>
-          <a class="btn btn-outline" href="#galerij">Bekijk foto’s</a>
+          <a class="btn" href="https://wa.me/31624978211?text=Hoi%2C%20ik%20ben%20ge%C3%AFnteresseerd%20in%20Finca%20el%20Coraz%C3%B3n.%20Mijn%20gewenste%20data%20zijn%3A%20">Stuur een WhatsApp</a>
         </div>
+        <p class="contact-meta">Meestal binnen een dag antwoord · Nederlandse eigenaren</p>
       </div>
     </div>
   </section>
@@ -1499,6 +1390,7 @@
       <button class="lb-btn lb-prev" type="button" aria-label="Vorige">‹</button>
       <button class="lb-btn lb-next" type="button" aria-label="Volgende">›</button>
       <img alt="Vergrote foto" />
+      <p class="lb-count" aria-live="polite"></p>
     </div>
   </div>
 
@@ -1537,7 +1429,7 @@
 
     function startAuto(){
       if (timer || slides.length <= 1) return;
-      timer = setInterval(nextSlide, 4200);
+      timer = setInterval(nextSlide, 6500);
     }
 
     function restartAuto(){
@@ -1545,6 +1437,16 @@
       timer = null;
       startAuto();
     }
+
+    // Don't cycle slides in a background tab
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(timer);
+        timer = null;
+      } else {
+        restartAuto();
+      }
+    });
 
     // Build dots
     if (dotsWrap && slides.length > 1) {
@@ -1637,29 +1539,37 @@
     const closeBtn = lb ? lb.querySelector('.lb-close') : null;
     const prevBtn = lb ? lb.querySelector('.lb-prev') : null;
     const nextBtn = lb ? lb.querySelector('.lb-next') : null;
+    const countEl = lb ? lb.querySelector('.lb-count') : null;
 
     const allGalleryImgs = Array.from(document.querySelectorAll('#galerij .g img'));
 
     let current = 0;
 
+    function render(){
+      if (!lbImg || !allGalleryImgs.length) return;
+      lbImg.src = allGalleryImgs[current].src;
+      lbImg.alt = allGalleryImgs[current].alt || '';
+      if (countEl) countEl.textContent = (current + 1) + ' / ' + allGalleryImgs.length;
+    }
     function openLb(i){
       if (!lb || !lbImg) return;
       current = i;
-      lbImg.src = allGalleryImgs[current].src;
-      lbImg.alt = allGalleryImgs[current].alt || '';
+      render();
       lb.classList.add('is-open');
       lb.setAttribute('aria-hidden','false');
+      // stop the page scrolling behind the overlay
+      document.body.classList.add('lb-open');
     }
     function closeLb(){
       if (!lb) return;
       lb.classList.remove('is-open');
       lb.setAttribute('aria-hidden','true');
+      document.body.classList.remove('lb-open');
     }
     function show(delta){
       if (!lb || !lbImg || !allGalleryImgs.length) return;
       current = (current + delta + allGalleryImgs.length) % allGalleryImgs.length;
-      lbImg.src = allGalleryImgs[current].src;
-      lbImg.alt = allGalleryImgs[current].alt || '';
+      render();
     }
 
     allGalleryImgs.forEach((img, i) => {
@@ -1703,84 +1613,61 @@
     });
 
     // =========================
-    // Linear scroll-linked reveal
+    // Reveal on entry — one observer, fires once per element
     // =========================
-    const revealLinearEls = Array.from(document.querySelectorAll('.reveal-l'));
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function clamp01(x){
-      return Math.max(0, Math.min(1, x));
+    const revealEls = Array.from(document.querySelectorAll(
+      '.reveal-l, .features .feature, .info-grid .info-card, .gallery .g'
+    ));
+
+    if (prefersReduced) {
+      revealEls.forEach(el => el.classList.add('is-revealed'));
+    } else {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          // stagger only within a grid, so rows arrive as a group
+          const sibs = el.parentElement
+            ? Array.from(el.parentElement.children).indexOf(el)
+            : 0;
+          const isGridChild = el.matches('.feature, .info-card, .g');
+          el.style.transitionDelay = isGridChild ? Math.min(sibs % 4, 3) * 70 + 'ms' : '0ms';
+          el.classList.add('is-revealed');
+          revealObserver.unobserve(el);
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
+
+      revealEls.forEach(el => revealObserver.observe(el));
     }
 
-    let ticking = false;
-
     // --- Hero parallax ---
+    // Gentle, and only while the hero is actually on screen. rAF-throttled so
+    // it never runs more than once per frame.
     const heroSlides = document.querySelector('.hero-slides');
     const heroSection = document.querySelector('.hero');
+    let parallaxTicking = false;
 
     function updateParallax(){
+      parallaxTicking = false;
       if (!heroSlides || !heroSection) return;
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const heroH = heroSection.offsetHeight;
       if (scrollY <= heroH){
-        heroSlides.style.transform = `translateY(${scrollY * 0.35}px) scale(1.02)`;
+        heroSlides.style.transform = 'translate3d(0,' + (scrollY * 0.18) + 'px,0) scale(1.04)';
       }
     }
 
-    function updateRevealLinear(){
-      ticking = false;
-
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-
-      // start = wanneer het element begint te verschijnen
-      // end   = wanneer het volledig zichtbaar is
-      const start = vh * 0.92;
-      const end   = vh * 0.30;
-
-      revealLinearEls.forEach(el => {
-        const r = el.getBoundingClientRect();
-
-        const p = clamp01((start - r.top) / (start - end));
-
-        // smooth easing via cubic bezier approximation
-        const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-        const opacity = eased;
-        const translateY = (1 - eased) * 24;
-
-        el.style.opacity = opacity;
-        el.style.transform = `translateY(${translateY}px)`;
-      });
-
+    if (!prefersReduced && heroSlides) {
+      heroSlides.style.willChange = 'transform';
+      window.addEventListener('scroll', () => {
+        if (parallaxTicking) return;
+        parallaxTicking = true;
+        requestAnimationFrame(updateParallax);
+      }, { passive: true });
       updateParallax();
     }
-
-    // --- Staggered reveal for grid children ---
-    const staggerContainers = document.querySelectorAll('.features, .info-grid, .gallery');
-    const staggerObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const children = entry.target.querySelectorAll('.feature, .info-card, .g');
-        children.forEach((child, i) => {
-          setTimeout(() => {
-            child.classList.add('is-revealed');
-          }, i * 70);
-        });
-        staggerObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.1 });
-    staggerContainers.forEach(c => staggerObserver.observe(c));
-
-    function requestUpdate(){
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(updateRevealLinear);
-    }
-
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    window.addEventListener('load', updateRevealLinear);
-
-    // Ensure top on load
-    window.addEventListener('load', () => window.scrollTo(0,0));
   </script>
 </body>
 </html>
