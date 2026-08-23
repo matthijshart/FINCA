@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://fincacorazon.nl/" />
 
    <!-- PRELOAD hero images -->
-  <link rel="preload" as="image" href="images/bank-binnen-hero-1024.jpg" imagesrcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" href="images/1-img-0988-1280.jpg" imagesrcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" imagesizes="100vw" fetchpriority="high">
 
 <meta property="og:image" content="https://fincacorazon.nl/images/373f4572-0ca4-4c11-a3b8-25e8bb6fdbb6.png" />
 <meta property="og:image:width" content="1200" />
@@ -106,19 +106,21 @@
       justify-content: space-between;
       gap:14px;
 
-      padding:10px 14px;
-      border-radius: 999px;
+      padding:10px var(--s3);
+      border-radius: var(--r-pill);
 
-      background: rgba(244,241,236,.70);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.55);
-      box-shadow: var(--shadow-lg);
+      /* Nearly opaque: at 70% the photo behind showed straight through and
+         the bar read as smudged rather than crisp. */
+      background: rgba(250,248,245,.94);
+      -webkit-backdrop-filter: blur(16px) saturate(1.1);
+      backdrop-filter: blur(16px) saturate(1.1);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 8px 28px rgba(38,33,28,.08);
 
       opacity: 0;
       transform: translateY(-6px);
       pointer-events: none;
-      transition: opacity .22s ease, transform .22s ease;
+      transition: opacity var(--t) var(--ease), transform var(--t) var(--ease);
     }
     .topbar.is-visible{
       opacity: 1;
@@ -126,6 +128,10 @@
       pointer-events: auto;
     }
     .brand{
+      /* comfortable hit area for the home link in the bar */
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
       font-family: "Cormorant Garamond", serif;
       font-size: 1.15rem;
       font-weight: 500;
@@ -202,11 +208,11 @@
       right: 14px;
       z-index: 55;
 
-      background: rgba(244,241,236,.92);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.55);
-      box-shadow: var(--shadow-lg);
+      background: rgba(250,248,245,.97);
+      -webkit-backdrop-filter: blur(16px) saturate(1.1);
+      backdrop-filter: blur(16px) saturate(1.1);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 12px 34px rgba(38,33,28,.10);
       border-radius: var(--r);
       overflow:hidden;
     }
@@ -263,14 +269,21 @@
     .hero-overlay{
       position:absolute;
       inset:0;
-      /* Light, warm scrim: enough to carry white type, not so much that the
-         photography goes grey. Weighted top and bottom where the type sits. */
+      /* Two layers. A soft ellipse sits behind the title block so white type
+         always reads, even over a bright interior shot; the linear pass only
+         darkens the very top and bottom. The corners of the photograph stay
+         bright, which is what a flat overall scrim used to destroy. */
       background:
+        radial-gradient(ellipse 78% 52% at 50% 50%,
+          rgba(24,18,12,.62) 0%,
+          rgba(24,18,12,.40) 48%,
+          rgba(24,18,12,0) 80%
+        ),
         linear-gradient(180deg,
-          rgba(28,22,16,.42) 0%,
-          rgba(28,22,16,.18) 42%,
-          rgba(28,22,16,.20) 58%,
-          rgba(28,22,16,.50) 100%
+          rgba(24,18,12,.40) 0%,
+          rgba(24,18,12,.06) 30%,
+          rgba(24,18,12,.06) 66%,
+          rgba(24,18,12,.46) 100%
         );
       pointer-events:none;
     }
@@ -288,6 +301,7 @@
 
     .hero-title{
       font-family: "Cormorant Garamond", serif;
+      text-shadow: 0 1px 24px rgba(24,18,12,.35);
       font-weight: 500;
       letter-spacing: .005em;
       font-size: clamp(2.5rem, 1.1rem + 6.4vw, 4.8rem);
@@ -296,10 +310,10 @@
     }
 
     .hero-logo{
-      width: clamp(70px, 11vw, 120px);
-      margin:0 auto 14px;
-      opacity: .75;
-      filter: brightness(0) invert(1) drop-shadow(0 4px 14px rgba(28,22,16,.28));
+      width: clamp(64px, 9vw, 104px);
+      margin:0 auto var(--s4);
+      opacity: .92;
+      filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(24,18,12,.5));
     }
 
     @media (max-width: 560px){
@@ -313,9 +327,10 @@
       font-weight: 400;
       letter-spacing: .22em;
       text-transform: uppercase;
-      font-size: clamp(.72rem, 1.2vw, .82rem);
-      opacity: .92;
-      margin-bottom:26px;
+      font-size: .74rem;
+      opacity: .95;
+      text-shadow: 0 1px 12px rgba(24,18,12,.4);
+      margin-bottom:var(--s4);
     }
     /* Plain letterspaced label — the pill was a third rounded shape
        stacked above two pill buttons. */
@@ -325,8 +340,9 @@
       font-size: .68rem;
       letter-spacing: .28em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.88);
-      margin-bottom:var(--s3);
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 1px 12px rgba(24,18,12,.4);
+      margin-bottom:var(--s2);
     }
 
     /* Hero intro reveal */
@@ -378,6 +394,32 @@
       border-color: var(--accent-ink);
     }
 
+    /* On the hero the primary button sits on photography, where a solid dark
+       pill reads as a heavy block. A light fill is lighter on the eye and
+       still clears AA (ink on cream, 15:1). */
+    .hero-actions .btn{
+      background: var(--bg);
+      border-color: var(--bg);
+      color: var(--ink);
+    }
+    .hero-actions .btn:hover{
+      background: #fff;
+      border-color: #fff;
+      color: var(--ink);
+    }
+    .hero-actions .btn-ghost{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.7);
+      color: #fff;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .hero-actions .btn-ghost:hover{
+      background: rgba(255,255,255,.22);
+      border-color: #fff;
+      color: #fff;
+    }
+
     .btn-ghost{
       background: transparent;
       color: #fff;
@@ -402,7 +444,7 @@
     .scroll-cue{
       position:absolute;
       left:50%;
-      bottom: calc(var(--heroFrame) + 24px);
+      bottom: calc(var(--heroFrame) + 20px);
       transform: translateX(-50%);
       display:flex;
       flex-direction: column;
@@ -471,7 +513,7 @@
       font-weight: 500;
     }
     section{
-      padding:clamp(88px, 13vh, 168px) 0;
+      padding:clamp(72px, 9vh, 120px) 0;
       /* clears the floating topbar so anchors do not land underneath it */
       scroll-margin-top:var(--s6);
     }
@@ -479,7 +521,7 @@
     /* Feature list — no cards. Plain text blocks on the page, left aligned,
        with air between them doing the separating. */
     .features{
-      margin-top:var(--s6);
+      margin-top:var(--s5);
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap:var(--s5) var(--s4);
@@ -519,7 +561,7 @@
 
     /* Key facts under the intro — hairline-separated, no boxes */
     .facts{
-      margin:var(--s5) auto 0;
+      margin:var(--s4) auto 0;
       max-width: 720px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -558,7 +600,7 @@
 
     /* --------- Gallery (varied, premium) --------- */
     .gallery{
-      margin-top:var(--s6);
+      margin-top:var(--s5);
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap:var(--s2);
@@ -740,11 +782,11 @@
       display: block;
       margin-bottom:var(--s1);
     }
-    footer .brand-mark span{ color: var(--accent); }
+    footer .brand-mark span{ color: var(--accent-ink); }
 
     /* --- Info cards --- */
     .info-grid{
-      margin-top:var(--s6);
+      margin-top:var(--s5);
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap:var(--s4);
@@ -797,7 +839,7 @@
     .highlight{
       background: var(--bg-alt);
       color: var(--ink);
-      padding:clamp(88px, 13vh, 168px) 0;
+      padding:clamp(72px, 9vh, 120px) 0;
       position: relative;
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
@@ -891,7 +933,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: calc(var(--heroFrame) + 96px);
+      bottom: calc(var(--heroFrame) + 108px);
       display: flex;
       gap:4px;
       z-index: 6;
@@ -932,7 +974,7 @@
 
       /* Sections — breathing room */
       section{
-        padding:clamp(56px, 10vh, 90px) 0;
+        padding:clamp(56px, 8vh, 84px) 0;
       }
 
       /* Typography — luxe scale on mobile */
@@ -983,10 +1025,9 @@
         margin-bottom:30px;
       }
       .hero-badge{
-        font-size: .6rem;
+        font-size: .64rem;
         letter-spacing: .24em;
-        padding:6px 14px;
-        margin-bottom:20px;
+        margin-bottom:var(--s2);
       }
       .hero-actions{
         flex-direction: column;
@@ -1033,7 +1074,7 @@
 
       /* --- Highlight quote --- */
       .highlight{
-        padding:clamp(72px, 12vh, 120px) 0;
+        padding:clamp(60px, 9vh, 92px) 0;
       }
       .quote-mark{
         font-size: 3.5rem;
@@ -1143,8 +1184,8 @@
   <header id="home" class="hero">
     <div class="hero-frame" aria-hidden="true">
       <div class="hero-slides">
-  <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
-  <img srcset="images/photo-2025-05-22-09-41-58-16-640.jpg 640w, images/photo-2025-05-22-09-41-58-16-1024.jpg 1024w, images/photo-2025-05-22-09-41-58-16-1280.jpg 1280w, images/photo-2025-05-22-09-41-58-16-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-41-58-16-1600.jpg" alt="" loading="lazy" decoding="async" />
+  <img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="100vw" src="images/1-img-0988-2000.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
+  <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/zwembad-drone-640.jpg 640w, images/zwembad-drone-1024.jpg 1024w, images/zwembad-drone-1280.jpg 1280w, images/zwembad-drone-1600.jpg 1600w, images/zwembad-drone-2000.jpg 2000w" sizes="100vw" src="images/zwembad-drone-2000.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1600.jpg" alt="" loading="lazy" decoding="async" />
 </div>
@@ -1281,7 +1322,7 @@
   <!-- HIGHLIGHT QUOTE -->
   <section class="highlight fade">
     <div class="wrap">
-      <div class="quote-mark reveal-l">“</div>
+      <div class="quote-mark reveal-l" aria-hidden="true">“</div>
       <blockquote class="reveal-l">
         Wij voelden ons meteen thuis toen we de poorten binnenliepen.
         Prachtig verzorgd.
