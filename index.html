@@ -967,6 +967,55 @@
       pointer-events: auto;
     }
 
+    /* Countdown rings under the reviews: one per review, the active one fills
+       clockwise over the dwell so you can see the next one coming. They double
+       as buttons, so the rotation is never something you just have to wait out. */
+    .quote-nav{
+      display: flex;
+      justify-content: center;
+      gap: var(--s1);
+      margin-top: var(--s4);
+    }
+    .qdot{
+      position: relative;
+      /* 22px ring inside a 44px hit area */
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: none;
+      background: none;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .qdot svg{
+      width: 26px;
+      height: 26px;
+      overflow: visible;
+      /* start the arc at twelve o'clock */
+      transform: rotate(-90deg);
+    }
+    .qdot-track,
+    .qdot-prog{
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    .qdot-track{ stroke: rgba(38,33,28,.22); }
+    .qdot-prog{
+      stroke: var(--accent-ink);
+      /* circumference of r=9 */
+      stroke-dasharray: 56.549;
+      stroke-dashoffset: 56.549;
+    }
+    /* the inactive rings sit back so the filling one reads at a glance */
+    .qdot .qdot-track{ transition: stroke var(--t) var(--ease); }
+    .qdot.is-active .qdot-track{ stroke: rgba(38,33,28,.32); }
+
+    @media (hover: hover) and (pointer: fine){
+      .qdot:hover .qdot-track{ stroke: rgba(38,33,28,.38); }
+    }
+
     .highlight cite{
       display: block;
       margin-top:var(--s3);
@@ -1028,6 +1077,7 @@
       .quotes{ display: block; }
       .quote{ opacity: 1 !important; pointer-events: auto; }
       .quote + .quote{ margin-top: var(--s5); }
+      .quote-nav{ display: none; }
       *,*::before,*::after{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
 
@@ -1455,6 +1505,27 @@
           <cite>— Fleur</cite>
         </figure>
       </div>
+
+      <div class="quote-nav reveal-l" role="tablist" aria-label="Reviews">
+        <button class="qdot" type="button" role="tab" aria-label="Review 1 van 3">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle class="qdot-track" cx="12" cy="12" r="9" />
+            <circle class="qdot-prog"  cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+        <button class="qdot" type="button" role="tab" aria-label="Review 2 van 3">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle class="qdot-track" cx="12" cy="12" r="9" />
+            <circle class="qdot-prog"  cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+        <button class="qdot" type="button" role="tab" aria-label="Review 3 van 3">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle class="qdot-track" cx="12" cy="12" r="9" />
+            <circle class="qdot-prog"  cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1467,7 +1538,7 @@
 
     <div class="gallery" aria-label="Galerij">
       <!-- Aankomst -->
-      <div class="g span-12 reveal-l"><img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/1-img-0988-2000.jpg" alt="De finca en het zwembad bij zonsopkomst, met de Montgó erachter" loading="lazy" decoding="async"></div>
+      <div class="g span-12 reveal-l"><img srcset="images/photo-2025-05-22-09-41-58-16-640.jpg 640w, images/photo-2025-05-22-09-41-58-16-1024.jpg 1024w, images/photo-2025-05-22-09-41-58-16-1280.jpg 1280w, images/photo-2025-05-22-09-41-58-16-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/photo-2025-05-22-09-41-58-16-1600.jpg" alt="Terras bij het zwembad onder de palmen" loading="lazy" decoding="async"></div>
       <div class="g span-6 reveal-l"><img srcset="images/hihiphoto-2025-05-22-09-41-58-9-640.jpg 640w, images/hihiphoto-2025-05-22-09-41-58-9-1024.jpg 1024w, images/hihiphoto-2025-05-22-09-41-58-9-1280.jpg 1280w, images/hihiphoto-2025-05-22-09-41-58-9-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/hihiphoto-2025-05-22-09-41-58-9-1600.jpg" alt="Voorgevel met bloeiende bougainville boven de bogen" loading="lazy" decoding="async"></div>
       <div class="g span-6 reveal-l"><img srcset="images/photo-2025-05-22-09-40-54-7-640.jpg 640w, images/photo-2025-05-22-09-40-54-7-1024.jpg 1024w, images/photo-2025-05-22-09-40-54-7-1280.jpg 1280w, images/photo-2025-05-22-09-40-54-7-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1180px) calc(50vw - 36px), 552px" src="images/photo-2025-05-22-09-40-54-7-1600.jpg" alt="Overdekte binnenplaats met terracotta tegels" loading="lazy" decoding="async"></div>
       <div class="g span-6 is-portrait reveal-l"><img srcset="images/photo-2025-05-22-09-40-54-14-640.jpg 640w, images/photo-2025-05-22-09-40-54-14-1024.jpg 1024w, images/photo-2025-05-22-09-40-54-14-1200.jpg 1200w" sizes="(max-width: 560px) 100vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1180px) calc(50vw - 36px), 552px" src="images/photo-2025-05-22-09-40-54-14-1200.jpg" alt="Balkon met smeedijzeren tafeltje en bougainville" loading="lazy" decoding="async"></div>
@@ -1478,7 +1549,7 @@
       <div class="g span-6 reveal-l"><img srcset="images/xxphoto-2025-05-22-09-42-58-15-640.jpg 640w, images/xxphoto-2025-05-22-09-42-58-15-1024.jpg 1024w, images/xxphoto-2025-05-22-09-42-58-15-1280.jpg 1280w, images/xxphoto-2025-05-22-09-42-58-15-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/xxphoto-2025-05-22-09-42-58-15-1600.jpg" alt="Gazon met ingegraven trampoline, zwembad op de achtergrond" loading="lazy" decoding="async"></div>
       <div class="g span-6 reveal-l"><img srcset="images/photo-2025-05-22-09-42-58-11-640.jpg 640w, images/photo-2025-05-22-09-42-58-11-1024.jpg 1024w, images/photo-2025-05-22-09-42-58-11-1280.jpg 1280w, images/photo-2025-05-22-09-42-58-11-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1180px) calc(50vw - 36px), 552px" src="images/photo-2025-05-22-09-42-58-11-1600.jpg" alt="Zwembad met ligbedden en de finca erachter" loading="lazy" decoding="async"></div>
       <div class="g span-12 reveal-l"><img srcset="images/dji-fly-20250605-134034-0028-1749124595923-photo-640.jpg 640w, images/dji-fly-20250605-134034-0028-1749124595923-photo-1024.jpg 1024w, images/dji-fly-20250605-134034-0028-1749124595923-photo-1280.jpg 1280w, images/dji-fly-20250605-134034-0028-1749124595923-photo-1600.jpg 1600w, images/dji-fly-20250605-134034-0028-1749124595923-photo-2000.jpg 2000w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/dji-fly-20250605-134034-0028-1749124595923-photo-2000.jpg" alt="Dronefoto recht boven het zwembad" loading="lazy" decoding="async"></div>
-      <div class="g span-6 reveal-l"><img srcset="images/photo-2025-05-22-09-41-58-16-640.jpg 640w, images/photo-2025-05-22-09-41-58-16-1024.jpg 1024w, images/photo-2025-05-22-09-41-58-16-1280.jpg 1280w, images/photo-2025-05-22-09-41-58-16-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/photo-2025-05-22-09-41-58-16-1600.jpg" alt="Terras bij het zwembad onder de palmen" loading="lazy" decoding="async"></div>
+      <div class="g span-6 reveal-l"><img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/1-img-0988-2000.jpg" alt="De finca en het zwembad bij zonsopkomst, met de Montgó erachter" loading="lazy" decoding="async"></div>
       <div class="g span-6 reveal-l"><img srcset="images/veranda-1-640.jpg 640w, images/veranda-1-1024.jpg 1024w, images/veranda-1-1280.jpg 1280w, images/veranda-1-1448.jpg 1448w" sizes="(max-width: 560px) 100vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1180px) calc(50vw - 36px), 552px" src="images/veranda-1-1448.jpg" alt="Lange eettafel onder de veranda met rieten hanglampen" loading="lazy" decoding="async"></div>
 
       <!-- Buitenleven -->
@@ -1803,36 +1874,81 @@
       const quotes = Array.from(wrap.querySelectorAll('.quote'));
       if (quotes.length < 2) return;
 
+      const nav  = document.querySelector('.quote-nav');
+      const dots = nav ? Array.from(nav.querySelectorAll('.qdot')) : [];
+
       // Under reduced motion the CSS shows all three at once, so leave it be.
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       const DWELL = 7500;   // long enough to read the longest review
-      let i = 0, timer = null;
+      const CIRC  = 56.549; // circumference of the r=9 ring
+      let i = 0, timer = null, ring = null;
+
+      function paintDots(){
+        dots.forEach((d, n) => {
+          d.classList.toggle('is-active', n === i);
+          d.setAttribute('aria-selected', n === i ? 'true' : 'false');
+        });
+      }
+
+      // The ring is driven by the Web Animations API rather than a CSS
+      // keyframe, so it can be paused in step with the rotation itself.
+      function startRing(){
+        if (ring) ring.cancel();
+        const el = dots[i] && dots[i].querySelector('.qdot-prog');
+        if (!el) return;
+        ring = el.animate(
+          [{ strokeDashoffset: CIRC }, { strokeDashoffset: 0 }],
+          { duration: DWELL, easing: 'linear', fill: 'forwards' }
+        );
+      }
 
       function show(n){
         quotes[i].classList.remove('is-active');
         i = (n + quotes.length) % quotes.length;
         quotes[i].classList.add('is-active');
+        paintDots();
+        startRing();
       }
+
       function start(){
         if (timer) return;
+        if (ring && ring.playState === 'paused') ring.play();
+        else startRing();
         timer = setInterval(() => show(i + 1), DWELL);
       }
       function stop(){
         clearInterval(timer);
         timer = null;
+        if (ring) ring.pause();
       }
+      function jump(n){
+        stop();
+        show(n);
+        start();
+      }
+
+      dots.forEach((d, n) => {
+        d.addEventListener('click', () => jump(n));
+      });
 
       // Let people finish reading: pause on hover and on keyboard focus.
       wrap.addEventListener('mouseenter', stop);
       wrap.addEventListener('mouseleave', start);
       wrap.addEventListener('focusin', stop);
       wrap.addEventListener('focusout', start);
+      if (nav){
+        nav.addEventListener('mouseenter', stop);
+        nav.addEventListener('mouseleave', start);
+        nav.addEventListener('focusin', stop);
+        nav.addEventListener('focusout', start);
+      }
 
       document.addEventListener('visibilitychange', () => {
         document.hidden ? stop() : start();
       });
 
+      paintDots();
       start();
     })();
 
