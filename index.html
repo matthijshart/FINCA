@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://fincacorazon.nl/" />
 
    <!-- PRELOAD hero images -->
-  <link rel="preload" as="image" href="images/1-img-0988-1280.jpg" imagesrcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" href="images/bank-binnen-hero-1024.jpg" imagesrcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" imagesizes="100vw" fetchpriority="high">
 
 <meta property="og:image" content="https://fincacorazon.nl/images/373f4572-0ca4-4c11-a3b8-25e8bb6fdbb6.png" />
 <meta property="og:image:width" content="1200" />
@@ -274,10 +274,11 @@
          darkens the very top and bottom. The corners of the photograph stay
          bright, which is what a flat overall scrim used to destroy. */
       background:
-        radial-gradient(ellipse 78% 52% at 50% 50%,
-          rgba(24,18,12,.62) 0%,
-          rgba(24,18,12,.40) 48%,
-          rgba(24,18,12,0) 80%
+        radial-gradient(ellipse 82% 58% at 50% 50%,
+          rgba(24,18,12,.74) 0%,
+          rgba(24,18,12,.60) 42%,
+          rgba(24,18,12,.28) 66%,
+          rgba(24,18,12,0) 86%
         ),
         linear-gradient(180deg,
           rgba(24,18,12,.40) 0%,
@@ -551,6 +552,39 @@
       color: var(--muted);
       line-height: 1.65;
       font-size: .95rem;
+    }
+
+    /* Hover on the feature blocks.
+       A hairline draws itself under the heading and the icon lifts a little —
+       the same accent-rule language the info blocks already use. Deliberately
+       no shadow, scale or card-lift: these blocks are not links, and lifting
+       them would promise a click that does not exist.
+       Guarded by hover:hover so it never sticks after a tap on iOS. */
+    @media (hover: hover) and (pointer: fine){
+      .feature h3{ position: relative; }
+      .feature h3::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -9px;
+        width: 0;
+        height: 1px;
+        background: var(--accent-ink);
+        transition: width var(--t) var(--ease);
+      }
+      .feature:hover h3::after{ width: 34px; }
+
+      .feature .icon{
+        transition: transform var(--t) var(--ease), color var(--t) var(--ease);
+      }
+      .feature:hover .icon{
+        transform: translateY(-3px);
+        color: var(--accent-ink-hover);
+      }
+      .feature p{
+        transition: color var(--t) var(--ease);
+      }
+      .feature:hover p{ color: var(--ink); }
     }
     .note{
       margin-top:var(--s5);
@@ -852,7 +886,7 @@
       font-family: "Cormorant Garamond", serif;
       font-size: clamp(3.5rem, 6vw, 5rem);
       line-height: .8;
-      color: var(--accent);
+      color: var(--accent-ink);
       margin-bottom:var(--s2);
     }
     .highlight blockquote{
@@ -1184,8 +1218,8 @@
   <header id="home" class="hero">
     <div class="hero-frame" aria-hidden="true">
       <div class="hero-slides">
-  <img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="100vw" src="images/1-img-0988-2000.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
-  <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="lazy" decoding="async" />
+  <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
+  <img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="100vw" src="images/1-img-0988-2000.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/zwembad-drone-640.jpg 640w, images/zwembad-drone-1024.jpg 1024w, images/zwembad-drone-1280.jpg 1280w, images/zwembad-drone-1600.jpg 1600w, images/zwembad-drone-2000.jpg 2000w" sizes="100vw" src="images/zwembad-drone-2000.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1600.jpg" alt="" loading="lazy" decoding="async" />
 </div>
