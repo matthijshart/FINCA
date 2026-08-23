@@ -949,6 +949,24 @@
       margin:0 auto;
       letter-spacing: -.01em;
     }
+    /* All three quotes share one grid cell, so the block is as tall as the
+       longest one and nothing jumps as they cross-fade. */
+    .quotes{
+      display: grid;
+      margin: 0 auto;
+    }
+    .quote{
+      grid-area: 1 / 1;
+      margin: 0;
+      opacity: 0;
+      transition: opacity var(--t-slow) var(--ease);
+      pointer-events: none;
+    }
+    .quote.is-active{
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .highlight cite{
       display: block;
       margin-top:var(--s3);
@@ -1006,6 +1024,10 @@
       .scroll-cue{ animation: none !important; opacity: 1 !important; }
       .scroll-cue-line::after{ animation: none !important; }
       .hero-slides img{ transition: none !important; }
+      /* No rotation — show every review at once so nothing is hidden */
+      .quotes{ display: block; }
+      .quote{ opacity: 1 !important; pointer-events: auto; }
+      .quote + .quote{ margin-top: var(--s5); }
       *,*::before,*::after{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
 
@@ -1269,7 +1291,7 @@
     <div class="hero-frame" aria-hidden="true">
       <div class="hero-slides">
   <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
-  <img srcset="images/1-img-0988-640.jpg 640w, images/1-img-0988-1024.jpg 1024w, images/1-img-0988-1280.jpg 1280w, images/1-img-0988-1600.jpg 1600w, images/1-img-0988-2000.jpg 2000w" sizes="100vw" src="images/1-img-0988-2000.jpg" alt="" loading="lazy" decoding="async" />
+  <img srcset="images/photo-2025-05-22-09-41-58-16-640.jpg 640w, images/photo-2025-05-22-09-41-58-16-1024.jpg 1024w, images/photo-2025-05-22-09-41-58-16-1280.jpg 1280w, images/photo-2025-05-22-09-41-58-16-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-41-58-16-1600.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/zwembad-drone-640.jpg 640w, images/zwembad-drone-1024.jpg 1024w, images/zwembad-drone-1280.jpg 1280w, images/zwembad-drone-1600.jpg 1600w, images/zwembad-drone-2000.jpg 2000w" sizes="100vw" src="images/zwembad-drone-2000.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1600.jpg" alt="" loading="lazy" decoding="async" />
 </div>
@@ -1407,11 +1429,32 @@
   <section class="highlight fade">
     <div class="wrap">
       <div class="quote-mark reveal-l" aria-hidden="true">“</div>
-      <blockquote class="reveal-l">
-        Wij voelden ons meteen thuis toen we de poorten binnenliepen.
-        Prachtig verzorgd.
-      </blockquote>
-      <cite class="reveal-l">— Lisanne</cite>
+
+      <div class="quotes reveal-l" aria-live="polite">
+        <figure class="quote is-active">
+          <blockquote>
+            Wij voelden ons meteen thuis toen we de poorten binnenliepen.
+            Prachtig verzorgd.
+          </blockquote>
+          <cite>— Lisanne</cite>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>
+            Drie weken heerlijk genoten. Fantastisch huis, van alle gemakken
+            voorzien en top sfeer. Wij komen zeker terug!
+          </blockquote>
+          <cite>— Roderick</cite>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>
+            Vanaf seconde één voelde deze finca als thuis. Alles was aanwezig:
+            genoeg glazen en borden, veel stoelen, en bovenal heerlijke matrassen.
+          </blockquote>
+          <cite>— Fleur</cite>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -1750,6 +1793,48 @@
       if (e.key === 'ArrowLeft') show(-1);
       if (e.key === 'ArrowRight') show(1);
     });
+
+    // =========================
+    // Rotating reviews
+    // =========================
+    (function(){
+      const wrap = document.querySelector('.quotes');
+      if (!wrap) return;
+      const quotes = Array.from(wrap.querySelectorAll('.quote'));
+      if (quotes.length < 2) return;
+
+      // Under reduced motion the CSS shows all three at once, so leave it be.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const DWELL = 7500;   // long enough to read the longest review
+      let i = 0, timer = null;
+
+      function show(n){
+        quotes[i].classList.remove('is-active');
+        i = (n + quotes.length) % quotes.length;
+        quotes[i].classList.add('is-active');
+      }
+      function start(){
+        if (timer) return;
+        timer = setInterval(() => show(i + 1), DWELL);
+      }
+      function stop(){
+        clearInterval(timer);
+        timer = null;
+      }
+
+      // Let people finish reading: pause on hover and on keyboard focus.
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+      wrap.addEventListener('focusin', stop);
+      wrap.addEventListener('focusout', start);
+
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? stop() : start();
+      });
+
+      start();
+    })();
 
     // =========================
     // Reveal on entry — one observer, fires once per element
