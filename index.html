@@ -748,26 +748,86 @@
 
 
     /* --------- Contact card --------- */
-    .contact-card{
-      margin-top:var(--s5);
-      padding:0;
-      text-align:center;
-      position: relative;
-    }
-    .contact-card p{
-      margin:0 0 var(--s1);
-      color: var(--muted);
-      position: relative;
-      font-size: 1.05rem;
-    }
     .contact-meta{
       margin-top:var(--s3);
       color: var(--muted);
       font-size: .85rem;
       letter-spacing: .04em;
     }
+    /* --------- Boeken: closing section --------- */
+    .book{
+      position: relative;
+      padding: clamp(96px, 14vh, 168px) 0;
+      overflow: hidden;
+    }
+    .book-bg{ position: absolute; inset: 0; }
+    .book-bg img{ width: 100%; height: 100%; object-fit: cover; }
+    /* warm scrim: the card has to read, the lights behind it should still glow */
+    .book-bg::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(24,18,12,.55) 0%, rgba(24,18,12,.32) 50%, rgba(24,18,12,.6) 100%);
+    }
+    .book-card{
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--bg);
+      border-radius: var(--r);
+      padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .book-card h2{ margin-bottom: var(--s2); }
+    .book-card .lead{ margin-bottom: var(--s4); }
+
+    /* three steps: numbered rings in the accent, left-aligned so they read as a list */
+    .book-steps{
+      list-style: none;
+      counter-reset: step;
+      text-align: left;
+      max-width: 440px;
+      margin: 0 auto var(--s4);
+      display: grid;
+      gap: var(--s3);
+    }
+    .book-steps li{
+      position: relative;
+      padding-left: 52px;
+      counter-increment: step;
+    }
+    .book-steps li::before{
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r-pill);
+      border: 1px solid var(--accent-ink);
+      color: var(--accent-ink);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.25rem;
+      display: grid;
+      place-items: center;
+    }
+    .book-steps strong{
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .book-steps span{
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.55;
+    }
+
     .contact-actions{
-  margin-top:10px;
+  margin-top:0;
   display:flex;              /* was inline-flex */
   justify-content:center;
   align-items:center;
@@ -1254,13 +1314,12 @@
          exist), and the nth-child(7n+4) rhythm rule left a white gap beside
          whichever tile preceded a full-width one. All three are gone. */
 
-      /* --- Contact --- */
-      .contact-card{
-        margin-top:var(--s4);
-      }
-      .contact-card p{
-        font-size: 1rem;
-      }
+      /* --- Boeken --- */
+      .book{ padding: clamp(64px, 10vh, 96px) 0; }
+      .book-card{ padding: var(--s5) var(--s3); }
+      .book-steps{ gap: var(--s2); }
+      .book-steps li{ padding-left: 48px; }
+      .book-steps strong{ font-size: 1.2rem; }
       .contact-actions{
         flex-direction: column;
         gap:10px;
@@ -1346,7 +1405,7 @@
   <img srcset="images/bank-binnen-hero-640.jpg 640w, images/bank-binnen-hero-1024.jpg 1024w, images/bank-binnen-hero-1280.jpg 1280w, images/bank-binnen-hero-1448.jpg 1448w" sizes="100vw" src="images/bank-binnen-hero-1448.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" class="is-active" />
   <img srcset="images/photo-2025-05-22-09-41-58-16-640.jpg 640w, images/photo-2025-05-22-09-41-58-16-1024.jpg 1024w, images/photo-2025-05-22-09-41-58-16-1280.jpg 1280w, images/photo-2025-05-22-09-41-58-16-1448.jpg 1448w" sizes="100vw" src="images/photo-2025-05-22-09-41-58-16-1448.jpg" alt="" loading="lazy" decoding="async" />
   <img srcset="images/zwembad-drone-640.jpg 640w, images/zwembad-drone-1024.jpg 1024w, images/zwembad-drone-1280.jpg 1280w, images/zwembad-drone-1600.jpg 1600w, images/zwembad-drone-2000.jpg 2000w" sizes="100vw" src="images/zwembad-drone-2000.jpg" alt="" loading="lazy" decoding="async" />
-  <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1600.jpg 1600w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1600.jpg" alt="" loading="lazy" decoding="async" />
+  <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1448.jpg 1448w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1448.jpg" alt="" loading="lazy" decoding="async" />
 </div>
       <div class="hero-overlay"></div>
     </div>
@@ -1409,7 +1468,7 @@
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
           <h3>4 slaapkamers</h3>
-          <p>Vier ruime slaapkamers, allen met kingsize bed (180×200) en premium matrassen.</p>
+          <p>Drie in het huis en één in het aparte guesthouse — ideaal voor twee stellen, of een puber met een eigen plek. Allemaal met kingsize bed (180×200).</p>
         </div>
         <div class="feature">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="M7 12V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v5"/><path d="M9 20v2"/><path d="M15 20v2"/></svg></div>
@@ -1471,7 +1530,7 @@
 
         <article class="info-card reveal-l" id="bedden">
           <h3>Slapen</h3>
-          <p>Elke slaapkamer heeft een kingsize bed van 180×200 cm met hoogwaardige matrassen voor een optimale nachtrust.</p>
+          <p>Elke slaapkamer heeft een kingsize bed van 180×200 cm met hoogwaardige matrassen. Eén slaapkamer ligt in het guesthouse, een apart gebouw met eigen badkamer — zo heeft iedereen zijn eigen plek.</p>
         </article>
       </div>
 
@@ -1578,7 +1637,7 @@
       <div class="g span-4 is-portrait reveal-l"><img srcset="images/niche-01-full-640.jpg 640w, images/niche-01-full-1024.jpg 1024w, images/niche-01-full-1280.jpg 1280w, images/niche-01-full-1600.jpg 1600w, images/niche-01-full-1950.jpg 1950w" sizes="(max-width: 560px) 100vw, (max-width: 900px) calc(33vw - 32px), (max-width: 1180px) calc(33vw - 32px), 363px" src="images/niche-01-full-1950.jpg" alt="Nis in de trapwand met terracotta kruik" loading="lazy" decoding="async"></div>
 
       <!-- Avond -->
-      <div class="g span-12 reveal-l"><img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1600.jpg 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/photo-2025-05-22-09-44-07-4-1600.jpg" alt="Het verlichte terras en zwembad in de avond" loading="lazy" decoding="async"></div>
+      <div class="g span-12 reveal-l"><img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1448.jpg 1448w" sizes="(max-width: 560px) 100vw, (max-width: 1180px) calc(100vw - 56px), 1120px" src="images/photo-2025-05-22-09-44-07-4-1448.jpg" alt="Het verlichte terras en zwembad in de avond" loading="lazy" decoding="async"></div>
     </div>
 
   </div>
@@ -1602,18 +1661,27 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="fade">
+  <section id="contact" class="book fade">
+    <div class="book-bg" aria-hidden="true">
+      <img srcset="images/photo-2025-05-22-09-44-07-4-640.jpg 640w, images/photo-2025-05-22-09-44-07-4-1024.jpg 1024w, images/photo-2025-05-22-09-44-07-4-1280.jpg 1280w, images/photo-2025-05-22-09-44-07-4-1448.jpg 1448w" sizes="100vw" src="images/photo-2025-05-22-09-44-07-4-1448.jpg" alt="" loading="lazy" decoding="async">
+    </div>
     <div class="wrap">
-      <span class="eyebrow reveal-l">Contact</span>
-      <h2 class="reveal-l">Boeken</h2>
-      <p class="lead reveal-l">Geen boekingssysteem — je appt ons rechtstreeks. We stemmen samen af op seizoen en verblijfsduur.</p>
+      <div class="book-card reveal-l">
+        <span class="eyebrow">Boeken</span>
+        <h2>Kom het zelf ervaren</h2>
+        <p class="lead">Geen boekingssysteem en geen tussenpersoon. Je appt ons rechtstreeks en we regelen het samen.</p>
 
-      <div class="contact-card reveal-l">
-        <p>Laat je gewenste data en het aantal personen weten.</p>
+        <ol class="book-steps">
+          <li><strong>App je data en groepsgrootte</strong><span>Ook als je nog twijfelt tussen weken.</span></li>
+          <li><strong>Wij antwoorden binnen een dag</strong><span>Beschikbaarheid, prijs en wat er allemaal inbegrepen is.</span></li>
+          <li><strong>Bevestigen, en de periode is van jullie</strong><span>We zetten de afspraken zwart op wit, zodat je precies weet waar je aan toe bent.</span></li>
+        </ol>
+
         <div class="contact-actions">
           <a class="btn" href="https://wa.me/31624978211?text=Hoi%2C%20ik%20ben%20ge%C3%AFnteresseerd%20in%20Finca%20el%20Coraz%C3%B3n.%20Mijn%20gewenste%20data%20zijn%3A%20">Stuur een WhatsApp</a>
+          <a class="btn btn-outline" href="tel:+31624978211">+31 6 24 97 82 11</a>
         </div>
-        <p class="contact-meta">Meestal binnen een dag antwoord · Nederlandse eigenaren</p>
+        <p class="contact-meta">Nederlandse eigenaren · Reactie binnen een dag · Geen boekingskosten</p>
       </div>
     </div>
   </section>
